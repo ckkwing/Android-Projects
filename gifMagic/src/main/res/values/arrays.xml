@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="language_entryvalues_list">
+		<item>en</item>
+		<item>zh_CN</item>
+	</string-array>
+	
+	<string-array name="language_entries_list">
+		<item>English</item>
+		<item>中文 ，国庆终极版\n国庆，你玩着呢还是宅着呢</item>
+	</string-array>
+
+	<string-array name="photo_album_types">
+		<item>Select photo</item>
+		<item>Select video</item>
+	</string-array>
+</resources>

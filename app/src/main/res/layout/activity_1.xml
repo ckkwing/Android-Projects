@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="This is Activity 1"/>
+    <!--<ListView android:id="@+id/myListView"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"></ListView>-->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#77ffff00">
+        <TextView android:id="@+id/txtRlativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aaaaa"/>
+        <TextView android:id="@+id/txtRlativeLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtRlativeLayout1"
+            android:text="bbbbb"/>
+        <TextView android:id="@+id/txtRlativeLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtRlativeLayout2"
+            android:text="ccccc"/>
+        </RelativeLayout>
+</LinearLayout>

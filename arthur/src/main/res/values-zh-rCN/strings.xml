@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">亚瑟</string>
+    <string name="hello_world">你好，世界！</string>
+    <string name="action_settings">设置</string>
+    <string name="action_search">搜索</string>
+    <string name="menu_item1">菜单项 1</string>
+    <string name="menu_item2">菜单项 2</string>
+    <string name="menu_item3">菜单项 3</string>
+</resources>

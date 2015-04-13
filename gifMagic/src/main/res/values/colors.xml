@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    	<!-- Color -->
+	<color name="folder_color">#FFF7B2</color>
+	<color name="photo_blank_color">#3E3E3E</color>
+	<color name="titlebar_color">#F5F5F5</color>
+	<color name="background">#F6F6F6</color>
+	<color name="main_txt_color">#98989B</color>
+	<color name="setting_text_color">#000000</color>
+	<color name="item_selected_color">#EF7D18</color>
+</resources>

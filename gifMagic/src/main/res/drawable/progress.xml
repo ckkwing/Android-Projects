@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="@android:id/background">
+    	<shape>
+    		<corners android:radius="20dip" />
+    		<gradient 
+    			android:startColor="#ABABAB"
+    			android:centerColor="#DEDEDE"
+                android:centerY="0.75"
+				android:endColor="#EAEAEA"
+				android:angle="270" /> <!-- 90表示从下到上，270表示从上到下，180表示从右到左，默认从左 -->
+    	</shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">  
+         <clip>  
+             <shape>  
+                 <corners android:radius="20dip" />  
+                 <gradient  
+                         android:startColor="#2F5E9E"
+                         android:centerColor="#4985CC"
+                         android:centerY="0.75"
+                         android:endColor="#5792D1"  
+                         android:angle="270"  
+                 />  
+             </shape>  
+         </clip>  
+     </item> 
+     
+     <item android:id="@android:id/progress">  
+         <clip>  
+             <shape>  
+                 <corners android:radius="20dip" />  
+                 <gradient  
+                         android:startColor="#2F5E9E"
+                         android:centerColor="#4985CC"
+                         android:centerY="0.75"
+                         android:endColor="#5792D1"  
+                         android:angle="270"  
+                 />  
+             </shape>  
+         </clip>  
+     </item>  
+</layer-list>

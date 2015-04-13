@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/weiboEdit_linearLayout" android:orientation="vertical"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:background="@color/background">
+	<LinearLayout android:orientation="horizontal"
+		android:id="@+id/weiboEdit_linearLayoutHint"   android:paddingLeft="3dip" android:layout_marginTop="3dip"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<ImageButton android:id="@+id/weiboEdit_backtohome"   
+			android:src="@drawable/backtohome_background"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_weight="5"/>  
+		<TextView android:id="@+id/weiboEdit_inputTip_textView"
+			android:text="@string/weibo_edit_input_tip" android:layout_weight="3"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:gravity="center" />
+		<Button	android:id="@+id/weiboedit_go_to_publish" android:text="@string/weibo_edit_go_to_publish" 
+			android:layout_weight="4" 
+			android:layout_width="fill_parent" android:layout_height="wrap_content" 
+			/>		
+	</LinearLayout>	
+	<LinearLayout android:orientation="vertical"
+		android:id="@+id/weiboEdit_linearLayoutUpper" android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:layout_weight="5"
+		android:paddingLeft="3dip" android:paddingRight="3dip">
+		<EditText android:id="@+id/weiboEdit_editText"
+			android:gravity="top" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_weight="1"/>
+		<LinearLayout android:orientation="horizontal"
+			android:id="@+id/weiboEdit_linearLayoutUpper1" android:layout_height="wrap_content"
+			android:layout_width="fill_parent">
+			<LinearLayout android:orientation="vertical"
+				android:id="@+id/weiboEdit_linearLayoutUpper11"
+				android:layout_height="fill_parent" android:layout_width="wrap_content"
+				android:layout_weight="4" android:paddingRight="5dip">
+				<ProgressBar android:id="@+id/weiboEdit_progressBar"
+					style="?android:attr/progressBarStyleHorizontal"
+					android:layout_height="5dip" android:layout_width="fill_parent"
+					android:layout_weight="3" android:progressDrawable="@drawable/progress">
+				</ProgressBar>
+				<TextView android:id="@+id/weiboEdit_file_desc"
+					android:layout_weight="1" android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:gravity="center_horizontal">
+				</TextView>
+			</LinearLayout>
+			<ImageView android:id="@+id/weiboEdit_atFriends" android:src = "@drawable/at"
+						android:layout_alignParentLeft="true" 
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:clickable="true" android:layout_weight="1"
+						>
+			</ImageView>			
+		</LinearLayout>
+	</LinearLayout>
+	
+	<LinearLayout android:orientation="vertical"
+		android:id="@+id/weiboEdit_linearLayoutDowner" android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:layout_weight="4">
+		<TextView android:id="@+id/weiboEdit_progress_textView" android:text ="" android:gravity="center"
+				 android:layout_width="fill_parent"  android:layout_height="fill_parent" android:layout_weight="2"/>
+		<LinearLayout android:id="@+id/weiboEdit_linearLayoutGroup"  android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1">
+			<RadioGroup android:id="@+id/weiboEdit_radioGroup"	android:orientation="vertical" android:layout_weight="3"
+				android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="45dip">
+				<RadioButton android:id="@+id/weiboEdit_radioSina" android:text="@string/account_sina" android:textColor="@color/setting_text_color"></RadioButton>
+				<RadioButton android:id="@+id/weiboEdit_radioTencent" android:text="@string/account_qq" android:textColor="@color/setting_text_color" ></RadioButton>
+				<RadioButton android:id="@+id/weiboEdit_radioRenren" android:text="@string/account_renren" android:textColor="@color/setting_text_color" ></RadioButton>			
+			</RadioGroup>	
+			<LinearLayout android:id="@+id/weiboEdit_linearLayoutBtnGroup"  android:orientation="vertical" android:layout_weight="4"
+					android:layout_width="fill_parent" android:layout_height="fill_parent" >					
+					<Button android:text="@string/unauthorized" android:id="@+id/weiboEdit_buttonSina" android:layout_width="wrap_content" android:layout_height="wrap_content" ></Button>
+					<Button android:text="@string/unauthorized" android:id="@+id/weiboEdit_buttonTencent" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+					<Button android:text="@string/unauthorized" android:id="@+id/weiboEdit_buttonRenren" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>			
+			</LinearLayout>
+		</LinearLayout>
+		
+	</LinearLayout>
+
+</LinearLayout>
+<!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/layout/weibo_edit.xml -->

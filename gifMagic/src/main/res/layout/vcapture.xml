@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:background="@color/background">
+	<RelativeLayout android:id="@+id/capture_view_top"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentTop="true">
+		<ImageView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_alignParentTop="true"
+			android:scaleType="centerInside" android:background="@drawable/navigation1">
+		</ImageView>
+	</RelativeLayout>
+	<RelativeLayout android:id="@+id/capture_view_bottom"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:background="@drawable/bar_background">
+		<ImageView android:id="@+id/browse" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+			android:layout_marginLeft="10dip" android:scaleType="centerInside"
+			android:background="@drawable/image_folder_selector"
+			android:layout_marginTop="25dp">
+		</ImageView>
+		<ImageView android:id="@+id/vcapture_preview"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" android:scaleType="centerInside"
+			android:background="@drawable/image_camera_selector">
+		</ImageView>
+		<ImageView android:id="@+id/setup" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentRight="true"
+			android:layout_marginRight="10dip" android:scaleType="centerInside"
+			android:background="@drawable/image_setting_selector"
+			android:layout_marginTop="25dp">
+		</ImageView>
+	</RelativeLayout>
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/capture_view_top" android:layout_above="@id/capture_view_bottom">
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical">
+			<RelativeLayout android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:layout_marginTop="10dip"
+				android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+				android:orientation="horizontal">
+				<ProgressBar android:id="@+id/capture_progress"
+					android:layout_height="wrap_content" android:layout_width="fill_parent"
+					android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/store_progress"
+					android:layout_centerVertical="true"
+					style="?android:attr/progressBarStyleHorizontal"
+					android:progressDrawable="@drawable/progress">
+				</ProgressBar>
+			</RelativeLayout>
+			<RelativeLayout android:id="@+id/video_preview_holder"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
+				android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
+				<TextView android:id="@+id/vcapture_video_info"
+					android:layout_marginLeft="20dp" android:layout_width="wrap_content"
+					android:layout_marginTop="10dp" android:layout_height="wrap_content"
+					android:layout_above="@+id/video_seekbar"/>
+				<SeekBar android:id="@+id/video_seekbar"
+					android:progressDrawable="@drawable/progress" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:layout_margin="10px"
+					android:layout_alignParentBottom="true" />
+				<ImageView android:id="@+id/video_capture_preview"
+					android:layout_width="fill_parent" android:layout_height="fill_parent"
+					android:layout_above="@+id/vcapture_video_info">
+				</ImageView>
+			</RelativeLayout>
+		</LinearLayout>
+	</RelativeLayout>
+</RelativeLayout>

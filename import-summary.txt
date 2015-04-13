@@ -1,0 +1,64 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea\
+* .idea\.name
+* .idea\GifMagic.iml
+* .idea\compiler.xml
+* .idea\copyright\
+* .idea\copyright\profiles_settings.xml
+* .idea\encodings.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\scopes\
+* .idea\scopes\scope_settings.xml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* proguard.cfg
+* proguard\
+* proguard\dump.txt
+* proguard\mapping.txt
+* proguard\seeds.txt
+* proguard\usage.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => gifMagic\src\main\AndroidManifest.xml
+* assets\ => gifMagic\src\main\assets\
+* jni\ => gifMagic\src\main\jni\
+* libs\Analytics_Android_SDK_3.0.jar => gifMagic\libs\Analytics_Android_SDK_3.0.jar
+* libs\armeabi\libffmpegutils.so => gifMagic\src\main\jniLibs\armeabi\libffmpegutils.so
+* libs\armeabi\libYUV420SP.so => gifMagic\src\main\jniLibs\armeabi\libYUV420SP.so
+* libs\commons-codec.jar => gifMagic\libs\commons-codec.jar
+* libs\commons-httpclient-3.1.jar => gifMagic\libs\commons-httpclient-3.1.jar
+* libs\commons-logging-1.1.jar => gifMagic\libs\commons-logging-1.1.jar
+* libs\dom4j-1.6.1.jar => gifMagic\libs\dom4j-1.6.1.jar
+* libs\QWeiboSDK.jar => gifMagic\libs\QWeiboSDK.jar
+* libs\renren_android_connect.jar => gifMagic\libs\renren_android_connect.jar
+* libs\weibo4android.jar => gifMagic\libs\weibo4android.jar
+* res\ => gifMagic\src\main\res\
+* src\ => gifMagic\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

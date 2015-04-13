@@ -1,0 +1,8 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := YUV420SP
+LOCAL_SRC_FILES := YUV420SP.c
+
+include $(BUILD_SHARED_LIBRARY)

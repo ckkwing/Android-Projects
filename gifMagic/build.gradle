@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 8
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.jecfbagsx.android.gifmagic"
+        minSdkVersion 3
+        targetSdkVersion 8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/Analytics_Android_SDK_3.0.jar')
+    compile files('libs/commons-codec.jar')
+    compile files('libs/commons-httpclient-3.1.jar')
+    compile files('libs/commons-logging-1.1.jar')
+    compile files('libs/dom4j-1.6.1.jar')
+    compile files('libs/QWeiboSDK.jar')
+    compile files('libs/renren_android_connect.jar')
+    compile files('libs/weibo4android.jar')
+}

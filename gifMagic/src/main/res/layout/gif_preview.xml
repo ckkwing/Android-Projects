@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@color/background">
+
+	<ImageView android:layout_alignParentTop="true" android:id="@+id/navigationBar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:src="@drawable/navigation3" android:scaleType="centerInside" />
+
+	<RelativeLayout android:id="@+id/previewTitlePanel"
+		android:layout_below="@+id/navigationBar" android:layout_width="fill_parent"
+		android:layout_height="30dp" android:background="@drawable/title_gradient">
+		<TextView android:id="@+id/previewTitle"
+			android:layout_centerInParent="true" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:gravity="center" />
+		<Button android:id="@+id/previewOperationBtn" android:text="@string/general_done"
+			android:layout_alignParentRight="true" android:layout_marginRight="23dp"
+			android:layout_width="80dp" android:layout_height="wrap_content"
+			android:gravity="center" android:layout_centerVertical="true"
+			android:background="@drawable/green_button_selector"
+			android:visibility="gone" />
+	</RelativeLayout>
+
+	<com.jecfbagsx.android.gifmanage.GifView
+		android:id="@+id/gifPreview" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_centerInParent="true"
+		android:layout_margin="20dp"
+		android:enabled="false" />
+
+	<RelativeLayout android:id="@+id/bottomToolBar"
+		android:layout_width="fill_parent" android:layout_alignParentBottom="true"
+	 	android:layout_height="wrap_content" android:background="@drawable/bar_background">
+	<!-- 	<Button android:id="@+id/qqImage"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="10dip"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:scaleType="centerInside"
+			android:clickable="true" android:drawableTop="@android:drawable/ic_menu_share"
+			android:layout_marginTop="25dp"
+			
+			/> -->
+
+		<Button android:id="@+id/sinaImage"
+		    android:layout_marginTop="25dp"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" android:scaleType="centerInside"
+			android:drawableTop="@android:drawable/ic_menu_share"
+			android:text="@string/share_main"
+			/>
+
+		<Button android:id="@+id/mailImage"
+			android:layout_alignParentRight="true" android:layout_marginRight="10dip"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:scaleType="centerInside"
+			android:drawableTop="@android:drawable/ic_menu_share" android:layout_marginTop="25dp"
+			android:text="@string/share_other"
+			/>
+	</RelativeLayout>
+
+
+</RelativeLayout>

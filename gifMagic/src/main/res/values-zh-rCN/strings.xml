@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">GifMagic</string>
+	<string name="version">版本</string>
+	<string name="contact_us">联系我们</string>
+	<string name="about_us">关于我们</string>
+	<string name="about_us1">我是Jecf Bags.  来自杭州。\n\n这个软件做的很认真。不管你信不信。反正我是信了。</string>
+	<string name="about_us2">请把你的问题建议发到 gifmagic2011@gmail.com</string>
+	<string name="help">帮助</string>
+	<string name="help1">有问题，请发邮件到gifmagic2011@gmail.com \n\n或\n\n到新浪/腾讯微博找我：  @gifmagic</string>
+	<string name="help2">我们的优势：\n\n 1.支持Android2.1 或更高\n\n2.支持前置后置摄像头\n\n3.支持更灵活的制作长度与质量</string>
+	<string name="app_trend">#GifMagic#</string>
+	
+	<!-- General -->
+	<string name="ok">确定</string>
+	<string name="cancel">取消</string>
+	<string name="authorized">已认证</string>
+	<string name="unauthorized">去认证</string>
+	<string name="general_go_to_authorize">请先认证</string>
+	<string name="general_delete">删除</string>
+	<string name="general_preview">预览</string>
+	<string name="general_done">完成</string>
+	<string name="general_select_items">选择</string>
+	<string name="general_selected_photocount">已选 %1$d 张</string>
+	<string name="general_select_all">全选</string>
+	<string name="general_unselect_all">取消选择</string>
+	<string name="general_select_nothing">请选择至少一张以上图片</string>
+	<string name="general_delete_alert">确认要删除所选图片?</string>
+	<string name="general_viewmode_grid">网格视图</string>
+	<string name="general_viewmode_list">列表视图</string>
+	<string name="general_warning">警告</string>
+	<string name="general_tip">提示</string>
+	<string name="general_searching">搜索中...</string>
+	<string name="general_merge">连图</string>
+	<string name="general_OnlyTwoImg">只能选两张哦</string>
+	<string name="general_SelectTwoImg">要选两张哦</string>
+	<string name="general_inprocess">正在处理中...</string>
+	
+	<!-- main activity -->
+	<string name="video_capture">Capture</string>
+	<string name="sdcard_invalid">Cannot access SD Card</string>
+	<string name="no_video_files">Cannot find video files on your phone</string>
+	<string name="android_2_2_supported">this function only support Android 2.2!</string>
+	<string name="main_camera">相机</string>
+	<string name="main_gallery">媒体库</string>
+	<string name="main_browse">浏览</string>
+	<string name="please_wait">请稍候</string>
+	<string name="create_shortcut">你想在主页面上创建应用程序的快捷方式吗?</string>
+	
+	<!-- Main activity menu -->
+	<string name="menu_about">关于</string>
+	<string name="menu_setting">设置</string>
+	<string name="menu_language">语言</string>
+	<string name="menu_help">帮助</string>
+
+	<!-- video capture menu & preference -->
+	<string name="preference_video_mode">Capture mode</string>
+	<string name="preference_video_mode_summary">Select your capture mode</string>
+	<string name="preference_video_interval">Capture interval</string>
+	<string name="preference_video_interval_summary">Select your capture interval</string>
+	<string name="preference_video_total">Capture total number of images</string>
+	<string name="preference_video_total_summary">Select your capture total</string>
+	<string name="video_info">当前时间:%1$s, 总时间:%2$s</string>
+	<string name="hide_folder">隐藏文件夹</string>
+	<string name="hide_folder_message">此文件夹将被隐藏，下次将不会显示。是否继续？</string>
+	<string name="show_folder">显示被隐藏的文件夹</string>
+	<string name="capture_error">出错了</string>
+	<string name="capture_error_message">只有Android 2.2及以上版本才可以使用视频捕捉功能。</string>
+	
+	<!-- Setting -->
+	<string name="PREF_LANGUAGE">PREF_LANGUAGE</string>
+	<string name="gif_quality">Gif 质量</string>
+	<string name="gif_camera_duration">拍照长度</string>
+	<string name="gif_video_duration">视频长度</string>
+	<string name="low">低</string>
+	<string name="middle">中</string>
+	<string name="high">高</string>
+	<string name="short_pic">短(20)</string>
+	<string name="middle_pic">中(30)</string>
+	<string name="long_pic">长(40)</string>
+	<string name="max_pic">最长(50)</string>
+	<string name="vip_feature">请输入密码激活高级功能</string>
+	<string name="vip_feature_contact">VIP 密码是免费的。 请发邮件到gifmagic2011@gmail.com索取。或新浪腾讯微博关注@gifmagic</string>
+	<string name="active">激活</string>
+	<string name="active_success">激活成功!</string>
+	<string name="active_failed">激活失败！请重新尝试.</string>
+	<string name="activate">激活</string>
+	<string name="clean_account">清空已登录账户</string>
+	<string name="account_list">账户列表</string>
+	<string name="camera_speed_setting">拍照速度</string>
+	<string name="fast">快</string>
+	<string name="normal">正常</string>
+	<string name="slow">慢</string>
+	<string name="hide_tag">发送Gif到微博时，隐藏 #GifMagic# 标签 </string>
+	<string name="notify_offcial_weibo">官方微博  @GifMagic</string>
+	<string name="history_gif_path">Gif 存储在:</string>
+	<string name="temp_image_setting">临时图片设置</string>
+	<string name="quit_app">退出程序</string>
+	<string name="quit_message">亲，你真的不玩了吗？</string>
+	<string name="quit_title">退出程序</string>
+	<string name="share_main">主流</string>
+	<string name="share_other">非主流</string>
+	<string name="info">提示</string>
+	<string name="info_hide_folder">长按文件夹，可以隐藏不想扫描的文件夹哦。通过 功能菜单 可以找回被隐藏的文件夹。</string>
+	<string name="scanning">正在从媒体库中扫描此文件...</string>
+	
+	<!-- Preference activity -->
+	<string name="preference_language">语言</string>
+	<string name="preference_language_title">语言选择</string>
+	<string name="preference_language_summary">选择应用程序语言</string>
+	<string name="dialog_title_language_preference">选择语言</string>
+	<string name="account_sina">新浪微博</string>
+	<string name="account_qq">腾讯微博</string>
+	<string name="account_renren">人人网</string>
+
+	<!-- Image operation activity -->
+	<string name="img_operation_creategif">创建Gif</string>
+	<string name="img_operation_speed">速度</string>
+	<string name="img_operation_ascendingorder">升序排列</string>
+	<string name="img_operation_decreasingsorder">降序排列</string>
+	<string name="img_operation_toomuchfiles">您选择了太多的图片，请最多挑选%1$d张图片！</string>
+	<string name="img_operation_rotateleft">左转</string>
+	<string name="img_operation_rotateright">右转</string>
+	<string name="img_operation_tipalert">左下角按钮可以选转图片/倒序图片, 长按单张图片还有额外惊喜哦！</string>
+	
+	<!-- weibo edit activity -->
+	<string name="weibo_edit_publish_to_sina">共享到 新浪微博</string>
+	<string name="weibo_edit_publish_to_tencent">共享到 腾讯微博</string>
+	<string name="weibo_edit_oauth_request_too_frequently">认证请求太频繁,请稍等片刻之后再试...</string>
+	<string name="weibo_edit_input_tip">主流分享</string>
+	<string name="weibo_edit_text_hint">分享图片</string>
+	<string name="weibo_edit_go_to_publish">传出去</string>
+	<string name="weibo_edit_gif_is_still_generating">正在创建GIF...</string>
+	<string name="weibo_edit_progress_dlg_title">正在发布...</string>
+	<string name="weibo_edit_progress_dlg_msg_publishing">正在发布Gif...</string>
+	<string name="weibo_edit_progress_dlg_msg_authorizing">正在授权账号...</string>
+	<string name="weibo_edit_gif_is_in_processing">创建Gif...</string>
+	<string name="weibo_edit_gif_is_completed">Gif 创建完成</string>
+	<string name="weibo_edit_oauth_result">认证结果</string>
+	<string name="weibo_edit_oauth_is_successful">认证已完成</string>
+	<string name="weibo_edit_oauth_occur_error">认证失败</string>
+	<string name="weibo_edit_publish_is_successful">亲，传好了。轻度发送，尽量不要追尾哦！</string>
+	<string name="weibo_edit_publish_occur_error">亲,传错了了。</string>
+	<string name="weibo_edit_create_friendship">\n顺便关注我们官方微博吧</string>
+	<string name="publish_to_renren">共享到 人人网</string>
+	<string name="weibo_edit_gprs_or_wifi_upload_tip">亲，根据经验，GPRS上传最好600K以下，WIFI上传最好1.5M以下，否则可能因为网络异常而传不上去！</string>
+	
+	<!-- webview activity -->
+	<string name="webview_progress_dlg_title">用户授权...</string>
+	<string name="webview_progress_dlg_msg_loading_authorize_page">正在加载授权页面...</string>
+	
+	<!-- weibo atfriends activity-->
+	<string name="weibo_atfriends">指定好友</string>
+	<string name="weibo_atfriends_edit_text_hint">查找好友...</string>
+	<string name="weibo_atfriends_search">找人</string>
+	<string name="weibo_atfriends_history_user">最近老转的</string>
+	<string name="weibo_atfriends_friends_user">所有关注的</string>
+		
+	<!-- video select -->
+	<string name="video_select_loading_title">正在加载...</string>
+	<string name="video_select_loading">正在从媒体库加载视频</string>
+	<string name="video_capture_title">捕捉视频...</string>
+	<string name="scan_photo">正在扫描图片...</string>
+	<string name="loading_thumbnail">正在加载缩略图 ...</string>
+	
+	<!-- camera view -->
+	<string name="camera_view_rotate_title">转屏</string>
+	<string name="camera_view_zoom_in_title">放大</string>
+	<string name="camera_view_zoom_out_title">缩小</string>
+	<string name="camera_view_title">新功能提示</string>
+	<string name="camera_view_help">1.点取景框屏幕，缩放/转屏/切换功能将出现。\n\n2.点“左下角按钮”可以进入单拍照片编辑。\n\n3.建议横向拍摄视频</string>
+	
+	<!-- main tab -->
+	<string name="maintab_progress">进度</string>
+	<string name="maintab_edit">编辑</string>
+	<string name="maintab_share">共享</string>
+	
+	<!-- photo edit -->
+	<string name="photoedit_savedtoast">新文件保存在以下路径：%1$s</string>
+	<string name="photoedit_groupalert">目前只支持整个GIF的颜色条件。暂不支持单张调节</string>
+	<string name="photoedit_colorpalette">调色板</string>
+	<string name="photoedit_brightness">亮度</string>
+	<string name="photoedit_saturation">饱和度</string>
+	<string name="photoedit_contrast">对比度</string>
+	
+	<!-- other strings -->
+	<!-- Error -->
+	<string name="sdcard_busy">内存卡繁忙.</string>
+	<string name="no_folder">没有找到任何含有图片的文件夹.</string>
+	<string name="networkinfo_unavailable">无法访问网络</string>
+    <string name="networkinfo_start_gprs_or_wifi_connect">开始  GPRS 或 无线 连接</string>   
+    <string name="weibo_service_or_network_is_unavailable">微博服务不可用或网络异常</string>
+    <string name="error_return_from_sina">\n新浪返回错误 : </string>
+    <string name="error_exception">\n异常错误 : </string>	
+
+</resources>

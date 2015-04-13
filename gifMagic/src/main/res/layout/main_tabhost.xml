@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/maintabhost"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<RelativeLayout
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<TabWidget android:id="@android:id/tabs"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="false" />
+		<FrameLayout android:id="@android:id/tabcontent"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@android:id/tabs">
+			<!-- 
+			<LinearLayout android:id="@+id/mainprogresstab"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+				<TextView android:id="@+id/progresstabview"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/maintab_progress" />
+			</LinearLayout>
+			<LinearLayout android:id="@+id/mainedittab"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+				<TextView android:id="@+id/edittabview"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/maintab_edit" />
+			</LinearLayout>
+			<LinearLayout android:id="@+id/mainsharetab"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+				<TextView android:id="@+id/sharetabview"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/maintab_share" />
+			</LinearLayout>
+			 -->
+		</FrameLayout>
+	</RelativeLayout>
+</TabHost>

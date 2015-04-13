@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+  <ImageView
+	    android:layout_alignParentTop="true"
+	    android:id="@+id/navigationBar"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:src="@drawable/navigation2"
+	    android:scaleType="centerInside"
+	    />
+	    
+	<RelativeLayout
+			android:id="@+id/operationPanel"
+			android:layout_below="@+id/navigationBar"
+		  	android:layout_width="wrap_content"
+		  	android:layout_height="wrap_content" >
+		  	<ImageView android:id="@+id/approveImg"
+		  		android:src="@drawable/approve"
+		  		android:layout_alignParentLeft="true"
+				android:layout_width="26dp"
+				android:layout_height="26dp" 
+				android:gravity="center"
+				android:layout_centerVertical="true"
+				android:scaleType="centerInside"
+		  	 />
+		  	<ImageView android:id="@+id/rejectImg"
+		  		android:src="@drawable/reject"
+		  		android:layout_alignParentRight="true"
+				android:layout_width="26dp"
+				android:layout_height="26dp" 
+				android:gravity="center"
+				android:layout_centerVertical="true"
+				android:scaleType="centerInside"
+		  	 />
+	</RelativeLayout>
+  
+  <ImageView android:id="@+id/displayImg"
+  	android:layout_below="@+id/operationPanel"
+  	android:layout_above="@+id/bottomBar"
+  	android:layout_marginLeft="10dp"
+  	android:layout_marginRight="10dp"
+  	android:layout_marginTop="20dp"
+  	android:layout_marginBottom="20dp"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:scaleType="centerInside" />
+  
+  <RelativeLayout android:id="@+id/bottomBar"
+		android:layout_width="fill_parent" android:layout_alignParentBottom="true"
+	 	android:layout_height="wrap_content" android:background="#ffffffff">
+	 	
+	 	<RelativeLayout
+	 		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+	 		android:layout_margin="26dp"
+	 	>
+		 	<RelativeLayout
+	    		android:id="@+id/brightnessPanel"
+	    		android:gravity="center"
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content">
+	    		<TextView 
+	    			android:id="@+id/txtBrightness"
+	    			android:layout_alignParentLeft="true"
+	    			android:layout_margin="10dp"
+	    			android:text="@string/photoedit_brightness"
+					android:layout_width="80dp"
+	    			android:layout_height="wrap_content" />
+		    	<SeekBar android:id="@+id/brightnessBar"
+		    		android:progressDrawable="@drawable/progress"
+		    		android:layout_margin="10dp"
+		    		android:layout_toRightOf="@+id/txtBrightness"
+			 		android:layout_width="fill_parent"
+		    		android:layout_height="20dp"
+		    		android:progress="50"
+		    		android:max="100" />
+	    	</RelativeLayout>
+		 	<RelativeLayout
+		 		android:id="@+id/saturationPanel"
+		 		android:gravity="center"
+		 		android:layout_below="@+id/brightnessPanel"
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content">
+	    		<TextView 
+	    			android:id="@+id/txtSaturation"
+	    			android:layout_alignParentLeft="true"
+	    			android:layout_margin="10dp"
+	    			android:text="@string/photoedit_saturation"
+					android:layout_width="80dp"
+	    			android:layout_height="wrap_content" />
+		    	<SeekBar android:id="@+id/saturationBar"
+		    		android:progressDrawable="@drawable/progress"
+		    		android:layout_margin="10dp"
+		    		android:layout_toRightOf="@+id/txtSaturation"
+			 		android:layout_width="fill_parent"
+		    		android:layout_height="20dp"
+		    		android:progress="100"
+		    		android:max="200" />
+	    	</RelativeLayout>
+	    	<RelativeLayout
+		 		android:id="@+id/contrastPanel"
+		 		android:gravity="center"
+		 		android:layout_below="@+id/saturationPanel"
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content">
+	    		<TextView 
+	    			android:id="@+id/txtContrast"
+	    			android:layout_alignParentLeft="true"
+	    			android:layout_margin="10dp"
+	    			android:text="@string/photoedit_contrast"
+					android:layout_width="80dp"
+	    			android:layout_height="wrap_content" />
+		    	<SeekBar android:id="@+id/contrastBar"
+		    		android:progressDrawable="@drawable/progress"
+		    		android:layout_margin="10dp"
+		    		android:layout_toRightOf="@+id/txtContrast"
+			 		android:layout_width="fill_parent"
+		    		android:layout_height="20dp"
+		    		android:progress="50"
+		    		android:max="100" />
+	    	</RelativeLayout>
+	 	</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>
+

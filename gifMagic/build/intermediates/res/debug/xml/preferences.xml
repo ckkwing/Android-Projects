@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- 	<PreferenceCategory android:title="@string/preference_resolution">
+		<ListPreference
+                android:key="PREF_RESOLUTION"
+                android:title="@string/preference_resolution_title"
+                android:summary="@string/preference_resolution_summary"
+                android:entries="@array/resolution_entries_list"
+                android:entryValues="@array/resolution_entryvalues_list"
+                android:dialogTitle="@string/dialog_title_resolution_preference"
+                android:defaultValue="@string/resolution_default_entryvalue" />
+	</PreferenceCategory> -->
+	
+	<PreferenceCategory android:title="@string/preference_language">
+		<ListPreference
+                android:key="PREF_LANGUAGE"
+                android:title="@string/preference_language_title"
+                android:summary="@string/preference_language_summary"
+                android:entries="@array/language_entries_list"
+                android:entryValues="@array/language_entryvalues_list"
+                android:dialogTitle="@string/dialog_title_language_preference"
+                android:defaultValue="@string/language_default_entryvalue"/>
+	</PreferenceCategory>
+	
+	<!-- <PreferenceCategory android:title="@string/preference_accounts">
+		<com.jecfbags.android.gifmagic.preference.AccountPreference
+                android:key="PREF_SINA"
+                android:title="@string/preference_account_sina"
+                android:summary="@string/preference_accounts_click"/>
+                
+       <com.jecfbags.android.gifmagic.preference.AccountPreference
+                android:key="PREF_QQ"
+                android:title="@string/preference_account_qq"
+                android:summary="@string/preference_accounts_click"/>
+       <com.jecfbags.android.gifmagic.preference.AccountPreference
+                android:key="PREF_RENREN"
+                android:title="@string/preference_account_renren"
+                android:summary="@string/preference_accounts_click"/>
+	</PreferenceCategory> -->
+
+</PreferenceScreen><!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/xml/preferences.xml -->
