@@ -18,6 +18,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.echen.wisereminder.Data.DataManager;
+import com.echen.wisereminder.Model.Category;
+
+import java.util.List;
+
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -57,17 +62,26 @@ public class MainActivity extends Activity
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
+        if (number <= 0)
+            return;
+        List<Category> categories = DataManager.getInstance().getCategories();
+        if (number > categories.size())
+            return;
+        Category selectedCategory = categories.get(number-1);
+        if (null == selectedCategory)
+            return;
+        mTitle = selectedCategory.getName();
+//        switch (number) {
+//            case 1:
+//                mTitle = getString(R.string.title_section1);
+//                break;
+//            case 2:
+//                mTitle = getString(R.string.title_section2);
+//                break;
+//            case 3:
+//                mTitle = getString(R.string.title_section3);
+//                break;
+//        }
     }
 
     public void restoreActionBar() {
@@ -132,9 +146,42 @@ public class MainActivity extends Activity
         }
 
         @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Bundle bundle = getArguments();
+            if (bundle != null)
+            {
+//                mArgument = bundle.getString(ARGUMENT);
+//                Intent intent = new Intent();
+//                intent.putExtra(RESPONSE, "good");
+//                getActivity().setResult(ListTitleFragment.REQUEST_DETAIL, intent);
+            }
+        }
+
+        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            Bundle bundle = getArguments();
+            if(null != bundle)
+            {
+                int position = bundle.getInt(ARG_SECTION_NUMBER);
+                if (position >0 && position<= DataManager.getInstance().getCategories().size())
+                {
+                    Category category = DataManager.getInstance().getCategories().get(position-1);
+                    if (null != category)
+                    {
+                        TextView txtName = (TextView)rootView.findViewById(R.id.section_label);
+                        txtName.setText(category.getName());
+
+                        //SQL test
+                        com.echen.wisereminder.Database.DAL.Category categoryDAL = new com.echen.wisereminder.Database.DAL.Category(getActivity());
+                        categoryDAL.AddCategory(category);
+
+                        //SQL test
+                    }
+                }
+            }
             return rootView;
         }
 

@@ -2,6 +2,7 @@ package com.echen.arthur;
 
 import android.app.Application;
 import com.echen.androidcommon.CrashHandler;
+import com.echen.arthur.Data.DataManager;
 
 /**
  * Created by echen on 2015/1/14.
@@ -21,4 +22,11 @@ public class MyApplication extends Application {
         crashHandler.init(this);
         singleton = this;
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
+
+
 }
