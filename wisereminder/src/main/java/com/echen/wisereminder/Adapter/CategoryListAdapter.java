@@ -25,7 +25,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
     public class ViewHolder
     {
-        public int id;
+        public long id;
         public TextView textView_Name;
     }
 

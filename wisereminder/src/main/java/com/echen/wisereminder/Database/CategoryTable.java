@@ -11,4 +11,6 @@ public class CategoryTable {
     public static final String ID = "_id";
     // NAME OF THE CATEGORY
     public static final String NAME = "category_name";
+
+
 }

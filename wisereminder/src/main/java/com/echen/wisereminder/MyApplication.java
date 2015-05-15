@@ -1,9 +1,11 @@
 package com.echen.wisereminder;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.echen.androidcommon.CrashHandler;
 import com.echen.wisereminder.Data.DataManager;
+import com.echen.wisereminder.Utility.SettingUtility;
 
 /**
  * Created by echen on 2015/4/21.
@@ -32,7 +34,9 @@ public class MyApplication extends Application {
         super.onCreate();
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
-        DataManager.getInstance().initiate(getApplicationContext());
+        Context appContext = getApplicationContext();
+        SettingUtility.getInstance().initiate(appContext);
+        DataManager.getInstance().initiate(appContext);
     }
 
     @Override

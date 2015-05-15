@@ -41,7 +41,6 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -64,10 +63,10 @@ public class MainActivity extends Activity
     public void onSectionAttached(int number) {
         if (number <= 0)
             return;
-        List<Category> categories = DataManager.getInstance().getCategories();
+        List<Category> categories = DataManager.getInstance().getCategories(false);
         if (number > categories.size())
             return;
-        Category selectedCategory = categories.get(number-1);
+        Category selectedCategory = categories.get(number - 1);
         if (null == selectedCategory)
             return;
         mTitle = selectedCategory.getName();
@@ -149,8 +148,7 @@ public class MainActivity extends Activity
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             Bundle bundle = getArguments();
-            if (bundle != null)
-            {
+            if (bundle != null) {
 //                mArgument = bundle.getString(ARGUMENT);
 //                Intent intent = new Intent();
 //                intent.putExtra(RESPONSE, "good");
@@ -163,20 +161,18 @@ public class MainActivity extends Activity
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             Bundle bundle = getArguments();
-            if(null != bundle)
-            {
+
+            if (null != bundle) {
                 int position = bundle.getInt(ARG_SECTION_NUMBER);
-                if (position >0 && position<= DataManager.getInstance().getCategories().size())
-                {
-                    Category category = DataManager.getInstance().getCategories().get(position-1);
-                    if (null != category)
-                    {
-                        TextView txtName = (TextView)rootView.findViewById(R.id.section_label);
+                if (position > 0 && position <= DataManager.getInstance().getCategories(false).size()) {
+                    Category category = DataManager.getInstance().getCategories(false).get(position - 1);
+                    if (null != category) {
+                        TextView txtName = (TextView) rootView.findViewById(R.id.section_label);
                         txtName.setText(category.getName());
 
                         //SQL test
-                        com.echen.wisereminder.Database.DAL.Category categoryDAL = new com.echen.wisereminder.Database.DAL.Category(getActivity());
-                        categoryDAL.AddCategory(category);
+//                        com.echen.wisereminder.Database.DAL.Category categoryDAL = new com.echen.wisereminder.Database.DAL.Category(getActivity());
+//                        categoryDAL.addCategory(category);
 
                         //SQL test
                     }

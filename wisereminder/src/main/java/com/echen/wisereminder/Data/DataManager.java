@@ -2,7 +2,10 @@ package com.echen.wisereminder.Data;
 
 import android.content.Context;
 
+import com.echen.wisereminder.Database.CategorySQLiteHelper;
 import com.echen.wisereminder.Model.Category;
+import com.echen.wisereminder.R;
+import com.echen.wisereminder.Utility.SettingUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,9 @@ import java.util.List;
 public class DataManager {
     private Context context = null;
     private volatile static DataManager instance;
+
+    private com.echen.wisereminder.Database.DAL.Category categoryDAL = null;
+    private List<Category> categories = new ArrayList<Category>();
 
     public static DataManager getInstance()
     {
@@ -34,6 +40,15 @@ public class DataManager {
         if (null == context)
             return false;
         this.context = context;
+        categoryDAL = new com.echen.wisereminder.Database.DAL.Category(context);
+        if (null == categoryDAL)
+            throw new NullPointerException("CategoryDAL is NULL");
+//        categoryDAL.clearCategories();
+        if (SettingUtility.getInstance().getIsFirstUse())
+        {
+            addDefaultCategories();
+            SettingUtility.getInstance().setIsFirstUse(false);
+        }
         return true;
     }
 
@@ -42,21 +57,44 @@ public class DataManager {
 
     }
 
-    public List<Category> getCategories()
+    private final String getString(int resId)
     {
-        Category categoryWork = new Category();
-        categoryWork.setId(1);
-        categoryWork.setName("Work");
-        Category categoryTravel = new Category();
-        categoryTravel.setId(2);
-        categoryTravel.setName("Travel");
-        Category categoryTODO = new Category();
-        categoryTODO.setId(3);
-        categoryTODO.setName("TODO");
-        List<Category> categoryList = new ArrayList<Category>();
-        categoryList.add(categoryWork);
-        categoryList.add(categoryTravel);
-        categoryList.add(categoryTODO);
-        return categoryList;
+        return context.getString(resId);
+    }
+
+    public void addDefaultCategories()
+    {
+        Category allCategory = new Category(getString(R.string.category_all));
+        long retId = categoryDAL.addCategory(allCategory);
+        if (retId <= 0)
+            return;
+        allCategory.setId(retId);
+
+        Category workCategory = new Category(getString(R.string.category_work));
+        retId = categoryDAL.addCategory(workCategory);
+        if (retId <= 0)
+            return;
+        workCategory.setId(retId);
+
+        Category homeCategory = new Category(getString(R.string.category_home));
+        retId = categoryDAL.addCategory(homeCategory);
+        if (retId <= 0)
+            return;
+        homeCategory.setId(retId);
+
+        Category otherCategory = new Category(getString(R.string.category_other));
+        retId = categoryDAL.addCategory(otherCategory);
+        if (retId <= 0)
+            return;
+        otherCategory.setId(retId);
+    }
+
+    public List<Category> getCategories(boolean isForce)
+    {
+        if (isForce)
+        {
+            categories = categoryDAL.getCategories();
+        }
+        return categories;
     }
 }

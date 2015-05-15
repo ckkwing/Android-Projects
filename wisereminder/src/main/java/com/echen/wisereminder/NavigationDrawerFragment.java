@@ -1,16 +1,16 @@
 package com.echen.wisereminder;
 
 
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,16 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.echen.wisereminder.Adapter.CategoryListAdapter;
 import com.echen.wisereminder.Data.DataManager;
-import com.echen.wisereminder.Model.Category;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -75,7 +70,7 @@ public class NavigationDrawerFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         categoryListAdapter = new CategoryListAdapter(getActionBar().getThemedContext(),
-                DataManager.getInstance().getCategories());
+                DataManager.getInstance().getCategories(true));
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.

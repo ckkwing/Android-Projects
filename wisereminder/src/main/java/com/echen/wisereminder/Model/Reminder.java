@@ -1,12 +1,9 @@
 package com.echen.wisereminder.Model;
 
-import java.util.List;
-
 /**
- * Created by echen on 2015/4/22.
+ * Created by echen on 2015/5/15.
  */
-public class Category {
-
+public class Reminder {
     protected long id = -1;
     public long getId(){return id;}
     public void setId(long id){this.id = id;}
@@ -15,10 +12,9 @@ public class Category {
     public String getName(){return name;}
     public void setName(String name){this.name = name;}
 
+    public Reminder(){}
 
-    public Category(){}
-
-    public Category(String name)
+    public Reminder(String name)
     {
         this.name = name;
     }
