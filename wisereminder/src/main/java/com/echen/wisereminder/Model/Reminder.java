@@ -12,6 +12,10 @@ public class Reminder {
     public String getName(){return name;}
     public void setName(String name){this.name = name;}
 
+    protected long ownerId = -1;
+    public long getOwnerId() { return ownerId; }
+    public void setOwnerId(long ownerId) { this.ownerId = ownerId; }
+
     public Reminder(){}
 
     public Reminder(String name)

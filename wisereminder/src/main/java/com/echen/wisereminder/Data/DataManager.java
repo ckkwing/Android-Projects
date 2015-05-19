@@ -1,9 +1,8 @@
 package com.echen.wisereminder.Data;
 
 import android.content.Context;
-
-import com.echen.wisereminder.Database.CategorySQLiteHelper;
 import com.echen.wisereminder.Model.Category;
+import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.R;
 import com.echen.wisereminder.Utility.SettingUtility;
 
@@ -18,6 +17,8 @@ public class DataManager {
     private volatile static DataManager instance;
 
     private com.echen.wisereminder.Database.DAL.Category categoryDAL = null;
+    private com.echen.wisereminder.Database.DAL.Reminder reminderDAL = null;
+
     private List<Category> categories = new ArrayList<Category>();
 
     public static DataManager getInstance()
@@ -43,7 +44,10 @@ public class DataManager {
         categoryDAL = new com.echen.wisereminder.Database.DAL.Category(context);
         if (null == categoryDAL)
             throw new NullPointerException("CategoryDAL is NULL");
-//        categoryDAL.clearCategories();
+        reminderDAL = new com.echen.wisereminder.Database.DAL.Reminder(context);
+        if (null == reminderDAL)
+            throw new NullPointerException("ReminderDAL is NULL");
+        //categoryDAL.clearCategories();
         if (SettingUtility.getInstance().getIsFirstUse())
         {
             addDefaultCategories();
@@ -65,28 +69,37 @@ public class DataManager {
     public void addDefaultCategories()
     {
         Category allCategory = new Category(getString(R.string.category_all));
+        allCategory.setIsDefault(true);
         long retId = categoryDAL.addCategory(allCategory);
         if (retId <= 0)
             return;
-        allCategory.setId(retId);
+
+        //Test
+        for(int i =0; i< 5; i++)
+        {
+            Reminder testReminder = new Reminder("Reminder " + String.valueOf(i));
+            testReminder.setOwnerId(retId);
+            reminderDAL.addReminder(testReminder);
+        }
+        //Test
 
         Category workCategory = new Category(getString(R.string.category_work));
+        workCategory.setIsDefault(true);
         retId = categoryDAL.addCategory(workCategory);
         if (retId <= 0)
             return;
-        workCategory.setId(retId);
 
         Category homeCategory = new Category(getString(R.string.category_home));
+        homeCategory.setIsDefault(true);
         retId = categoryDAL.addCategory(homeCategory);
         if (retId <= 0)
             return;
-        homeCategory.setId(retId);
 
         Category otherCategory = new Category(getString(R.string.category_other));
+        otherCategory.setIsDefault(true);
         retId = categoryDAL.addCategory(otherCategory);
         if (retId <= 0)
             return;
-        otherCategory.setId(retId);
     }
 
     public List<Category> getCategories(boolean isForce)
@@ -96,5 +109,10 @@ public class DataManager {
             categories = categoryDAL.getCategories();
         }
         return categories;
+    }
+
+    public List<Reminder> getRemindersByCategoryID(long categoryID)
+    {
+        return reminderDAL.getRemindersByCategoryID(categoryID);
     }
 }

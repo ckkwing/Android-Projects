@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.echen.wisereminder.Database.CategorySQLiteHelper;
+import com.echen.wisereminder.Database.SQLiteHelper;
 import com.echen.wisereminder.Database.CategoryTable;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by echen on 2015/4/29.
  */
 public class Category {
-    private CategorySQLiteHelper helper;
+    private SQLiteHelper helper;
     private SQLiteDatabase db;
 
     //SQL query
@@ -23,16 +23,8 @@ public class Category {
 
     public Category(Context context)
     {
-        helper = new CategorySQLiteHelper(context);
+        helper = SQLiteHelper.getInstance(context);
         db = helper.getWritableDatabase();
-    }
-
-    public void close()
-    {
-        if (null != db)
-        {
-            db.close();
-        }
     }
 
     public long addCategory(com.echen.wisereminder.Model.Category category)
@@ -40,9 +32,9 @@ public class Category {
         // CREATE A CONTENTVALUE OBJECT
         ContentValues cv = new ContentValues();
         cv.put(CategoryTable.NAME, category.getName());
+        cv.put(CategoryTable.FLAG, CategoryTable.isDefaultToFlag(category.getIsDefault()));
         // RETRIEVE WRITEABLE DATABASE AND INSERT
-        long result = db.insert(CategoryTable.TABLE_NAME,
-                CategoryTable.NAME, cv);
+        long result = db.insert(CategoryTable.TABLE_NAME,CategoryTable.NAME, cv);
         return result;
     }
 
@@ -57,12 +49,16 @@ public class Category {
                 com.echen.wisereminder.Model.Category category = new com.echen.wisereminder.Model.Category();
                 category.setId(cursor.getInt(cursor.getColumnIndex(CategoryTable.ID)));
                 category.setName(cursor.getString(cursor.getColumnIndex(CategoryTable.NAME)));
+                Integer flag = cursor.getInt(cursor.getColumnIndex(CategoryTable.FLAG));
+                category.setIsDefault(CategoryTable.flagToIsDefault(flag));
                 categories.add(category);
             }
             cursor.close();
         }
         return categories;
     }
+
+//    public com.echen.wisereminder.Model.Category getCategoryByID()
 
     public void clearCategory(com.echen.wisereminder.Model.Category category)
     {

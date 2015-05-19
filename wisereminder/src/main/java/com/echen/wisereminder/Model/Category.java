@@ -1,7 +1,5 @@
 package com.echen.wisereminder.Model;
 
-import java.util.List;
-
 /**
  * Created by echen on 2015/4/22.
  */
@@ -14,6 +12,10 @@ public class Category {
     protected String name = "";
     public String getName(){return name;}
     public void setName(String name){this.name = name;}
+
+    protected boolean isDefault = false;
+    public boolean getIsDefault() {return isDefault;}
+    public void setIsDefault(boolean isDefault){this.isDefault = isDefault;}
 
 
     public Category(){}

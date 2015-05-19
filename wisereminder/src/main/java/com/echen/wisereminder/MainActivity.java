@@ -5,8 +5,8 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,11 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
+import com.echen.wisereminder.Adapter.ReminderListAdapter;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Category;
+import com.echen.wisereminder.Model.Reminder;
 
 import java.util.List;
 
@@ -45,10 +49,12 @@ public class MainActivity extends Activity
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        createFloatAddButtonView();
     }
 
     @Override
@@ -119,6 +125,54 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    private WindowManager mWindowManager;
+    private WindowManager.LayoutParams wmParams;
+    private LinearLayout mFloatLayout;
+    private Button mFloatView;
+    private void createFloatAddButtonView()
+    {
+        wmParams = new WindowManager.LayoutParams();
+        mWindowManager = this.getWindowManager();
+        wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        wmParams.format = PixelFormat.RGBA_8888;;
+        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        wmParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+        wmParams.x = 0;
+        wmParams.y = 0;
+        wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        LayoutInflater inflater = this.getLayoutInflater();
+        mFloatLayout = (LinearLayout)inflater.inflate(R.layout.float_additem_view, null);
+        mWindowManager.addView(mFloatLayout, wmParams);
+        mFloatView = (Button)mFloatLayout.findViewById(R.id.float_btn_add);
+//        //绑定触摸移动监听
+//        mFloatView.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                // TODO Auto-generated method stub
+//                wmParams.x = (int) event.getRawX() - mFloatLayout.getWidth() / 2;
+//                //25为状态栏高度
+//                wmParams.y = (int) event.getRawY() - mFloatLayout.getHeight() / 2 - 40;
+//                mWindowManager.updateViewLayout(mFloatLayout, wmParams);
+//                return false;
+//            }
+//        });
+
+
+        mFloatView.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -167,14 +221,11 @@ public class MainActivity extends Activity
                 if (position > 0 && position <= DataManager.getInstance().getCategories(false).size()) {
                     Category category = DataManager.getInstance().getCategories(false).get(position - 1);
                     if (null != category) {
-                        TextView txtName = (TextView) rootView.findViewById(R.id.section_label);
-                        txtName.setText(category.getName());
-
-                        //SQL test
-//                        com.echen.wisereminder.Database.DAL.Category categoryDAL = new com.echen.wisereminder.Database.DAL.Category(getActivity());
-//                        categoryDAL.addCategory(category);
-
-                        //SQL test
+//                        TextView txtName = (TextView) rootView.findViewById(R.id.section_label);
+//                        txtName.setText(category.getName());
+                        List<Reminder> reminders =DataManager.getInstance().getRemindersByCategoryID(category.getId());
+                        ListView reminderList = (ListView)rootView.findViewById(R.id.reminderList);
+                        reminderList.setAdapter(new ReminderListAdapter(inflater, reminders));
                     }
                 }
             }

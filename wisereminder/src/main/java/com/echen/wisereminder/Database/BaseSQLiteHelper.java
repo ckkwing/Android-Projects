@@ -23,9 +23,12 @@ public abstract class BaseSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // CREATE CATEGORY TABLE
-        db.execSQL("CREATE TABLE " + CategoryTable.TABLE_NAME +
-                " (" + CategoryTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + CategoryTable.NAME + " TEXT);");
+//        db.execSQL("CREATE TABLE " + CategoryTable.TABLE_NAME +
+//                " (" + CategoryTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + CategoryTable.NAME + " TEXT);");
+
+        db.execSQL(CategoryTable.getCreateTableSqlString());
+        db.execSQL(ReminderTable.getCreateTableSqlString());
     }
 
     @Override
@@ -34,6 +37,7 @@ public abstract class BaseSQLiteHelper extends SQLiteOpenHelper {
                 + oldVersion + " to " + newVersion + ",which will destroy all old data");
         // KILL PREVIOUS TABLES IF UPGRADED
         db.execSQL("DROP TABLE IF EXISTS " + CategoryTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ReminderTable.TABLE_NAME);
         // CREATE NEW INSTANCE OF SCHEMA
         onCreate(db);
     }

@@ -13,4 +13,14 @@ public class ReminderTable {
     public static final String NAME = "item_name";
     //ID TO CATEGORY OWNER 1-1
     public static final String OWNER_ID = "owner_id";
+
+    public static String getCreateTableSqlString()
+    {
+        final String creation = "CREATE TABLE " + TABLE_NAME + " (" +
+                ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                NAME + " TEXT," +
+                OWNER_ID + " INTEGER" +
+                ");";
+        return creation;
+    }
 }
