@@ -17,6 +17,10 @@ public class Category {
     public boolean getIsDefault() {return isDefault;}
     public void setIsDefault(boolean isDefault){this.isDefault = isDefault;}
 
+    protected long creationTime_UTC = 0;
+    public long getCreationTime_UTC() {return creationTime_UTC;}
+    public void setCreationTime_UTC(long creationTime_UTC) { this.creationTime_UTC = creationTime_UTC; }
+
 
     public Category(){}
 

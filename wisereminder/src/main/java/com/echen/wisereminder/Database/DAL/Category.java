@@ -5,10 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Database.SQLiteHelper;
 import com.echen.wisereminder.Database.CategoryTable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +22,7 @@ public class Category {
 
     //SQL query
     private String QUERY_CATEGORIES = "SELECT * FROM " + CategoryTable.TABLE_NAME;
+    //private String QUERY_CATEGORIES = "SELECT _id, category_name, flag, datetime(creation_time_utc, \"localtime\") FROM " + CategoryTable.TABLE_NAME;
 
     public Category(Context context)
     {
@@ -33,6 +36,8 @@ public class Category {
         ContentValues cv = new ContentValues();
         cv.put(CategoryTable.NAME, category.getName());
         cv.put(CategoryTable.FLAG, CategoryTable.isDefaultToFlag(category.getIsDefault()));
+        //cv.put(CategoryTable.CREATION_TIME, DateTime.getUTCTimeStr(null));
+        cv.put(CategoryTable.CREATION_TIME, DateTime.getNowUTCTimeLong());
         // RETRIEVE WRITEABLE DATABASE AND INSERT
         long result = db.insert(CategoryTable.TABLE_NAME,CategoryTable.NAME, cv);
         return result;
@@ -51,6 +56,10 @@ public class Category {
                 category.setName(cursor.getString(cursor.getColumnIndex(CategoryTable.NAME)));
                 Integer flag = cursor.getInt(cursor.getColumnIndex(CategoryTable.FLAG));
                 category.setIsDefault(CategoryTable.flagToIsDefault(flag));
+                long creationTime_UTC = cursor.getLong(cursor.getColumnIndex(CategoryTable.CREATION_TIME));
+                category.setCreationTime_UTC(creationTime_UTC);
+                String s = DateTime.getLocalTimeStrFromUTC(creationTime_UTC);
+                //String creationTime = cursor.getString(cursor.getColumnIndex("datetime(creation_time_utc, \"localtime\")"));
                 categories.add(category);
             }
             cursor.close();

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Database.ReminderTable;
 import com.echen.wisereminder.Database.SQLiteHelper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +36,7 @@ public class Reminder {
         ContentValues cv = new ContentValues();
         cv.put(ReminderTable.NAME, reminder.getName());
         cv.put(ReminderTable.OWNER_ID, reminder.getOwnerId());
+        cv.put(ReminderTable.CREATION_TIME, DateTime.getNowUTCTimeStr(null));
         // RETRIEVE WRITEABLE DATABASE AND INSERT
         long result = db.insert(ReminderTable.TABLE_NAME,ReminderTable.NAME, cv);
         return result;

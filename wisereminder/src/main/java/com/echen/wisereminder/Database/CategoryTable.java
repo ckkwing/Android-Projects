@@ -16,6 +16,10 @@ public class CategoryTable {
     //1 == customer created
     public static final String FLAG = "flag";
 
+    public static final String CREATION_TIME = "creation_time_utc";
+
+    public static final String MODIFIED_TIME = "modified_time_utc";
+
     public static boolean flagToIsDefault(int flag)
     {
         boolean isDefault = false;
@@ -37,7 +41,9 @@ public class CategoryTable {
         final String creation = "CREATE TABLE " + TABLE_NAME + " (" +
                 ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 NAME + " TEXT," +
-                FLAG + " INT" +
+                FLAG + " INT," +
+                CREATION_TIME + " INTEGER," +
+                MODIFIED_TIME + " INTEGER" +
                 ");";
         return creation;
     }
