@@ -3,11 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
-    android:layout_width="200sp"
-    android:layout_height="60sp" />
+        android:id="@+id/txtReminderTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="60sp" />
+    <CalendarView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"></CalendarView>
     <Button
         android:id="@+id/btn_save_reminder"
         android:text="@string/common_save"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="saveBtnOnClick"/>
 </LinearLayout>

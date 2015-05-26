@@ -3,8 +3,7 @@ package com.echen.androidcommon.Media;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.echen.androidcommon.Model.File;
-import com.echen.androidcommon.Model.FileSystemInfo;
+import com.echen.androidcommon.FileSystem.File;
 
 /**
  * Created by echen on 2015/1/27.

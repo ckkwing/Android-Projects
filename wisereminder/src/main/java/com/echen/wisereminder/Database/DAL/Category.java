@@ -37,7 +37,7 @@ public class Category {
         cv.put(CategoryTable.NAME, category.getName());
         cv.put(CategoryTable.FLAG, CategoryTable.isDefaultToFlag(category.getIsDefault()));
         //cv.put(CategoryTable.CREATION_TIME, DateTime.getUTCTimeStr(null));
-        cv.put(CategoryTable.CREATION_TIME, DateTime.getNowUTCTimeLong());
+        cv.put(CategoryTable.CREATION_TIME, category.getCreationTime_UTC());
         // RETRIEVE WRITEABLE DATABASE AND INSERT
         long result = db.insert(CategoryTable.TABLE_NAME,CategoryTable.NAME, cv);
         return result;

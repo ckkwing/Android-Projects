@@ -1,6 +1,8 @@
 package com.echen.wisereminder.Data;
 
 import android.content.Context;
+
+import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.R;
@@ -70,6 +72,7 @@ public class DataManager {
     {
         Category allCategory = new Category(getString(R.string.category_all));
         allCategory.setIsDefault(true);
+        allCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
         long retId = categoryDAL.addCategory(allCategory);
         if (retId <= 0)
             return;
@@ -85,18 +88,21 @@ public class DataManager {
 
         Category workCategory = new Category(getString(R.string.category_work));
         workCategory.setIsDefault(true);
+        workCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
         retId = categoryDAL.addCategory(workCategory);
         if (retId <= 0)
             return;
 
         Category homeCategory = new Category(getString(R.string.category_home));
         homeCategory.setIsDefault(true);
+        homeCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
         retId = categoryDAL.addCategory(homeCategory);
         if (retId <= 0)
             return;
 
         Category otherCategory = new Category(getString(R.string.category_other));
         otherCategory.setIsDefault(true);
+        otherCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
         retId = categoryDAL.addCategory(otherCategory);
         if (retId <= 0)
             return;
@@ -109,6 +115,11 @@ public class DataManager {
             categories = categoryDAL.getCategories();
         }
         return categories;
+    }
+
+    public long addReminder(Reminder reminder)
+    {
+        return reminderDAL.addReminder(reminder);
     }
 
     public List<Reminder> getRemindersByCategoryID(long categoryID)

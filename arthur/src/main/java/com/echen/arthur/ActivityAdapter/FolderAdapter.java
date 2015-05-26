@@ -1,10 +1,7 @@
 package com.echen.arthur.ActivityAdapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.echen.androidcommon.Model.File;
-import com.echen.androidcommon.Model.FileSystemInfo;
-import com.echen.androidcommon.Model.Folder;
+import com.echen.androidcommon.FileSystem.File;
+import com.echen.androidcommon.FileSystem.FileSystemInfo;
+import com.echen.androidcommon.FileSystem.Folder;
 import com.echen.arthur.R;
 
 import java.util.ArrayList;

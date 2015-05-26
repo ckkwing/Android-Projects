@@ -1,12 +1,9 @@
 package com.echen.wisereminder.Database;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import com.echen.androidcommon.Model.File;
 
 /**
  * Created by echen on 2015/4/28.

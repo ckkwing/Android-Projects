@@ -11,7 +11,9 @@ import java.util.TimeZone;
  * Created by echen on 2015/5/20.
  */
 public class DateTime {
+
     public static String DATETIMEFORMAT = "yyyy-MM-dd HH:mm";
+
     public static String getNowUTCTimeStr(String format) {
         String strFormat = (null == format || format.isEmpty())?DATETIMEFORMAT:format;
         DateFormat dateFormat = new SimpleDateFormat(strFormat) ;

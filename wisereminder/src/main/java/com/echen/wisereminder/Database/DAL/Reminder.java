@@ -36,7 +36,7 @@ public class Reminder {
         ContentValues cv = new ContentValues();
         cv.put(ReminderTable.NAME, reminder.getName());
         cv.put(ReminderTable.OWNER_ID, reminder.getOwnerId());
-        cv.put(ReminderTable.CREATION_TIME, DateTime.getNowUTCTimeStr(null));
+        cv.put(ReminderTable.CREATION_TIME, reminder.getCreationTime_UTC());
         // RETRIEVE WRITEABLE DATABASE AND INSERT
         long result = db.insert(ReminderTable.TABLE_NAME,ReminderTable.NAME, cv);
         return result;

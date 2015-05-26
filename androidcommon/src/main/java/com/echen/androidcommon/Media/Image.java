@@ -6,8 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 
-import com.echen.androidcommon.Model.File;
-import com.echen.androidcommon.Model.FileSystemInfo;
+import com.echen.androidcommon.FileSystem.File;
 
 /**
  * Created by echen on 2015/1/27.

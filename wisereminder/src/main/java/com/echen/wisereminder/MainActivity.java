@@ -159,8 +159,11 @@ public class MainActivity extends Activity
             public void onClick(View v)
             {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
-                startActivity(intent);
+                if (null != currentCategory) {
+                    Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
+                    intent.putExtra(ConsistentString.PARAM_CATEGORY_ID, currentCategory.getId());
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.echen.arthur;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,11 +16,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.echen.androidcommon.Media.MediaCenter;
-import com.echen.androidcommon.Model.FileSystemInfo;
+import com.echen.androidcommon.FileSystem.FileSystemInfo;
 import com.echen.androidcommon.Utility.PathUtility;
 import com.echen.arthur.ActivityAdapter.FolderAdapter;
 import com.echen.arthur.Data.DataManager;
-import com.echen.androidcommon.Model.Folder;
+import com.echen.androidcommon.FileSystem.Folder;
 import com.echen.arthur.Utility.StringConstant;
 
 import java.util.ArrayList;
