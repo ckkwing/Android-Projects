@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/menu_photo_show_folder" android:title="@string/show_folder" android:icon="@android:drawable/ic_menu_preferences">
-	</item>
-</menu>
-<!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/menu/photo_album_show.xml -->

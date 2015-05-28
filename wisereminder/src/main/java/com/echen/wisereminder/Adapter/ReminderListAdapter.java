@@ -82,4 +82,5 @@ public class ReminderListAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
 }

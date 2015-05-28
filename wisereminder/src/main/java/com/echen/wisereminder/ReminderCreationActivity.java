@@ -12,20 +12,15 @@ import com.echen.wisereminder.Model.Reminder;
 /**
  * Created by echen on 2015/5/19.
  */
-public class ReminderCreationActivity extends Activity {
-    private EditText edtTitle = null;
-    private long ownerID = -1;
+public class ReminderCreationActivity extends ReminderBaseActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reminder_creation_view);
-        Intent intent = getIntent();
-        ownerID = intent.getLongExtra(ConsistentString.PARAM_CATEGORY_ID, -1);
-        edtTitle = (EditText)findViewById(R.id.txtReminderTitle);
     }
 
-    public void saveBtnOnClick(View view)
-    {
+    @Override
+    public void actionBtnOnClick(View view) {
         if (-1 == ownerID)
             return;
         Reminder reminder = new Reminder(edtTitle.getText().toString());

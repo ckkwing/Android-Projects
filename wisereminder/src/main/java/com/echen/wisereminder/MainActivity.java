@@ -16,14 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.echen.wisereminder.Adapter.ReminderListAdapter;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
+import com.echen.wisereminder.Model.ReminderActionType;
 
 import java.util.List;
 
@@ -177,6 +180,7 @@ public class MainActivity extends Activity
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private ReminderListAdapter listAdapter = null;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -220,12 +224,24 @@ public class MainActivity extends Activity
 //                        txtName.setText(category.getName());
                         List<Reminder> reminders =DataManager.getInstance().getRemindersByCategoryID(category.getId());
                         ListView reminderList = (ListView)rootView.findViewById(R.id.reminderList);
-                        reminderList.setAdapter(new ReminderListAdapter(inflater, reminders));
+                        listAdapter = new ReminderListAdapter(inflater, reminders);
+                        reminderList.setAdapter(listAdapter);
+                        reminderList.setOnItemClickListener(onItemClickListener);
                     }
                 }
             }
             return rootView;
         }
+
+        private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final TextView content=(TextView) view.findViewById(R.id.txtReminderName);
+                if (null == content)
+                    return;
+                content.setText("哈哈， 你选中我了");
+            }
+        };
 
         @Override
         public void onAttach(Activity activity) {

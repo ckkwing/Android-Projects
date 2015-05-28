@@ -33,7 +33,7 @@ Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
 * AndroidManifest.xml => gifMagic\src\main\AndroidManifest.xml
-* assets\ => gifMagic\src\main\assets\
+* assets\ => gifMagic\src\main\assets
 * jni\ => gifMagic\src\main\jni\
 * libs\Analytics_Android_SDK_3.0.jar => gifMagic\libs\Analytics_Android_SDK_3.0.jar
 * libs\armeabi\libffmpegutils.so => gifMagic\src\main\jniLibs\armeabi\libffmpegutils.so

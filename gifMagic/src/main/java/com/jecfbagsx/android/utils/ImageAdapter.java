@@ -242,11 +242,13 @@ public class ImageAdapter extends BaseAdapter {
 		{
 			viewHolder.imageView.setImageResource(android.R.drawable.ic_menu_search);
 			new Thread(new Runnable() {
+				
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					ImageItem item = m_items.get(mPosition);
 					try {
+						
 						item.setThumbnail(FileHelper.getRefinedBitmap(item.getFile().getAbsolutePath(),
 								FileHelper.MINSIDELENGTH, FileHelper.MAXNUMOFPIXELS));
 					} catch (Exception e) {

@@ -11,6 +11,7 @@
         <!--android:text="aaa"/>-->
     <ListView android:id="@+id/reminderList"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></ListView>
+        android:layout_height="fill_parent"
+        android:choiceMode="multipleChoice"></ListView>
 
 </RelativeLayout>
