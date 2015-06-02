@@ -6,13 +6,17 @@
         android:id="@+id/txtReminderTitle"
         android:layout_width="fill_parent"
         android:layout_height="60sp" />
-    <CalendarView
+    <!--<CalendarView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="4"></CalendarView>-->
+    <DatePicker
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"></CalendarView>
+        android:datePickerMode="calendar"
+        android:calendarViewShown="false"></DatePicker>
     <Button
-        android:id="@+id/btn_save_reminder"
-        android:text="@string/common_save"
+        android:id="@+id/btn_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

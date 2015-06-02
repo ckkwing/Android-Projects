@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="frame_main_color">#FF63B2EF</color>
+    <color name="background_white">#FFFFFFFF</color>
+
+    <!--Font-->
+    <color name="font_black">#FF000000</color>
+    <color name="font_white">#FFFFFFFF</color>
+</resources>

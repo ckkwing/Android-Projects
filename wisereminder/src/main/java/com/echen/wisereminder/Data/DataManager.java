@@ -22,6 +22,7 @@ public class DataManager {
     private com.echen.wisereminder.Database.DAL.Reminder reminderDAL = null;
 
     private List<Category> categories = new ArrayList<Category>();
+    private List<Reminder> reminders = new ArrayList<>();
 
     public static DataManager getInstance()
     {
@@ -117,6 +118,15 @@ public class DataManager {
         return categories;
     }
 
+    public List<Reminder> getReminders(boolean isForce)
+    {
+        if (isForce)
+        {
+            reminders = reminderDAL.getReminders();
+        }
+        return reminders;
+    }
+
     public long addReminder(Reminder reminder)
     {
         return reminderDAL.addReminder(reminder);
@@ -125,5 +135,23 @@ public class DataManager {
     public List<Reminder> getRemindersByCategoryID(long categoryID)
     {
         return reminderDAL.getRemindersByCategoryID(categoryID);
+    }
+
+    public Reminder getReminderByID(long id)
+    {
+        Reminder reminderByID = null;
+        boolean isForceGet = false;
+        if (this.reminders.size() == 0)
+            isForceGet = true;
+        List<Reminder> reminders = getReminders(isForceGet);
+        for(Reminder reminder : reminders)
+        {
+            if (id == reminder.getId())
+            {
+                reminderByID = reminder;
+                break;
+            }
+        }
+        return reminderByID;
     }
 }

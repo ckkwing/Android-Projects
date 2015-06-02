@@ -7,6 +7,7 @@ public class ConsistentString {
 
     //PARAM FOR INTENT
     public static String PARAM_CATEGORY_ID = "param_category_id";
+    public static String PARAM_REMINDER_ID = "param_reminder_id";
 //    public static String PARAM_REMINDER_ACTION = "param_reminder_action";
 
 

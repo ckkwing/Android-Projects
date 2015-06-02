@@ -14,9 +14,14 @@ import com.echen.wisereminder.Model.Reminder;
  */
 public class ReminderCreationActivity extends ReminderBaseActivity {
 
+    private long ownerID = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        ownerID = intent.getLongExtra(ConsistentString.PARAM_CATEGORY_ID, -1);
+        btnAction.setText(R.string.common_save);
     }
 
     @Override

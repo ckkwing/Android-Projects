@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -11,18 +12,15 @@ import android.widget.EditText;
  */
 public abstract class ReminderBaseActivity extends Activity {
     protected EditText edtTitle = null;
-    protected long ownerID = -1;
+    protected Button btnAction = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reminder_action_view);
-        Intent intent = getIntent();
-        ownerID = intent.getLongExtra(ConsistentString.PARAM_CATEGORY_ID, -1);
         edtTitle = (EditText)findViewById(R.id.txtReminderTitle);
+        btnAction = (Button)findViewById(R.id.btn_action);
     }
 
     public abstract void actionBtnOnClick(View view);
-
-
 }

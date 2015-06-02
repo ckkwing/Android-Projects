@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Database.ReminderTable;
 import com.echen.wisereminder.Database.SQLiteHelper;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,12 +20,32 @@ public class Reminder {
 
     //SQL query
     private String QUERY_ALL_REMINDERS = "SELECT * FROM " + ReminderTable.TABLE_NAME;
+    private String QUERY_REMINDERS = "SELECT * FROM " + ReminderTable.TABLE_NAME;
     private String QUERY_REMINDERS_BY_OWNER_ID = "SELECT * FROM " + ReminderTable.TABLE_NAME + " WHERE " + ReminderTable.OWNER_ID + "=%s";
 
     public Reminder(Context context)
     {
         helper = SQLiteHelper.getInstance(context);
         db = helper.getWritableDatabase();
+    }
+
+    public List<com.echen.wisereminder.Model.Reminder> getReminders()
+    {
+        List<com.echen.wisereminder.Model.Reminder> reminders = new ArrayList<>();
+        Cursor cursor = db.rawQuery(QUERY_REMINDERS, null);
+        if (null != cursor)
+        {
+            while (cursor.moveToNext())
+            {
+                com.echen.wisereminder.Model.Reminder reminder = new com.echen.wisereminder.Model.Reminder();
+                reminder.setId(cursor.getInt(cursor.getColumnIndex(ReminderTable.ID)));
+                reminder.setName(cursor.getString(cursor.getColumnIndex(ReminderTable.NAME)));
+                reminder.setOwnerId(cursor.getInt(cursor.getColumnIndex(ReminderTable.OWNER_ID)));
+                reminders.add(reminder);
+            }
+            cursor.close();
+        }
+        return reminders;
     }
 
     public long addReminder(com.echen.wisereminder.Model.Reminder reminder)
@@ -64,4 +82,6 @@ public class Reminder {
         }
         return reminders;
     }
+
+
 }

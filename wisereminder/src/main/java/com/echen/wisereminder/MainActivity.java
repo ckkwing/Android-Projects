@@ -8,6 +8,8 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -132,8 +134,8 @@ public class MainActivity extends Activity
         wmParams.format = PixelFormat.RGBA_8888;;
         wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         wmParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-        wmParams.x = 0;
-        wmParams.y = 0;
+        wmParams.x = 20;
+        wmParams.y = 20;
         wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         LayoutInflater inflater = this.getLayoutInflater();
@@ -174,13 +176,15 @@ public class MainActivity extends Activity
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final int REFRESH_COMPLETE = 0X110;
         private ReminderListAdapter listAdapter = null;
+        private SwipeRefreshLayout swipeLayout;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -213,6 +217,11 @@ public class MainActivity extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_ly);
+            swipeLayout.setOnRefreshListener(this);
+            swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
             Bundle bundle = getArguments();
 
             if (null != bundle) {
@@ -236,10 +245,16 @@ public class MainActivity extends Activity
         private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final TextView content=(TextView) view.findViewById(R.id.txtReminderName);
-                if (null == content)
+//                final TextView content=(TextView) view.findViewById(R.id.txtReminderName);
+//                if (null == content)
+//                    return;
+//                content.setText("哈哈， 你选中我了");
+                Reminder reminder = (Reminder)parent.getItemAtPosition(position);
+                if (null == reminder)
                     return;
-                content.setText("哈哈， 你选中我了");
+                    Intent intent = new Intent(PlaceholderFragment.this.getActivity(), ReminderEditActivity.class);
+                    intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
+                    getActivity().startActivity(intent);
             }
         };
 
@@ -249,6 +264,26 @@ public class MainActivity extends Activity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+        @Override
+        public void onRefresh() {
+            mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
+        }
+
+        private Handler mHandler = new Handler()
+        {
+            public void handleMessage(android.os.Message msg)
+            {
+                switch (msg.what)
+                {
+                    case REFRESH_COMPLETE:
+                        listAdapter.notifyDataSetChanged();
+                        swipeLayout.setRefreshing(false);
+                        break;
+
+                }
+            };
+        };
     }
 
 }

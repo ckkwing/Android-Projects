@@ -1,9 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:actionBarStyle">@style/customActionBarStyle</item>
+    </style>
+
+    <style name="customActionBarStyle" parent="android:Widget.ActionBar">
+        <item name="android:background">@color/frame_main_color</item>
+        <item name="android:titleTextStyle">@style/customTitleStyle</item>
+    </style>
+
+    <style name="customTitleStyle">
+        <item name="android:textColor">@color/font_white</item>
     </style>
 </resources>
