@@ -5,10 +5,12 @@ import android.content.Context;
 import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
+import com.echen.wisereminder.Model.Subject;
 import com.echen.wisereminder.R;
 import com.echen.wisereminder.Utility.SettingUtility;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ public class DataManager {
 
     private List<Category> categories = new ArrayList<Category>();
     private List<Reminder> reminders = new ArrayList<>();
+    private List<Subject> subjects = new ArrayList<>();
 
     public static DataManager getInstance()
     {
@@ -50,11 +53,29 @@ public class DataManager {
         reminderDAL = new com.echen.wisereminder.Database.DAL.Reminder(context);
         if (null == reminderDAL)
             throw new NullPointerException("ReminderDAL is NULL");
+
         //categoryDAL.clearCategories();
         if (SettingUtility.getInstance().getIsFirstUse())
         {
             addDefaultCategories();
             SettingUtility.getInstance().setIsFirstUse(false);
+        }
+        addDefaultSubjects();
+        List<Category> categories = getCategories(true);
+        for (Iterator<Subject> iterator = subjects.iterator(); iterator.hasNext();) {
+            Subject subject = iterator.next();
+            if (subject.getType() == Subject.Type.Categories)
+            {
+                for(Category category : categories)
+                {
+                    subject.getChildren().add(category);
+                }
+            }
+            else if (subject.getType() == Subject.Type.Star)
+                for(int i =0; i< 2; i++)
+                {
+                    subject.getChildren().add(categories.get(i));
+                }
         }
         return true;
     }
@@ -68,6 +89,25 @@ public class DataManager {
     {
         return context.getString(resId);
     }
+
+    private void addDefaultSubjects()
+    {
+        Subject allSubject = new Subject(Subject.Type.All, getString(R.string.subject_all));
+        Subject starSubject = new Subject(Subject.Type.Star, getString(R.string.subject_star));
+        Subject overdueSubject = new Subject(Subject.Type.Overdue, getString(R.string.subject_overdue));
+        Subject todaySubject = new Subject(Subject.Type.Today, getString(R.string.subject_today));
+        Subject next7DaysSubject = new Subject(Subject.Type.Next7Days, getString(R.string.subject_next7days));
+        Subject categoriesSubject = new Subject(Subject.Type.Categories, getString(R.string.subject_categories));
+
+        subjects.add(allSubject);
+        subjects.add(starSubject);
+        subjects.add(overdueSubject);
+        subjects.add(todaySubject);
+        subjects.add(next7DaysSubject);
+        subjects.add(categoriesSubject);
+    }
+
+    public List<Subject> getSubjects() { return this.subjects; }
 
     public void addDefaultCategories()
     {

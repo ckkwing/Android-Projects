@@ -17,12 +17,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.echen.wisereminder.Adapter.CategoryListAdapter;
+import com.echen.wisereminder.Adapter.ExpandableSubjectListAdapter;
 import com.echen.wisereminder.Data.DataManager;
+import com.echen.wisereminder.Model.Subject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -30,9 +35,6 @@ import com.echen.wisereminder.Data.DataManager;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-
-    private CategoryListAdapter categoryListAdapter = null;
-
     /**
      * Remember the position of the selected item.
      */
@@ -55,12 +57,14 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
+    private ExpandableListView mDrawerExpandableListView;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private ExpandableSubjectListAdapter subjectListAdapter = null;
+    private List<Subject> mSubjectList = new ArrayList<>();
 
     public NavigationDrawerFragment() {
     }
@@ -69,8 +73,8 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        categoryListAdapter = new CategoryListAdapter(getActionBar().getThemedContext(),
-                DataManager.getInstance().getCategories(true));
+        mSubjectList = DataManager.getInstance().getSubjects();
+        subjectListAdapter = new ExpandableSubjectListAdapter(getActionBar().getThemedContext(),mSubjectList);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -98,18 +102,46 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView = (ListView)view.findViewById(R.id.lstCategories);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        mDrawerListView = (ListView)view.findViewById(R.id.lstCategories);
+//        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                selectItem(position);
+//            }
+//        });
+//
+//
+//        mDrawerListView.setAdapter(categoryListAdapter);
+//
+//        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
+        mDrawerExpandableListView = (ExpandableListView)view.findViewById(R.id.lstSubjects);
+        mDrawerExpandableListView.setAdapter(subjectListAdapter);
+        mDrawerExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
+            public void onGroupExpand(int groupPosition) {
+                for (int i = 0; i < mSubjectList.size(); i++) {
+                    if (groupPosition != i) {
+                        mDrawerExpandableListView.collapseGroup(i);
+                    }
+                }
             }
         });
-
-
-        mDrawerListView.setAdapter(categoryListAdapter);
-
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        mDrawerExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (mSubjectList.get(groupPosition).getChildren().size() > 0)
+                    return false;
+                else
+                    return true;
+            }
+        });
+        mDrawerExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                return false;
+            }
+        });
         return view;
     }
 
@@ -193,8 +225,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
-        if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(position, true);
+        if (mDrawerExpandableListView != null) {
+            mDrawerExpandableListView.setItemChecked(position, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);

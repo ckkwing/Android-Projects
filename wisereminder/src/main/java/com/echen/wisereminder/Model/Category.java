@@ -3,7 +3,7 @@ package com.echen.wisereminder.Model;
 /**
  * Created by echen on 2015/4/22.
  */
-public class Category {
+public class Category implements IChildSubject {
 
     protected long id = -1;
     public long getId(){return id;}
@@ -27,5 +27,10 @@ public class Category {
     public Category(String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public String getChildName() {
+        return this.name;
     }
 }

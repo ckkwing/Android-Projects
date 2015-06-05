@@ -9,6 +9,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
 
+    <!--Subject-->
+    <string name="subject_unknown">Unknown</string>
+    <string name="subject_all">All</string>
+    <string name="subject_star">Star</string>
+    <string name="subject_overdue">Overdue</string>
+    <string name="subject_today">Today</string>
+    <string name="subject_next7days">Next 7 Days</string>
+    <string name="subject_categories">Categories</string>
+
     <!--Category-->
     <string name="category_all">All</string>
     <string name="category_work">Work</string>

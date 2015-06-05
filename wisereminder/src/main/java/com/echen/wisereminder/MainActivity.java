@@ -18,17 +18,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.echen.wisereminder.Adapter.ReminderListAdapter;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
-import com.echen.wisereminder.Model.ReminderActionType;
 
 import java.util.List;
 
@@ -157,6 +156,7 @@ public class MainActivity extends Activity
 //        });
 
 
+        mFloatView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_rotate_addbutton));
         mFloatView.setOnClickListener(new View.OnClickListener()
         {
 
@@ -245,10 +245,6 @@ public class MainActivity extends Activity
         private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                final TextView content=(TextView) view.findViewById(R.id.txtReminderName);
-//                if (null == content)
-//                    return;
-//                content.setText("哈哈， 你选中我了");
                 Reminder reminder = (Reminder)parent.getItemAtPosition(position);
                 if (null == reminder)
                     return;

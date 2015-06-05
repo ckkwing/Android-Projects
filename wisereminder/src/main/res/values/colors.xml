@@ -2,6 +2,7 @@
 <resources>
     <color name="frame_main_color">#FF63B2EF</color>
     <color name="background_white">#FFFFFFFF</color>
+    <color name="common_gray">#615b5b</color>
 
     <!--Font-->
     <color name="font_black">#FF000000</color>
