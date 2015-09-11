@@ -132,13 +132,18 @@ public class NavigationDrawerFragment extends Fragment {
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 if (mSubjectList.get(groupPosition).getChildren().size() > 0)
                     return false;
-                else
+                else {
+                    selectItem(groupPosition);
                     return true;
+                }
             }
         });
         mDrawerExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                int gp = groupPosition;
+                int cp = childPosition;
+
                 return false;
             }
         });

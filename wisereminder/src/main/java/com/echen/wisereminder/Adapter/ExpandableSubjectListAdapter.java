@@ -1,6 +1,8 @@
 package com.echen.wisereminder.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.echen.wisereminder.Model.IChildSubject;
+import com.echen.wisereminder.Model.IListItem;
 import com.echen.wisereminder.Model.Subject;
 import com.echen.wisereminder.R;
 
@@ -51,7 +53,7 @@ public class ExpandableSubjectListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        List<IChildSubject> children = subjectList.get(groupPosition).getChildren();
+        List<IListItem> children = subjectList.get(groupPosition).getChildren();
         if (children.size() > 0)
             return children.get(childPosition);
         return null;
@@ -77,8 +79,10 @@ public class ExpandableSubjectListAdapter extends BaseExpandableListAdapter {
         convertView = layoutInflater.inflate(R.layout.subject_item_view, null);
         Subject subject = subjectList.get(groupPosition);
         if (null != subject) {
-            ImageView subjectIcon = (ImageView)convertView.findViewById(R.id.subjectIco);
-            subjectIcon.setImageResource(R.drawable.img_calendar);
+            TextView subjectIcon = (TextView)convertView.findViewById(R.id.subjectIco);
+            GradientDrawable bgShape = (GradientDrawable  )subjectIcon.getBackground();
+            bgShape.setColor(Color.BLACK);
+//            subjectIcon.setImageResource(R.drawable.img_calendar);
             TextView textView = (TextView) convertView.findViewById(R.id.subjectTitle);
             textView.setText(subject.getName());
             ImageView expandIcon = (ImageView)convertView.findViewById(R.id.subjectExpandIco);
@@ -103,10 +107,13 @@ public class ExpandableSubjectListAdapter extends BaseExpandableListAdapter {
         convertView = layoutInflater.inflate(R.layout.category_item_view, null);
         Subject subject = subjectList.get(groupPosition);
         if (null != subject && subject.getChildren().size() > 0) {
-            IChildSubject child = subject.getChildren().get(childPosition);
+            IListItem child = subject.getChildren().get(childPosition);
             if (null != child) {
+                TextView subjectIcon = (TextView)convertView.findViewById(R.id.subjectIco);
+                GradientDrawable bgShape = (GradientDrawable)subjectIcon.getBackground();
+                bgShape.setColor(Color.parseColor(child.getItemColor()));
                 TextView textView = (TextView) convertView.findViewById(R.id.txtCategoryName);
-                textView.setText(child.getChildName());
+                textView.setText(child.getItemName());
             }
         }
         return convertView;
@@ -114,6 +121,6 @@ public class ExpandableSubjectListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 }

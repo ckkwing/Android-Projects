@@ -20,6 +20,8 @@ public class CategoryTable {
 
     public static final String MODIFIED_TIME = "modified_time_utc";
 
+    public static final String COLOR = "color";
+
     public static boolean flagToIsDefault(int flag)
     {
         boolean isDefault = false;
@@ -42,6 +44,7 @@ public class CategoryTable {
                 ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 NAME + " TEXT," +
                 FLAG + " INT," +
+                COLOR + " TEXT," +
                 CREATION_TIME + " INTEGER," +
                 MODIFIED_TIME + " INTEGER" +
                 ");";

@@ -32,7 +32,8 @@ public class Subject {
     public Type getType(){return type;}
     public void setType(Type type){this.type = type;}
 
-    protected List<IChildSubject> children = new ArrayList<>();
-    public List<IChildSubject> getChildren() { return this.children; }
-    public void setChildren(List<IChildSubject> children) { this.children = children; }
+    protected List<IListItem> children = new ArrayList<>();
+    public List<IListItem> getChildren() { return this.children; }
+    public void setChildren(List<IListItem> children) { this.children = children; }
+
 }

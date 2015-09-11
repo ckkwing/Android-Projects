@@ -11,7 +11,7 @@ public class ReminderTable {
     public static final String ID = "_id";
     // NAME OF THE ReminderItem
     public static final String NAME = "item_name";
-    //ID TO CATEGORY OWNER 1-1
+    //ID TO CATEGORY OWNER (-1 is no parent)
     public static final String OWNER_ID = "owner_id";
 
     public static final String CREATION_TIME = "creation_time_utc";

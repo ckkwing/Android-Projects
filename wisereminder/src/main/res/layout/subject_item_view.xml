@@ -2,13 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
+    <!--<ImageView-->
+        <!--android:id="@+id/subjectIco"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_alignParentLeft="true" />-->
+    <TextView
         android:id="@+id/subjectIco"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/category_icon_circle"/>
     <TextView
         android:id="@+id/subjectTitle"
         android:layout_width="wrap_content"

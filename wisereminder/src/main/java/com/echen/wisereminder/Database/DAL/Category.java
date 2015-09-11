@@ -38,6 +38,7 @@ public class Category {
         cv.put(CategoryTable.FLAG, CategoryTable.isDefaultToFlag(category.getIsDefault()));
         //cv.put(CategoryTable.CREATION_TIME, DateTime.getUTCTimeStr(null));
         cv.put(CategoryTable.CREATION_TIME, category.getCreationTime_UTC());
+        cv.put(CategoryTable.COLOR, category.getColor());
         // RETRIEVE WRITEABLE DATABASE AND INSERT
         long result = db.insert(CategoryTable.TABLE_NAME,CategoryTable.NAME, cv);
         return result;
@@ -59,6 +60,7 @@ public class Category {
                 long creationTime_UTC = cursor.getLong(cursor.getColumnIndex(CategoryTable.CREATION_TIME));
                 category.setCreationTime_UTC(creationTime_UTC);
                 String s = DateTime.getLocalTimeStrFromUTC(creationTime_UTC);
+                category.setColor(cursor.getString(cursor.getColumnIndex(CategoryTable.COLOR)));
                 //String creationTime = cursor.getString(cursor.getColumnIndex("datetime(creation_time_utc, \"localtime\")"));
                 categories.add(category);
             }

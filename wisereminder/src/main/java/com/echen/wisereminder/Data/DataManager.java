@@ -71,11 +71,11 @@ public class DataManager {
                     subject.getChildren().add(category);
                 }
             }
-            else if (subject.getType() == Subject.Type.Star)
-                for(int i =0; i< 2; i++)
-                {
-                    subject.getChildren().add(categories.get(i));
-                }
+//            else if (subject.getType() == Subject.Type.Star)
+//                for(int i =0; i< 2; i++)
+//                {
+//                    subject.getChildren().add(categories.get(i));
+//                }
         }
         return true;
     }
@@ -111,12 +111,14 @@ public class DataManager {
 
     public void addDefaultCategories()
     {
-        Category allCategory = new Category(getString(R.string.category_all));
+        long retId = -1;
+        /*Category allCategory = new Category(getString(R.string.category_all));
         allCategory.setIsDefault(true);
         allCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
+        allCategory.setColor("#FEEFD0C1");
         long retId = categoryDAL.addCategory(allCategory);
         if (retId <= 0)
-            return;
+            return;*/
 
         //Test
         for(int i =0; i< 5; i++)
@@ -130,6 +132,7 @@ public class DataManager {
         Category workCategory = new Category(getString(R.string.category_work));
         workCategory.setIsDefault(true);
         workCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
+        workCategory.setColor("#FEB1B4E9");
         retId = categoryDAL.addCategory(workCategory);
         if (retId <= 0)
             return;
@@ -137,6 +140,7 @@ public class DataManager {
         Category homeCategory = new Category(getString(R.string.category_home));
         homeCategory.setIsDefault(true);
         homeCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
+        homeCategory.setColor("#FE8AF1A3");
         retId = categoryDAL.addCategory(homeCategory);
         if (retId <= 0)
             return;
@@ -144,6 +148,7 @@ public class DataManager {
         Category otherCategory = new Category(getString(R.string.category_other));
         otherCategory.setIsDefault(true);
         otherCategory.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
+        otherCategory.setColor("#FEBA55EB");
         retId = categoryDAL.addCategory(otherCategory);
         if (retId <= 0)
             return;
