@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/umeng_analyse_strings.xml -->
+    <eat-comment/>
+    <string-array name="UMageList">
+		<item>Age</item>
+		<item>&lt;18</item>
+		<item>18~24</item>
+		<item>25~30</item>
+		<item>31~35</item>
+		<item>36~40</item>
+		<item>41~50</item>
+		<item>51~59</item>
+		<item>>=60</item>
+	</string-array>
+    <string-array name="UMgenderList">
+		<item>Gender</item>
+		<item>Male</item>
+		<item>Female</item>
+	</string-array>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/arrays.xml -->
+    <eat-comment/>
+    <string-array name="language_entries_list">
+		<item>English</item>
+		<item>中文 ，国庆终极版\n国庆，你玩着呢还是宅着呢</item>
+	</string-array>
+    <string-array name="language_entryvalues_list">
+		<item>en</item>
+		<item>zh_CN</item>
+	</string-array>
+    <string-array name="photo_album_types">
+		<item>Select photo</item>
+		<item>Select video</item>
+	</string-array>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="background">#F6F6F6</color>
+    <color name="folder_color">#FFF7B2</color>
+    <color name="item_selected_color">#EF7D18</color>
+    <color name="main_txt_color">#98989B</color>
+    <color name="photo_blank_color">#3E3E3E</color>
+    <color name="setting_text_color">#000000</color>
+    <color name="titlebar_color">#F5F5F5</color>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="PREF_LANGUAGE">PREF_LANGUAGE</string>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/umeng_analyse_strings.xml -->
+    <eat-comment/>
+    <string name="UMAppUpdate">GifMagic updating</string>
+    <string name="UMBreak_Network">Please make sure you are connected to internet,
+		update failed</string>
+    <string name="UMContentTooLong">Your content was over 140 characters. You\'ll have
+		to be more clever.</string>
+    <string name="UMDeleteFeedback">Delete Feedback</string>
+    <string name="UMDeleteMsg">Delete message</string>
+    <string name="UMDeleteThread">Delete Thread</string>
+    <string name="UMDialog_InstallAPK">The lastest version has been downloaded, install
+		now ?</string>
+    <string name="UMEmptyFbNotAllowed">Please input your feedback.</string>
+    <string name="UMFbList_ListItem_State_Fail">Fail</string>
+    <string name="UMFbList_ListItem_State_ReSend">Fail,Press to resend</string>
+    <string name="UMFbList_ListItem_State_Sending">Sending...</string>
+    <string name="UMFb_Atom_State_Resend">Fail,press to resend</string>
+    <string name="UMFb_Atom_State_Sending">Sending...</string>
+    <string name="UMFeedbackContent">Input your suggestions here</string>
+    <string name="UMFeedbackConversationTitle">My Feedback</string>
+    <string name="UMFeedbackListTitle">My Feedback</string>
+    <string name="UMFeedbackSummit">Submit</string>
+    <string name="UMFeedbackTitle">Every word you write will benefit us.</string>
+    <string name="UMFeedbackUmengTitle">Feedback</string>
+    <string name="UMGprsCondition">(Warning: Not WIFI Condition)</string>
+    <string name="UMNewReplyAlertTitle">You\'ve got reply</string>
+    <string name="UMNewReplyFlick"> Got new reply</string>
+    <string name="UMNewReplyHint"> Click to view</string>
+    <string name="UMNewReplyTitle"> Got new reply</string>
+    <string name="UMNewVersion">Latest version: </string>
+    <string name="UMNotNow">Not now</string>
+    <string name="UMResendFeedback">Resend Feedback</string>
+    <string name="UMToast_IsUpdating">Is updating...</string>
+    <string name="UMUpdateNow">Update now</string>
+    <string name="UMUpdateTitle">New version found</string>
+    <string name="UMUpdatingNow">Updating GifMagic...</string>
+    <string name="UMViewFeedback">View Feedback</string>
+    <string name="UMViewThread">View Thread</string>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="about_us">About us</string>
+    <string name="about_us1">My name is Jecf Bags from Hangzhou,China.\n\nTo make pictures flow.\n\nTo ignite life.</string>
+    <string name="about_us2">Look forward to your question and advise.\n Our contact:Gifmagic2011@gmail.com </string>
+    <string name="account_list">Account List</string>
+    <string name="account_qq">QQ</string>
+    <string name="account_renren">RenRen</string>
+    <string name="account_sina">Sina</string>
+    <string name="activate">Activate</string>
+    <string name="active">Active</string>
+    <string name="active_failed">Active Fail!, try it again.</string>
+    <string name="active_success">Active successfully!</string>
+    <string name="android_2_2_supported">this function only support Android 2.2!</string>
+    <string name="app_name">GifMagic</string>
+    <string name="app_trend">#GifMagic#</string>
+    <string name="authorized">Authorized</string>
+    <string name="camera_speed_setting">Camera speed</string>
+    <string name="camera_view_help">1.click preview frame, use zoom/rotate/switch features.\n\n2.click left lower button, edit pictures of single shot.\n\n3.recommend take video in landscape.</string>
+    <string name="camera_view_rotate_title">Rotate</string>
+    <string name="camera_view_title">new features hint</string>
+    <string name="camera_view_zoom_in_title">Zoom In</string>
+    <string name="camera_view_zoom_out_title">Zoom Out</string>
+    <string name="cancel">Cancel</string>
+    <string name="capture_error">Error</string>
+    <string name="capture_error_message">Only Android version 2.2 and later can run video capture.</string>
+    <string name="clean_account">Clean Account</string>
+    <string name="contact_us">Contact us</string>
+    <string name="create_shortcut">Do you want to create shortcut on main screen?</string>
+    <string name="delete_after_exit">Delete after exit application</string>
+    <string name="dialog_title_language_preference">Select language</string>
+    <string name="en">English</string>
+    <string name="error_exception">\nException error : </string>
+    <string name="error_return_from_sina">\nSina returned error : </string>
+    <string name="fast">Fast</string>
+    <string name="general_OnlyTwoImg">Only support two GIFs</string>
+    <string name="general_SelectTwoImg">Please select two GIFs</string>
+    <string name="general_delete">Delete</string>
+    <string name="general_delete_alert">Do you want to delete?</string>
+    <string name="general_done">Done</string>
+    <string name="general_go_to_authorize">Please go to authorize first</string>
+    <string name="general_inprocess">In process...</string>
+    <string name="general_merge">Merge</string>
+    <string name="general_preview">Preview</string>
+    <string name="general_searching">Searching...</string>
+    <string name="general_select_all">Select all</string>
+    <string name="general_select_items">Select items</string>
+    <string name="general_select_nothing">You selected nothing, please select one file at least</string>
+    <string name="general_selected_photocount">Select %1$d photo(s)</string>
+    <string name="general_tip">Tip</string>
+    <string name="general_unselect_all">Unselect all</string>
+    <string name="general_viewmode_grid">Grid View</string>
+    <string name="general_viewmode_list">List View</string>
+    <string name="general_warning">Warning</string>
+    <string name="gif_camera_duration">Camera Duration</string>
+    <string name="gif_quality">Gif Quality</string>
+    <string name="gif_video_duration">Video Duration</string>
+    <string name="help">Help</string>
+    <string name="help1">Feel free to contact us by email.\n\nGifmagic2011@gmail.com</string>
+    <string name="help2">Look forward to your question and advise.</string>
+    <string name="hide_folder">Hide folder</string>
+    <string name="hide_folder_message">This folder will be hidden by next scan, continue?</string>
+    <string name="hide_tag">Hide #GifMagic# tag when send to Weibo</string>
+    <string name="high">High</string>
+    <string name="history_gif_path">Gif in:</string>
+    <string name="img_operation_ascendingorder">Ascending order</string>
+    <string name="img_operation_creategif">Create Gif</string>
+    <string name="img_operation_decreasingsorder">Decreasing order</string>
+    <string name="img_operation_rotateleft">Rotate left</string>
+    <string name="img_operation_rotateright">Rotate right</string>
+    <string name="img_operation_speed">Speed</string>
+    <string name="img_operation_tipalert">Please press left bottom button, surprise!</string>
+    <string name="img_operation_toomuchfiles">You choose too many photos, please choose at most %1$d photos!</string>
+    <string name="info">Information</string>
+    <string name="info_hide_folder">Long click the folder can hide folder to display. click Menu button to show hidden folder.</string>
+    <string name="keep">Don\'t delete</string>
+    <string name="keep_temp_image_message">Keep temp image?</string>
+    <string name="language_default_entryvalue">en</string>
+    <string name="loading_thumbnail">Loading thumbnail ...</string>
+    <string name="long_pic">Long(40)</string>
+    <string name="low">Low</string>
+    <string name="main_browse">Browse</string>
+    <string name="main_camera">Camera</string>
+    <string name="main_gallery">Gallery</string>
+    <string name="maintab_edit">Edit</string>
+    <string name="maintab_progress">Progress</string>
+    <string name="maintab_share">Share</string>
+    <string name="max_pic">Max(50)</string>
+    <string name="menu_about">About</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_language">Language</string>
+    <string name="menu_setting">Setting</string>
+    <string name="middle">Middle</string>
+    <string name="middle_pic">Middle(30)</string>
+    <string name="networkinfo_start_gprs_or_wifi_connect">Start GPRS or WIFI Connectivity</string>
+    <string name="networkinfo_unavailable">Networks Unavailable</string>
+    <string name="no_folder">Cannot find Photo Folder on your SD Card.</string>
+    <string name="no_video_files">Cannot find video files on your phone</string>
+    <string name="normal">Normal</string>
+    <string name="notify_offcial_weibo">Offcial Weibo @GifMagic</string>
+    <string name="ok">Ok</string>
+    <string name="photoedit_brightness">Brightness</string>
+    <string name="photoedit_colorpalette">Color palette</string>
+    <string name="photoedit_contrast">Contrast</string>
+    <string name="photoedit_groupalert">The operation affects whole group</string>
+    <string name="photoedit_saturation">Saturation</string>
+    <string name="photoedit_savedtoast">New file has saved in the following path: %1$s</string>
+    <string name="please_wait">Please wait</string>
+    <string name="preference_language">Language</string>
+    <string name="preference_language_summary">Select application language</string>
+    <string name="preference_language_title">Language Select</string>
+    <string name="preference_video_interval">Capture interval</string>
+    <string name="preference_video_interval_summary">Select your capture interval</string>
+    <string name="preference_video_mode">Capture mode</string>
+    <string name="preference_video_mode_summary">Select your capture mode</string>
+    <string name="preference_video_total">Capture total number of images</string>
+    <string name="preference_video_total_summary">Select your capture total</string>
+    <string name="publish_to_renren">Publish To Renren</string>
+    <string name="quit_app">Quit</string>
+    <string name="quit_message">Are you sure you want to exit the application?</string>
+    <string name="quit_title">Exit Application</string>
+    <string name="scan_photo">Scan photos...</string>
+    <string name="scanning">Scanning file from MediaStore</string>
+    <string name="sdcard_busy">SD Card is busy.</string>
+    <string name="sdcard_invalid">Cannot access SD Card</string>
+    <string name="select_mode">Select mode</string>
+    <string name="select_video">Select video</string>
+    <string name="share_main">main</string>
+    <string name="share_other">others</string>
+    <string name="short_pic">Short(20)</string>
+    <string name="show_folder">Show hidden folder</string>
+    <string name="slow">Slow</string>
+    <string name="splash_notice_info">支持非政府公益机构\n请关注  @免费午餐</string>
+    <string name="temp_image_setting">Temp picture setting</string>
+    <string name="unauthorized">To Authorize</string>
+    <string name="version">Version</string>
+    <string name="video_capture">Capture</string>
+    <string name="video_capture_mode_default_entryvalue">1</string>
+    <string name="video_capture_title">Capture video...</string>
+    <string name="video_info">Current Time:%1$s, Total Time:%2$s</string>
+    <string name="video_select_loading">Loading video from gallery</string>
+    <string name="video_select_loading_title">Loading...</string>
+    <string name="vip_feature">Using pass to activate the VIP feature</string>
+    <string name="vip_feature_contact">VIP pass is free to give, only if you can raise any suggestion or advice to gifmagic2011@gmail.com</string>
+    <string name="warning_info"> </string>
+    <string name="webview_progress_dlg_msg_loading_authorize_page">Loading Authorizing Page...</string>
+    <string name="webview_progress_dlg_title">User Authorizing...</string>
+    <string name="weibo_atfriends">At Friends</string>
+    <string name="weibo_atfriends_edit_text_hint">search friends...</string>
+    <string name="weibo_atfriends_friends_user">My Friends</string>
+    <string name="weibo_atfriends_history_user">Last @Users</string>
+    <string name="weibo_atfriends_search">Search</string>
+    <string name="weibo_edit_create_friendship">\nPlease follow our offcial Weibo</string>
+    <string name="weibo_edit_gif_is_completed">Gif is completed</string>
+    <string name="weibo_edit_gif_is_in_processing">Gif is in processing...</string>
+    <string name="weibo_edit_gif_is_still_generating">Gif Is Still Generating...</string>
+    <string name="weibo_edit_go_to_publish">Send</string>
+    <string name="weibo_edit_gprs_or_wifi_upload_tip">Uploading is better with GPRS more than 600K and with WIFI no more than 1.5M,otherwise it will be failed because of network exception </string>
+    <string name="weibo_edit_input_tip">Major Share</string>
+    <string name="weibo_edit_oauth_is_successful">Authorizing is successful</string>
+    <string name="weibo_edit_oauth_occur_error">Authorizing occur error</string>
+    <string name="weibo_edit_oauth_request_too_frequently">OAuth request is too frequently,please wait a moment to retry...</string>
+    <string name="weibo_edit_oauth_result">Authorizing Result</string>
+    <string name="weibo_edit_progress_dlg_msg_authorizing">Account Is Authorizing...</string>
+    <string name="weibo_edit_progress_dlg_msg_publishing">Gif Is Publishing...</string>
+    <string name="weibo_edit_progress_dlg_title">Publish Gif...</string>
+    <string name="weibo_edit_publish_is_successful">Publish is successful</string>
+    <string name="weibo_edit_publish_occur_error">Publish occur error</string>
+    <string name="weibo_edit_publish_to_sina">Publish To Sina Weibo</string>
+    <string name="weibo_edit_publish_to_tencent">Publish To Tencent Weibo</string>
+    <string name="weibo_edit_text_hint">Share Pictures</string>
+    <string name="weibo_service_or_network_is_unavailable">Weibo service or network is unavailable</string>
+    <string name="zh_CN">中文 ，国庆终极版\n国庆，你玩着呢还是宅着呢</string>
+    <!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/values/customTheme.xml -->
+    <eat-comment/>
+    <style name="@android:style/Widget.CompoundButton.CheckBox">
+		<item name="android:background">@android:drawable/btn_check_label_background/</item>
+		<item name="android:button">@android:drawable/btn_check</item>
+	</style>
+    <style name="contentBoldFont" parent="android:Theme">
+		<item name="android:textColor">#6F6F6F</item>
+		<item name="android:textStyle">bold</item>r
+	</style>
+    <style name="custom" parent="android:Theme">
+		<item name="android:windowTitleSize">40dp</item>
+		 <item name="android:textColor">#000000</item>	
+	</style>
+</resources>

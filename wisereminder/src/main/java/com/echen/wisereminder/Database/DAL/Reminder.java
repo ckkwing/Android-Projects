@@ -19,9 +19,9 @@ public class Reminder {
     private SQLiteDatabase db;
 
     //SQL query
-    private String QUERY_ALL_REMINDERS = "SELECT * FROM " + ReminderTable.TABLE_NAME;
-    private String QUERY_REMINDERS = "SELECT * FROM " + ReminderTable.TABLE_NAME;
-    private String QUERY_REMINDERS_BY_OWNER_ID = "SELECT * FROM " + ReminderTable.TABLE_NAME + " WHERE " + ReminderTable.OWNER_ID + "=%s";
+    private String QUERY_REMINDERS = "SELECT * FROM " + ReminderTable.TABLE_NAME + " WHERE " + ReminderTable.COMPLETED + "=0";
+    private String QUERY_REMINDERS_BY_OWNER_ID = "SELECT * FROM " + ReminderTable.TABLE_NAME + " WHERE " + ReminderTable.OWNER_ID + "=%s AND " + ReminderTable.COMPLETED + "=0";
+    private String QUERY_REMINDERS_STAR = "SELECT * FROM " + ReminderTable.TABLE_NAME + " WHERE " + ReminderTable.STAR + "=1 AND " + ReminderTable.COMPLETED + "=0";
 
     public Reminder(Context context)
     {
@@ -29,59 +29,55 @@ public class Reminder {
         db = helper.getWritableDatabase();
     }
 
-    public List<com.echen.wisereminder.Model.Reminder> getReminders()
+    public long addReminder(com.echen.wisereminder.Model.Reminder reminder)
+    {
+        ContentValues cv = ReminderTable.ConverterReminderToDBRow(reminder);
+        long result = db.insert(ReminderTable.TABLE_NAME, ReminderTable.NAME, cv);
+        return result;
+    }
+
+    public long updateReminderByID(com.echen.wisereminder.Model.Reminder reminder)
+    {
+        ContentValues cv = ReminderTable.ConverterReminderToDBRow(reminder);
+        return db.update(ReminderTable.TABLE_NAME,cv, ReminderTable.ID+"=?", new String[] {String.valueOf(reminder.getId())});
+    }
+
+    private List<com.echen.wisereminder.Model.Reminder> getRemindersByQuery(String query)
     {
         List<com.echen.wisereminder.Model.Reminder> reminders = new ArrayList<>();
-        Cursor cursor = db.rawQuery(QUERY_REMINDERS, null);
+        Cursor cursor = db.rawQuery(query, null);
         if (null != cursor)
         {
             while (cursor.moveToNext())
             {
-                com.echen.wisereminder.Model.Reminder reminder = new com.echen.wisereminder.Model.Reminder();
-                reminder.setId(cursor.getInt(cursor.getColumnIndex(ReminderTable.ID)));
-                reminder.setName(cursor.getString(cursor.getColumnIndex(ReminderTable.NAME)));
-                reminder.setOwnerId(cursor.getInt(cursor.getColumnIndex(ReminderTable.OWNER_ID)));
-                reminders.add(reminder);
+                com.echen.wisereminder.Model.Reminder reminder = ReminderTable.ConvertDBRowToReminder(cursor);
+                if (null != reminder)
+                    reminders.add(reminder);
             }
             cursor.close();
         }
         return reminders;
     }
 
-    public long addReminder(com.echen.wisereminder.Model.Reminder reminder)
+    public List<com.echen.wisereminder.Model.Reminder> getReminders()
     {
-        // CREATE A CONTENTVALUE OBJECT
-        ContentValues cv = new ContentValues();
-        cv.put(ReminderTable.NAME, reminder.getName());
-        cv.put(ReminderTable.OWNER_ID, reminder.getOwnerId());
-        cv.put(ReminderTable.CREATION_TIME, reminder.getCreationTime_UTC());
-        // RETRIEVE WRITEABLE DATABASE AND INSERT
-        long result = db.insert(ReminderTable.TABLE_NAME,ReminderTable.NAME, cv);
-        return result;
+        return getRemindersByQuery(QUERY_REMINDERS);
     }
 
     public List<com.echen.wisereminder.Model.Reminder> getRemindersByCategoryID(long categoryID)
     {
-        List<com.echen.wisereminder.Model.Reminder> reminders = new ArrayList<>();
-        if (-1 != categoryID)
-        {
-            String querySql = String.format(QUERY_REMINDERS_BY_OWNER_ID, categoryID);
-            Cursor cursor = db.rawQuery(querySql, null);
-            if (null != cursor)
-            {
-                while (cursor.moveToNext())
-                {
-                    com.echen.wisereminder.Model.Reminder reminder = new com.echen.wisereminder.Model.Reminder();
-                    reminder.setId(cursor.getInt(cursor.getColumnIndex(ReminderTable.ID)));
-                    reminder.setName(cursor.getString(cursor.getColumnIndex(ReminderTable.NAME)));
-                    reminder.setOwnerId(categoryID);
-                    reminders.add(reminder);
-                }
-                cursor.close();
-            }
-        }
-        return reminders;
+        if (-1 == categoryID)
+            return new ArrayList<>();
+        String querySql = String.format(QUERY_REMINDERS_BY_OWNER_ID, categoryID);
+        return getRemindersByQuery(querySql);
     }
 
+    public List<com.echen.wisereminder.Model.Reminder> getStarReminders() {
+        return getRemindersByQuery(QUERY_REMINDERS_STAR);
+    }
 
+    public List<com.echen.wisereminder.Model.Reminder> getTodayReminders()
+    {
+        return new ArrayList<>();
+    }
 }

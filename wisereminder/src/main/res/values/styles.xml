@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/fontSize_body</item>
         <item name="android:textColor">@color/font_black</item>
         <item name="android:actionBarStyle">@style/customActionBarStyle</item>
     </style>
@@ -16,4 +16,16 @@
     <style name="customTitleStyle">
         <item name="android:textColor">@color/font_white</item>
     </style>
+
+    <style name="customTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">@dimen/fontSize_body</item>
+        <item name="android:textColor">@color/font_black</item>
+    </style>
+
+    <!--Animation start-->
+    <style name="popup_anim_style">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+    </style>
+    <!--Animation end-->
 </resources>

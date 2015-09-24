@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ioniconview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/subjectListItemHeight">
     <!--<ImageView-->
         <!--android:id="@+id/subjectIco"-->
         <!--android:layout_width="20dp"-->
         <!--android:layout_height="20dp"-->
         <!--android:layout_marginLeft="10dp"-->
         <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_alignParentLeft="true" />-->
-    <TextView
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_centerInParent="true"/>-->
+    <be.webelite.ion.IconView
         android:id="@+id/subjectIco"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/category_icon_circle"/>
+        android:textSize="20dp"
+        ioniconview:name="ion_ionic" />
     <TextView
         android:id="@+id/subjectTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/subjectIco"/>
+        android:layout_toRightOf="@+id/subjectIco"
+        android:layout_centerInParent="true"/>
     <ImageView
         android:id="@+id/subjectExpandIco"
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:src="@null"/>
+        android:src="@null"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

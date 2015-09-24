@@ -6,4 +6,17 @@
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">260dp</dimen>
+    
+    <!--List-->
+    <dimen name="subjectListItemHeight">30dp</dimen>
+    <dimen name="reminderListItemHeight">50dp</dimen>
+    
+    <!--Font size-->
+    <dimen name="fontSize_heading">24dp</dimen>
+    <dimen name="fontSize_title">20dp</dimen>
+    <dimen name="fontSize_subtitle">18dp</dimen>
+    <dimen name="fontSize_body">16dp</dimen>
+
+    <!--popup-->
+    <dimen name="popup_priority_width">300dp</dimen>
 </resources>

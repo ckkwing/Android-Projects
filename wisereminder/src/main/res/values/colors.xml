@@ -2,9 +2,22 @@
 <resources>
     <color name="frame_main_color">#FF63B2EF</color>
     <color name="background_white">#FFFFFFFF</color>
-    <color name="common_gray">#615b5b</color>
+    <!--<color name="common_gray">#615b5b</color>-->
+    <color name="common_gray">#7f7f7f</color>
+    <color name="common_gold">#FFD76E</color>
+
+    <!--Border-->
+    <color name="border_gray">#FFC3C3C3</color>
 
     <!--Font-->
     <color name="font_black">#FF000000</color>
     <color name="font_white">#FFFFFFFF</color>
+    <color name="font_gray">#615b5b</color>
+
+    <!--Priority-->
+    <color name="priority_level1">#FFD68080</color>
+    <color name="priority_level2">#FFFCC08E</color>
+    <color name="priority_level3">#FFFEE095</color>
+    <color name="priority_level4">#FF8A8A8A</color>
+
 </resources>

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -26,9 +27,13 @@ import android.widget.ListView;
 
 import com.echen.wisereminder.Adapter.ReminderListAdapter;
 import com.echen.wisereminder.Data.DataManager;
-import com.echen.wisereminder.Model.Category;
+import com.echen.wisereminder.Model.IListItem;
+import com.echen.wisereminder.Model.IReminderParent;
 import com.echen.wisereminder.Model.Reminder;
+import com.echen.wisereminder.Model.Subject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -38,64 +43,73 @@ public class MainActivity extends Activity
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationDrawerFragment m_NavigationDrawerFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence mTitle;
-    private Category currentCategory = null;
+    private CharSequence m_Title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        m_NavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        m_Title = getTitle();
 
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
+        m_NavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         createFloatAddButtonView();
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int groupPosition, int childPosition) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, PlaceholderFragment.newInstance(this, groupPosition, childPosition))
                 .commit();
     }
 
-    public void onSectionAttached(int number) {
-        if (number <= 0)
+    public void onSectionAttached(int groupPosition, int childPosition) {
+        if (groupPosition < 0)
             return;
-        List<Category> categories = DataManager.getInstance().getCategories(false);
-        if (number > categories.size())
-            return;
-        currentCategory = categories.get(number - 1);
-        if (null == currentCategory)
-            return;
-        mTitle = currentCategory.getName();
+
+        Subject currentSubject = DataManager.getInstance().getM_subjects().get(groupPosition);
+        if (null != currentSubject) {
+            if (-1 == childPosition)
+                m_Title = currentSubject.getName();
+            else
+            {
+                IListItem item = currentSubject.getChildren().get(childPosition);
+                m_Title = item.getName();
+            }
+        }
+        else
+            m_Title = "";
     }
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        actionBar.setTitle(m_Title);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+        if (!m_NavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
@@ -164,11 +178,8 @@ public class MainActivity extends Activity
             public void onClick(View v)
             {
                 // TODO Auto-generated method stub
-                if (null != currentCategory) {
-                    Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
-                    intent.putExtra(ConsistentString.PARAM_CATEGORY_ID, currentCategory.getId());
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -181,19 +192,24 @@ public class MainActivity extends Activity
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_SECTION_GROUP_NUMBER = "section_group_number";
+        private static final String ARG_SECTION_CHILD_NUMBER = "section_child_number";
         private static final int REFRESH_COMPLETE = 0X110;
-        private ReminderListAdapter listAdapter = null;
-        private SwipeRefreshLayout swipeLayout;
+        private ReminderListAdapter m_listAdapter = null;
+        private SwipeRefreshLayout m_swipeLayout;
+        private IReminderParent m_selectedItem;
+        private static Context m_context;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static PlaceholderFragment newInstance(Context context, int groupPosition, int childPosition) {
             PlaceholderFragment fragment = new PlaceholderFragment();
+            m_context = context;
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_SECTION_GROUP_NUMBER, groupPosition);
+            args.putInt(ARG_SECTION_CHILD_NUMBER, childPosition);
             fragment.setArguments(args);
             return fragment;
         }
@@ -217,28 +233,49 @@ public class MainActivity extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_ly);
-            swipeLayout.setOnRefreshListener(this);
-            swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+            m_swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_ly);
+            m_swipeLayout.setOnRefreshListener(this);
+            m_swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                     android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
             Bundle bundle = getArguments();
-
             if (null != bundle) {
-                int position = bundle.getInt(ARG_SECTION_NUMBER);
-                if (position > 0 && position <= DataManager.getInstance().getCategories(false).size()) {
-                    Category category = DataManager.getInstance().getCategories(false).get(position - 1);
-                    if (null != category) {
-//                        TextView txtName = (TextView) rootView.findViewById(R.id.section_label);
-//                        txtName.setText(category.getName());
-                        List<Reminder> reminders =DataManager.getInstance().getRemindersByCategoryID(category.getId());
-                        ListView reminderList = (ListView)rootView.findViewById(R.id.reminderList);
-                        listAdapter = new ReminderListAdapter(inflater, reminders);
-                        reminderList.setAdapter(listAdapter);
-                        reminderList.setOnItemClickListener(onItemClickListener);
-                    }
+                int groupPosition = bundle.getInt(ARG_SECTION_GROUP_NUMBER);
+                int childPosition = bundle.getInt(ARG_SECTION_CHILD_NUMBER);
+                m_selectedItem = null;
+                List<Subject> subjects = DataManager.getInstance().getM_subjects();
+                Subject currentSubject = subjects.get(groupPosition);
+                if (null == currentSubject)
+                    return rootView;
+
+                if (childPosition >= 0)
+                {
+                    m_selectedItem = (IReminderParent)currentSubject.getChildren().get(childPosition);
+                }
+                else {
+                    m_selectedItem = currentSubject;
+                }
+
+                if (null != m_selectedItem) {
+//                    List<Reminder> reminders = new ArrayList<>();
+//                    List<Reminder> selectedItemChildren = m_selectedItem.getReminders();
+//                    for (Iterator<Reminder> iterator = selectedItemChildren.iterator(); iterator.hasNext(); ) {
+//                        IListItem item = iterator.next();
+//                        if (null == item)
+//                            continue;
+//                        if (!(item instanceof Reminder))
+//                            continue;
+//                        Reminder reminder = (Reminder) item;
+//                        reminders.add(reminder);
+//                    }
+                    ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
+                    m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
+                    reminderList.setAdapter(m_listAdapter);
+                    reminderList.setOnItemClickListener(onItemClickListener);
                 }
             }
+
+
             return rootView;
         }
 
@@ -258,12 +295,15 @@ public class MainActivity extends Activity
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+                    getArguments().getInt(ARG_SECTION_GROUP_NUMBER),
+                    getArguments().getInt(ARG_SECTION_CHILD_NUMBER));
         }
 
         @Override
         public void onRefresh() {
-            mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
+//            mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
+            m_listAdapter.updateSource(m_selectedItem.getReminders());
+            mHandler.sendEmptyMessage(REFRESH_COMPLETE);
         }
 
         private Handler mHandler = new Handler()
@@ -272,9 +312,9 @@ public class MainActivity extends Activity
             {
                 switch (msg.what)
                 {
-                    case REFRESH_COMPLETE:
-                        listAdapter.notifyDataSetChanged();
-                        swipeLayout.setRefreshing(false);
+                    case REFRESH_COMPLETE: {
+                        m_swipeLayout.setRefreshing(false);
+                    }
                         break;
 
                 }

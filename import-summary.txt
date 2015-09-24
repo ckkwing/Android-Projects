@@ -7,46 +7,43 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
-* .idea\
-* .idea\.name
-* .idea\GifMagic.iml
-* .idea\compiler.xml
-* .idea\copyright\
-* .idea\copyright\profiles_settings.xml
-* .idea\encodings.xml
-* .idea\misc.xml
-* .idea\modules.xml
-* .idea\scopes\
-* .idea\scopes\scope_settings.xml
-* .idea\vcs.xml
-* .idea\workspace.xml
-* proguard.cfg
-* proguard\
-* proguard\dump.txt
-* proguard\mapping.txt
-* proguard\seeds.txt
-* proguard\usage.txt
+* ic_launcher-web.png
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.+
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => gifMagic\src\main\AndroidManifest.xml
-* assets\ => gifMagic\src\main\assets
-* jni\ => gifMagic\src\main\jni\
-* libs\Analytics_Android_SDK_3.0.jar => gifMagic\libs\Analytics_Android_SDK_3.0.jar
-* libs\armeabi\libffmpegutils.so => gifMagic\src\main\jniLibs\armeabi\libffmpegutils.so
-* libs\armeabi\libYUV420SP.so => gifMagic\src\main\jniLibs\armeabi\libYUV420SP.so
-* libs\commons-codec.jar => gifMagic\libs\commons-codec.jar
-* libs\commons-httpclient-3.1.jar => gifMagic\libs\commons-httpclient-3.1.jar
-* libs\commons-logging-1.1.jar => gifMagic\libs\commons-logging-1.1.jar
-* libs\dom4j-1.6.1.jar => gifMagic\libs\dom4j-1.6.1.jar
-* libs\QWeiboSDK.jar => gifMagic\libs\QWeiboSDK.jar
-* libs\renren_android_connect.jar => gifMagic\libs\renren_android_connect.jar
-* libs\weibo4android.jar => gifMagic\libs\weibo4android.jar
-* res\ => gifMagic\src\main\res\
-* src\ => gifMagic\src\main\java\
+* AndroidManifest.xml => googleDateTimePickers\src\main\AndroidManifest.xml
+* res\ => googleDateTimePickers\src\main\res\
+* src\ => googleDateTimePickers\src\main\java\
+
+Missing Android Support Repository:
+-----------------------------------
+Some useful libraries, such as the Android Support Library, are
+installed from a special Maven repository, which should be installed
+via the SDK manager.
+
+It looks like this library is missing from your SDK installation at:
+null
+
+To install it, open the SDK manager, and in the Extras category,
+select "Android Support Repository". You may also want to install the
+"Google Repository" if you want to use libraries like Google Play
+Services.
 
 Next Steps:
 -----------

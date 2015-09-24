@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@color/background">
+	<RelativeLayout android:id="@+id/layout_top"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true">
+		<Button android:id="@+id/main_camera_button"
+			android:layout_width="100dp" android:layout_height="100dp"
+			android:gravity="center" android:layout_marginTop="50dp"
+			android:background="@drawable/bg_main_camera" android:focusable="true"
+			android:text="@string/main_camera" android:paddingTop="55dp"
+			android:textSize="16dp" android:textColor="@color/main_txt_color" />
+		<Button android:id="@+id/main_gallery_button"
+			android:layout_marginTop="50dp" android:background="@drawable/bg_main_gallery"
+			android:layout_width="100dp" android:layout_height="100dp"
+			android:gravity="center" android:layout_toRightOf="@id/main_camera_button"
+			android:focusable="true" android:text="@string/main_gallery"
+			android:paddingTop="55dp" android:textSize="16dp" android:textColor="@color/main_txt_color" />
+	</RelativeLayout>
+
+	<RelativeLayout android:id="@+id/layout_below"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/layout_top" android:layout_centerHorizontal="true">
+		<Button android:id="@+id/main_browse_button"
+			android:background="@drawable/bg_main_browse" android:layout_width="100dp"
+			android:layout_height="100dp" android:layout_below="@id/main_camera_button"
+			android:focusable="true" android:text="@string/main_browse"
+			android:paddingTop="55dp" android:textSize="16dp" android:textColor="@color/main_txt_color" />
+
+		<Button android:id="@+id/main_setting_button"
+			android:background="@drawable/bg_main_setting" android:layout_width="100dp"
+			android:layout_height="100dp" android:layout_below="@id/main_gallery_button"
+			android:layout_toRightOf="@id/main_browse_button" android:focusable="true"
+			android:text="@string/menu_setting" android:paddingTop="55dp"
+			android:textSize="16dp" android:textColor="@color/main_txt_color" />
+	</RelativeLayout>
+	
+	<LinearLayout android:orientation="vertical"
+		android:gravity="center" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_below="@id/layout_below">
+		<TextView android:id="@+id/warning_text"
+			android:layout_marginTop="30dp" android:paddingLeft="15dp"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="@string/warning_info" android:textSize="25dp" android:textColor="#FF0000"
+			android:layout_below="@id/layout_below" />
+	</LinearLayout>
+	
+	<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/logo"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true" android:layout_marginBottom="20dp" />
+</RelativeLayout>
+<!-- From: file:/E:/GitHub/Android-Projects/gifMagic/src/main/res/layout/main.xml -->

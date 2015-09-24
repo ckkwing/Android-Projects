@@ -18,10 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.echen.wisereminder.Adapter.CategoryListAdapter;
 import com.echen.wisereminder.Adapter.ExpandableSubjectListAdapter;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Subject;
@@ -73,8 +71,8 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSubjectList = DataManager.getInstance().getSubjects();
-        subjectListAdapter = new ExpandableSubjectListAdapter(getActionBar().getThemedContext(),mSubjectList);
+        mSubjectList = DataManager.getInstance().getM_subjects();
+        subjectListAdapter = new ExpandableSubjectListAdapter(getActionBar().getThemedContext(), mSubjectList);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -87,7 +85,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        selectItem(mCurrentSelectedPosition, -1);
     }
 
     @Override
@@ -115,7 +113,7 @@ public class NavigationDrawerFragment extends Fragment {
 //
 //        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
-        mDrawerExpandableListView = (ExpandableListView)view.findViewById(R.id.lstSubjects);
+        mDrawerExpandableListView = (ExpandableListView) view.findViewById(R.id.lstSubjects);
         mDrawerExpandableListView.setAdapter(subjectListAdapter);
         mDrawerExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -130,10 +128,11 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if (mSubjectList.get(groupPosition).getChildren().size() > 0)
+                Subject subject = mSubjectList.get(groupPosition);
+                if (subject.getType() == Subject.Type.Categories)
                     return false;
                 else {
-                    selectItem(groupPosition);
+                    selectItem(groupPosition, -1);
                     return true;
                 }
             }
@@ -141,9 +140,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                int gp = groupPosition;
-                int cp = childPosition;
-
+                selectItem(groupPosition, childPosition);
                 return false;
             }
         });
@@ -228,17 +225,19 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
+    private void selectItem(int groupPosition, int childPosition) {
+        mCurrentSelectedPosition = groupPosition;
         if (mDrawerExpandableListView != null) {
-            mDrawerExpandableListView.setItemChecked(position, true);
+//            mDrawerExpandableListView.setItemChecked(groupPosition, true);
+            mDrawerExpandableListView.setSelectedGroup(groupPosition);
+            mDrawerExpandableListView.setSelectedChild(groupPosition, childPosition, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
 //            mCallbacks.onNavigationDrawerItemSelected(DataManager.getInstance().getCategories().get(position-1));
-            mCallbacks.onNavigationDrawerItemSelected(position);
+            mCallbacks.onNavigationDrawerItemSelected(groupPosition, childPosition);
         }
     }
 
@@ -318,6 +317,6 @@ public class NavigationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(int groupPosition, int childPosition);
     }
 }
