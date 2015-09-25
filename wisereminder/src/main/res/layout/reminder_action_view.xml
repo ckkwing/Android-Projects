@@ -15,7 +15,7 @@
             >
             <EditText
                 android:id="@+id/edtReminderInfo"
-                android:background="@color/background_white"
+                android:background="@color/common_white"
                 android:layout_marginRight="0.5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -24,36 +24,51 @@
                 android:id="@+id/spnCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/background_white"/>
+                android:background="@color/common_white"/>
         </TableRow>
         <TableRow
-            android:background="@color/background_white"
+            android:background="@color/common_white"
             android:layout_marginLeft="0.5dp"
             android:layout_marginRight="0.5dp"
             android:layout_marginBottom="0.5dp">
-            <EditText
-                android:id="@+id/edtDueDate"
-                android:background="@color/background_white"
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"
-                android:onClick="edtDueDateOnClick"
-                android:focusable="false"/>
-            <EditText
-                android:id="@+id/edtDueTime"
-                android:background="@color/background_white"
-                android:layout_width="50dp"
-                android:layout_height="fill_parent"
-                android:onClick="edtDueTimeOnClick"
-                android:focusable="false"/>
-            <be.webelite.ion.IconView
-                android:id="@+id/iconPriority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="right"
-                android:textColor="#FFC3C3C3"
-                android:textSize="30dp"
-                ioniconview:name="ion_flag" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/common_white"
+                    android:text="@string/reminder_execution_time"/>
+                <EditText
+                    android:id="@+id/edtDueDate"
+                    android:background="@color/common_white"
+                    android:layout_width="100dp"
+                    android:layout_height="fill_parent"
+                    android:onClick="edtDueDateOnClick"
+                    android:focusable="false"/>
+                <EditText
+                    android:id="@+id/edtDueTime"
+                    android:background="@color/common_white"
+                    android:layout_width="50dp"
+                    android:layout_height="fill_parent"
+                    android:onClick="edtDueTimeOnClick"
+                    android:focusable="false"/>
+            </LinearLayout>
+            <RelativeLayout android:layout_weight="1">
+                <be.webelite.ion.IconView
+                    android:id="@+id/iconPriority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFC3C3C3"
+                    android:textSize="30dp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    ioniconview:name="ion_flag" />
+            </RelativeLayout>
         </TableRow>
         <TableRow>
             <Button android:id="@+id/btnTest"
@@ -65,9 +80,17 @@
         </TableRow>
     </TableLayout>
     <Button
+        android:id="@+id/aaa"
         android:text="Test1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:onClick="actionBtnOnClick"/>
+    <Button
+        android:text="Test2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/aaa"
+        android:layout_alignParentRight="true"
         android:onClick="actionBtnOnClick"/>
 </RelativeLayout>

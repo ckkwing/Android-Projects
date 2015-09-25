@@ -1,34 +1,31 @@
 package com.echen.wisereminder;
 
 import android.app.Activity;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import com.echen.androidcommon.DateTime;
 import com.echen.androidcommon.Interface.IDateTimeEvent;
 import com.echen.wisereminder.Adapter.CategoryListAdapter;
+import com.echen.wisereminder.CustomControl.PriorityPopupWindow;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
+import com.echen.wisereminder.Utility.ReminderUtility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import be.webelite.ion.IconView;
 import mirko.android.datetimepicker.date.DatePickerDialog;
 import mirko.android.datetimepicker.time.RadialPickerLayout;
 import mirko.android.datetimepicker.time.TimePickerDialog;
-import uicommon.customcontrol.CustomPopupWindow;
+import uicommon.customcontrol.Interface.IPopupWindowEvent;
 
 /**
  * Created by echen on 2015/5/27.
@@ -47,7 +44,7 @@ public abstract class ReminderBaseActivity extends Activity {
     protected Spinner m_spinnerCategory = null;
     protected IconView m_iconPriority = null;
 
-    protected Reminder m_reminderToEdit = null;
+    protected Reminder m_reminder = null;
     protected Category m_selectedCategory = null;
     protected List<Category> m_categories = new ArrayList<>();
 
@@ -145,8 +142,6 @@ public abstract class ReminderBaseActivity extends Activity {
 //        Intent intent = new Intent(ALARM_ACTION);
 //        sendBroadcast(intent);
 
-//
-
         showPriorityPopupWindow(view);
     }
 
@@ -154,20 +149,26 @@ public abstract class ReminderBaseActivity extends Activity {
     {
         LayoutInflater mLayoutInflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = mLayoutInflater.inflate(R.layout.priority_view, null);// R.layout.popΪ PopupWindow �Ĳ����ļ�
-
-//        PopupWindow pop = new PopupWindow(contentView, getResources().getDimensionPixelSize(R.dimen.popup_priority_width), ViewGroup.LayoutParams.WRAP_CONTENT,true);
-//        pop.setFocusable(true);
-//        // ���������PopupWindow�ı����������ǵ���ⲿ������Back�����޷�dismiss����
-//        // �Ҿ���������API��һ��bug
-//        pop.setBackgroundDrawable(new BitmapDrawable());
-//        pop.setAnimationStyle(R.style.popup_anim_style);
-//        pop.showAsDropDown(parent);
-
-        CustomPopupWindow.PopupWindowExtraParam param = new CustomPopupWindow.PopupWindowExtraParam();
+        PriorityPopupWindow.PriorityPopupWindowExtraParam param = new PriorityPopupWindow.PriorityPopupWindowExtraParam(R.id.arrow_up, R.id.arrow_down);
         param.OffsetPoint.x = 30;
-        param.ArrowUpResId = R.id.arrow_up;
-        param.ArrowDownResId = R.id.arrow_down;
-        CustomPopupWindow pop = new CustomPopupWindow(parent, contentView, param);
+        param.PopupArrowMargin = getResources().getDimensionPixelSize(R.dimen.popup_arrow_margin);
+        param.ReminderPriority = m_reminder.getPriority();
+        PriorityPopupWindow pop = new PriorityPopupWindow(parent, contentView, param);
+        pop.setPopupWindowEvent(new IPopupWindowEvent() {
+            @Override
+            public void WindowClosed(Object obj) {
+                if (null == obj)
+                    return;
+                if (obj instanceof Reminder.Priority)
+                {
+                    Reminder.Priority priority = (Reminder.Priority)obj;
+                    if (null != m_reminder) {
+                        m_reminder.setPriority(priority);
+                        m_iconPriority.setTextColor(ReminderUtility.getPriorityColorInt(m_reminder.getPriority(), ReminderBaseActivity.this));
+                    }
+                }
+            }
+        });
         pop.show();
     }
 

@@ -27,6 +27,7 @@
     <!--Reminder-->
     <string name="reminder_creation">Create a reminder</string>
     <string name="reminder_edition">Edit a reminder</string>
+    <string name="reminder_execution_time">Execution time:</string>
 
 
     <!--Priority-->
