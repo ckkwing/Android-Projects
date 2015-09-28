@@ -242,7 +242,7 @@ public class DataManager {
         return reminderByID;
     }
 
-    public boolean updateReminderByID(Reminder reminder)
+    public boolean updateReminder(Reminder reminder)
     {
         long lRel = m_reminderDAL.updateReminderByID(reminder);
         if (1 == lRel)

@@ -60,6 +60,11 @@ public class DateTime {
             m_iDateTimeEvent.DateTimeChanged(this);
     }
 
+    public long toUTCLong()
+    {
+        return getUTCTimeLong(m_localCalendar.getTime());
+    }
+
     @Override
     public String toString() {
         return toString(DATETIME_FORMAT);
@@ -102,6 +107,12 @@ public class DateTime {
 
     public static long getNowUTCTimeLong() {
         Calendar cal = getUTCCalendarFromLocal(new Date());
+        return cal.getTime().getTime();
+    }
+
+    public static long getUTCTimeLong(Date localDate)
+    {
+        Calendar cal = getUTCCalendarFromLocal(localDate);
         return cal.getTime().getTime();
     }
 

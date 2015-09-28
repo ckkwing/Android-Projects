@@ -6,6 +6,7 @@
         <item name="android:textSize">@dimen/fontSize_body</item>
         <item name="android:textColor">@color/font_black</item>
         <item name="android:actionBarStyle">@style/customActionBarStyle</item>
+        <item name="android:windowBackground">@color/common_black</item> <!--set menu background-->
     </style>
 
     <style name="customActionBarStyle" parent="android:Widget.ActionBar">

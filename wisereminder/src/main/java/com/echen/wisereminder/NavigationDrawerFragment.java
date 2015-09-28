@@ -6,6 +6,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -303,7 +306,10 @@ public class NavigationDrawerFragment extends Fragment {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//        ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.common_black));
+//        actionBar.setBackgroundDrawable(colorDrawable);
         actionBar.setTitle(R.string.app_name);
+
     }
 
     private ActionBar getActionBar() {

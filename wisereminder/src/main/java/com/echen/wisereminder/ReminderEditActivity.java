@@ -2,6 +2,7 @@ package com.echen.wisereminder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Data.DataManager;
@@ -30,11 +31,11 @@ public class ReminderEditActivity extends ReminderBaseActivity {
         m_dateTime.update(localDate);
         m_iconPriority.setTextColor(ReminderUtility.getPriorityColorInt(m_reminder.getPriority(), this));
         updateDateTimeOnUI(m_dateTime);
-//        m_btnAction.setText(R.string.common_edit);
     }
 
-//    @Override
-//    public void actionBtnOnClick(View view) {
-//
-//    }
+    @Override
+    public void actionBtnOnClick(View view) {
+        super.actionBtnOnClick(view);
+        DataManager.getInstance().updateReminder(m_reminder);
+    }
 }

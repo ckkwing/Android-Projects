@@ -2,8 +2,6 @@ package com.echen.wisereminder.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +13,8 @@ import android.widget.TextView;
 
 import com.echen.wisereminder.ConsistentString;
 import com.echen.wisereminder.Data.DataManager;
-import com.echen.wisereminder.MainActivity;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.R;
-import com.echen.wisereminder.ReminderCreationActivity;
 import com.echen.wisereminder.ReminderEditActivity;
 
 import java.util.ArrayList;
@@ -111,7 +107,7 @@ public class ReminderListAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     boolean starToSet = !reminder.getIsStar();
                     reminder.setIsStar(starToSet);
-                    if (!DataManager.getInstance().updateReminderByID(reminder))
+                    if (!DataManager.getInstance().updateReminder(reminder))
                         reminder.setIsStar(!starToSet);
                     ReminderListAdapter.this.notifyDataSetChanged();
                 }
@@ -122,7 +118,7 @@ public class ReminderListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     reminder.setIsCompleted(true);
-                    if (!DataManager.getInstance().updateReminderByID(reminder))
+                    if (!DataManager.getInstance().updateReminder(reminder))
                         reminder.setIsCompleted(false);
                     else
                     {

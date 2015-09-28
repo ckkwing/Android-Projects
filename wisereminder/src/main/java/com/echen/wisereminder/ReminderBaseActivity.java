@@ -142,7 +142,12 @@ public abstract class ReminderBaseActivity extends Activity {
 //        Intent intent = new Intent(ALARM_ACTION);
 //        sendBroadcast(intent);
 
-        showPriorityPopupWindow(view);
+//        showPriorityPopupWindow(view);
+
+        m_reminder.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
+        m_reminder.setName(m_edtInfo.getText().toString());
+        m_reminder.setOwnerId(m_selectedCategory.getId());
+        m_reminder.setDueTime_UTC(m_dateTime.toUTCLong());
     }
 
     protected void showPriorityPopupWindow(View parent)

@@ -2,7 +2,10 @@ package com.echen.wisereminder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.echen.androidcommon.DateTime;
+import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.Utility.ReminderUtility;
 
@@ -19,15 +22,11 @@ public class ReminderCreationActivity extends ReminderBaseActivity {
         m_reminder.setPriority(Reminder.Priority.LEVEL4);
         m_iconPriority.setTextColor(ReminderUtility.getPriorityColorInt(m_reminder.getPriority(), this));
         updateDateTimeOnUI(m_dateTime);
-//        m_btnAction.setText(R.string.common_save);
-//        Calendar cal = Calendar.getInstance();
-//        m_datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
     }
 
-//    @Override
-//    public void actionBtnOnClick(View view) {
-//        Reminder reminder = new Reminder(m_edtTitle.getText().toString());
-//        reminder.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
-//        DataManager.getInstance().addReminder(reminder);
-//    }
+    @Override
+    public void actionBtnOnClick(View view) {
+        super.actionBtnOnClick(view);
+        DataManager.getInstance().addReminder(m_reminder);
+    }
 }

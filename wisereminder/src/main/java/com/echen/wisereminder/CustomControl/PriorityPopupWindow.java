@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.R;
 
-import uicommon.customcontrol.BasePopupWindow;
+import uicommon.customcontrol.PopupWindow.BasePopupWindow;
 
 /**
  * Created by echen on 2015/9/25.
