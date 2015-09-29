@@ -93,8 +93,8 @@ public class ReminderTable {
         reminder.setIsStar(ReminderTable.dbValueToIsStar(isStar));
         Integer isCompleted = cursor.getInt(cursor.getColumnIndex(ReminderTable.COMPLETED));
         reminder.setIsCompleted(ReminderTable.dbValueToIsCompleted(isCompleted));
-        reminder.setDueTime_UTC(cursor.getInt(cursor.getColumnIndex(ReminderTable.DUE_TIME)));
-        reminder.setCreationTime_UTC(cursor.getInt(cursor.getColumnIndex(ReminderTable.CREATION_TIME)));
+        reminder.setDueTime_UTC(cursor.getLong(cursor.getColumnIndex(ReminderTable.DUE_TIME)));
+        reminder.setCreationTime_UTC(cursor.getLong(cursor.getColumnIndex(ReminderTable.CREATION_TIME)));
         Integer priority = cursor.getInt(cursor.getColumnIndex(ReminderTable.PRIORITY));
         reminder.setPriority(Reminder.Priority.values()[priority]);
         return reminder;

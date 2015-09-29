@@ -1,5 +1,6 @@
 package com.echen.wisereminder.Model;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -7,7 +8,13 @@ import android.util.Log;
  */
 public class Task {
 
-    private static final String TAG = "Task";
+    protected static final String TAG = "Task";
+    protected Context m_context;
+
+    public Task(Context context)
+    {
+        m_context = context;
+    }
 
     public void doWork() throws InterruptedException {
         Thread.sleep(1000);
