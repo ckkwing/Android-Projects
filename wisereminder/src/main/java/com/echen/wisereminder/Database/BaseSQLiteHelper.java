@@ -1,9 +1,14 @@
 package com.echen.wisereminder.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.echen.androidcommon.DateTime;
+import com.echen.wisereminder.Database.DAL.Category;
+import com.echen.wisereminder.R;
 
 /**
  * Created by echen on 2015/4/28.
@@ -12,8 +17,7 @@ public abstract class BaseSQLiteHelper extends SQLiteOpenHelper {
     protected static final String DATABASE_NAME = "wr_data.db";
     protected static final int DATABASE_VERSION = 1;
 
-    public BaseSQLiteHelper(Context context)
-    {
+    public BaseSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

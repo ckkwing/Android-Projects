@@ -32,8 +32,6 @@ import com.echen.wisereminder.Model.IReminderParent;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.Model.Subject;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -89,13 +87,11 @@ public class MainActivity extends Activity
         if (null != currentSubject) {
             if (-1 == childPosition)
                 m_Title = currentSubject.getName();
-            else
-            {
+            else {
                 IListItem item = currentSubject.getChildren().get(childPosition);
                 m_Title = item.getName();
             }
-        }
-        else
+        } else
             m_Title = "";
     }
 
@@ -135,16 +131,44 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode != ConsistentParameter.REQUEST_CODE_MAINACTIVITY)
+//            return;
+//        switch (resultCode) {
+//            case ConsistentParameter.RESULT_CODE_REMINDERCREATIONACTIVITY: {
+//                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
+//                if (null != bundle) {
+//                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
+//                    if (bRel)
+//                        m_swipeLayout.setRefreshing(true);
+//                }
+//            }
+//            break;
+//            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY:{
+//                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
+//                if (null != bundle) {
+//                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
+//                    if (bRel)
+//                        m_swipeLayout.setRefreshing(true);
+//                }
+//            }
+//            break;
+//        }
+    }
+
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams wmParams;
     private LinearLayout mFloatLayout;
     private Button mFloatView;
-    private void createFloatAddButtonView()
-    {
+
+    private void createFloatAddButtonView() {
         wmParams = new WindowManager.LayoutParams();
         mWindowManager = this.getWindowManager();
         wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        wmParams.format = PixelFormat.RGBA_8888;;
+        wmParams.format = PixelFormat.RGBA_8888;
+        ;
         wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         wmParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
         wmParams.x = 20;
@@ -152,9 +176,9 @@ public class MainActivity extends Activity
         wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         LayoutInflater inflater = this.getLayoutInflater();
-        mFloatLayout = (LinearLayout)inflater.inflate(R.layout.float_additem_view, null);
+        mFloatLayout = (LinearLayout) inflater.inflate(R.layout.float_additem_view, null);
         mWindowManager.addView(mFloatLayout, wmParams);
-        mFloatView = (Button)mFloatLayout.findViewById(R.id.float_btn_add);
+        mFloatView = (Button) mFloatLayout.findViewById(R.id.float_btn_add);
 //        //绑定触摸移动监听
 //        mFloatView.setOnTouchListener(new View.OnTouchListener() {
 //
@@ -171,12 +195,10 @@ public class MainActivity extends Activity
 
 
         mFloatView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_rotate_addbutton));
-        mFloatView.setOnClickListener(new View.OnClickListener()
-        {
+        mFloatView.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
                 startActivity(intent);
@@ -233,7 +255,7 @@ public class MainActivity extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            m_swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_ly);
+            m_swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_ly);
             m_swipeLayout.setOnRefreshListener(this);
             m_swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                     android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -248,11 +270,9 @@ public class MainActivity extends Activity
                 if (null == currentSubject)
                     return rootView;
 
-                if (childPosition >= 0)
-                {
-                    m_selectedItem = (IReminderParent)currentSubject.getChildren().get(childPosition);
-                }
-                else {
+                if (childPosition >= 0) {
+                    m_selectedItem = (IReminderParent) currentSubject.getChildren().get(childPosition);
+                } else {
                     m_selectedItem = currentSubject;
                 }
 
@@ -271,7 +291,7 @@ public class MainActivity extends Activity
                     ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
                     m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
                     reminderList.setAdapter(m_listAdapter);
-                    reminderList.setOnItemClickListener(onItemClickListener);
+//                    reminderList.setOnItemClickListener(onItemClickListener);
                 }
             }
 
@@ -282,14 +302,42 @@ public class MainActivity extends Activity
         private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Reminder reminder = (Reminder)parent.getItemAtPosition(position);
+                Reminder reminder = (Reminder) parent.getItemAtPosition(position);
                 if (null == reminder)
                     return;
-                    Intent intent = new Intent(PlaceholderFragment.this.getActivity(), ReminderEditActivity.class);
-                    intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
-                    getActivity().startActivity(intent);
+                Intent intent = new Intent(PlaceholderFragment.this.getActivity(), ReminderEditActivity.class);
+                intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
+//                    getActivity().startActivity(intent);
+                startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
             }
         };
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != ConsistentParameter.REQUEST_CODE_MAINACTIVITY)
+            return;
+        switch (resultCode) {
+            case ConsistentParameter.RESULT_CODE_REMINDERCREATIONACTIVITY: {
+                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
+                if (null != bundle) {
+                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
+                    if (bRel)
+                        m_swipeLayout.setRefreshing(true);
+                }
+            }
+            break;
+            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY:{
+                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
+                if (null != bundle) {
+                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
+                    if (bRel)
+                        m_swipeLayout.setRefreshing(true);
+                }
+            }
+            break;
+        }
+        }
 
         @Override
         public void onAttach(Activity activity) {
@@ -306,19 +354,18 @@ public class MainActivity extends Activity
             mHandler.sendEmptyMessage(REFRESH_COMPLETE);
         }
 
-        private Handler mHandler = new Handler()
-        {
-            public void handleMessage(android.os.Message msg)
-            {
-                switch (msg.what)
-                {
+        private Handler mHandler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
                     case REFRESH_COMPLETE: {
                         m_swipeLayout.setRefreshing(false);
                     }
-                        break;
+                    break;
 
                 }
-            };
+            }
+
+            ;
         };
     }
 

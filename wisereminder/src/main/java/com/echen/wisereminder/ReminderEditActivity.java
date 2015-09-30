@@ -23,7 +23,7 @@ public class ReminderEditActivity extends ReminderBaseActivity {
         long reminderID = intent.getLongExtra(ConsistentString.PARAM_REMINDER_ID, -1);
         if (-1 != reminderID)
         {
-            m_reminder = DataManager.getInstance().getReminderByID(reminderID);
+            m_reminder = DataManager.getInstance().getReminderByID(reminderID,false);
         }
         m_edtInfo.setText(m_reminder.getName());
         long utcDueTime = m_reminder.getDueTime_UTC();
@@ -36,6 +36,12 @@ public class ReminderEditActivity extends ReminderBaseActivity {
     @Override
     public void actionBtnOnClick(View view) {
         super.actionBtnOnClick(view);
-        DataManager.getInstance().updateReminder(m_reminder);
+        boolean bRel = DataManager.getInstance().updateReminder(m_reminder);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ConsistentString.RESULT_BOOLEAN, bRel);
+        Intent intent = getIntent();
+        intent.putExtra(ConsistentString.BUNDLE_UNIT, bundle);
+        setResult(ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY, intent); //set resultCode
+        finish();
     }
 }

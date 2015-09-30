@@ -47,7 +47,7 @@ public class Category implements IListItem, IReminderParent {
 
     @Override
     public List<Reminder> getReminders() {
-        return DataManager.getInstance().getRemindersByCategoryID(id);
+        return DataManager.getInstance().getRemindersByCategoryID(id,false);
     }
 
     public Category(){}

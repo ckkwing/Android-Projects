@@ -1,5 +1,6 @@
 package com.echen.wisereminder.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.echen.wisereminder.ConsistentParameter;
 import com.echen.wisereminder.ConsistentString;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Reminder;
@@ -95,9 +97,13 @@ public class ReminderListAdapter extends BaseAdapter {
             viewHolder.Name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    Intent intent = new Intent(m_context, ReminderEditActivity.class);
+//                    intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
+//                    m_context.startActivity(intent);
+
                     Intent intent = new Intent(m_context, ReminderEditActivity.class);
                     intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
-                    m_context.startActivity(intent);
+                    ((Activity)m_context).startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
                 }
             });
 

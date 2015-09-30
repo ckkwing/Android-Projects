@@ -27,14 +27,10 @@ public class DataManager {
     private List<Reminder> m_reminders = new ArrayList<>();
     private List<Subject> m_subjects = new ArrayList<>();
 
-    public static DataManager getInstance()
-    {
-        if (null == instance)
-        {
-            synchronized (DataManager.class)
-            {
-                if (null == instance)
-                {
+    public static DataManager getInstance() {
+        if (null == instance) {
+            synchronized (DataManager.class) {
+                if (null == instance) {
                     instance = new DataManager();
                 }
             }
@@ -42,8 +38,7 @@ public class DataManager {
         return instance;
     }
 
-    public boolean initiate(Context context)
-    {
+    public boolean initiate(Context context) {
         if (null == context)
             return false;
         this.m_context = context;
@@ -55,8 +50,7 @@ public class DataManager {
             throw new NullPointerException("ReminderDAL is NULL");
 
         //m_categoryDAL.clearCategories();
-        if (SettingUtility.getInstance().getIsFirstUse())
-        {
+        if (SettingUtility.getInstance().getIsFirstUse()) {
             addDefaultCategories();
             SettingUtility.getInstance().setIsFirstUse(false);
         }
@@ -64,18 +58,15 @@ public class DataManager {
         return true;
     }
 
-    public void uninit()
-    {
+    public void uninit() {
 
     }
 
-    private final String getString(int resId)
-    {
+    private final String getString(int resId) {
         return m_context.getString(resId);
     }
 
-    private void addDefaultSubjects()
-    {
+    private void addDefaultSubjects() {
         Subject allSubject = new Subject(Subject.Type.All, getString(R.string.subject_all));
         Subject starSubject = new Subject(Subject.Type.Star, getString(R.string.subject_star));
         Subject overdueSubject = new Subject(Subject.Type.Overdue, getString(R.string.subject_overdue));
@@ -84,28 +75,13 @@ public class DataManager {
         Subject categoriesSubject = new Subject(Subject.Type.Categories, getString(R.string.subject_categories));
 
         //Set children
-        m_reminders = getReminders(true);
-        m_categories = getCategories(true);
+        reloadAll();
 
         for (Category category : m_categories) {
             if (null == category)
                 continue;
             categoriesSubject.getChildren().add(category);
         }
-
-//        for (Iterator<Reminder> iterator = m_reminders.iterator(); iterator.hasNext();) {
-//            Reminder reminder = iterator.next();
-//            if (null == reminder)
-//                continue;
-////            allSubject.getChildren().add(reminder);
-////            if (reminder.getIsStar())
-////                starSubject.getChildren().add(reminder);
-////            for (Category category : m_categories)
-////            {
-////                if (reminder.getOwnerId() == category.getId())
-////                    category.getChildren().add(reminder);
-////            }
-//        }
 
         m_subjects.add(allSubject);
         m_subjects.add(starSubject);
@@ -115,17 +91,31 @@ public class DataManager {
         m_subjects.add(categoriesSubject);
     }
 
-    public List<Reminder> getRemindersBySubject(Subject.Type subjectType)
-    {
+    public void reloadAll() {
+        m_reminders = getReminders(true);
+        m_categories = getCategories(true);
+    }
+
+    public List<Reminder> getRemindersBySubject(Subject.Type subjectType, boolean isForce) {
         List<Reminder> reminders = new ArrayList<>();
-        switch (subjectType)
-        {
-            case All:
+        switch (subjectType) {
+            case All: {
                 reminders = m_reminderDAL.getReminders();
-                break;
-            case Star:
-                reminders = m_reminderDAL.getStarReminders();
-                break;
+            }
+            break;
+            case Star: {
+                if (isForce)
+                    reminders = m_reminderDAL.getStarReminders();
+                else {
+                    for (Reminder reminder : m_reminders) {
+                        if (null == reminder)
+                            continue;
+                        if (reminder.getIsStar())
+                            reminders.add(reminder);
+                    }
+                }
+            }
+            break;
             case Overdue:
                 break;
             case Today:
@@ -138,7 +128,9 @@ public class DataManager {
         return reminders;
     }
 
-    public List<Subject> getM_subjects() { return this.m_subjects; }
+    public List<Subject> getM_subjects() {
+        return this.m_subjects;
+    }
 
     public void addDefaultCategories()
     {
@@ -196,45 +188,49 @@ public class DataManager {
             return;
     }
 
-    public List<Category> getCategories(boolean isForce)
-    {
-        if (isForce)
-        {
+    public List<Category> getCategories(boolean isForce) {
+        if (isForce) {
             m_categories = m_categoryDAL.getCategories();
         }
         return m_categories;
     }
 
-    public List<Reminder> getReminders(boolean isForce)
-    {
-        if (isForce)
-        {
+    public List<Reminder> getReminders(boolean isForce) {
+        if (isForce) {
             m_reminders = m_reminderDAL.getReminders();
         }
         return m_reminders;
     }
 
-    public long addReminder(Reminder reminder)
-    {
-        return m_reminderDAL.addReminder(reminder);
+    public long addReminder(Reminder reminder) {
+        long lRel = m_reminderDAL.addReminder(reminder);
+        if (lRel >= 0) {
+            reminder.setId(lRel);
+            m_reminders.add(reminder);
+        }
+        return lRel;
     }
 
-    public List<Reminder> getRemindersByCategoryID(long categoryID)
-    {
-        return m_reminderDAL.getRemindersByCategoryID(categoryID);
+    public List<Reminder> getRemindersByCategoryID(long categoryID, boolean isForce) {
+        List<Reminder> reminders = new ArrayList<>();
+        if (isForce) {
+            reminders = m_reminderDAL.getRemindersByCategoryID(categoryID);
+        } else {
+            for (Reminder reminder : m_reminders) {
+                if (null == reminder)
+                    continue;
+                if (categoryID == reminder.getOwnerId())
+                    reminders.add(reminder);
+            }
+        }
+        return reminders;
     }
 
-    public Reminder getReminderByID(long id)
-    {
+    public Reminder getReminderByID(long id, boolean isForce) {
         Reminder reminderByID = null;
-        boolean isForceGet = false;
-        if (this.m_reminders.size() == 0)
-            isForceGet = true;
-        List<Reminder> reminders = getReminders(isForceGet);
-        for(Reminder reminder : reminders)
-        {
-            if (id == reminder.getId())
-            {
+        List<Reminder> reminders = getReminders(isForce);
+        for (Reminder reminder : reminders) {
+            if (id == reminder.getId()) {
                 reminderByID = reminder;
                 break;
             }
@@ -242,8 +238,7 @@ public class DataManager {
         return reminderByID;
     }
 
-    public boolean updateReminder(Reminder reminder)
-    {
+    public boolean updateReminder(Reminder reminder) {
         long lRel = m_reminderDAL.updateReminderByID(reminder);
         if (1 == lRel)
             return true;

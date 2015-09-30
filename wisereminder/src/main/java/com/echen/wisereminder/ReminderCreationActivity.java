@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.Utility.ReminderUtility;
@@ -27,6 +26,12 @@ public class ReminderCreationActivity extends ReminderBaseActivity {
     @Override
     public void actionBtnOnClick(View view) {
         super.actionBtnOnClick(view);
-        DataManager.getInstance().addReminder(m_reminder);
+        long lRel = DataManager.getInstance().addReminder(m_reminder);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ConsistentString.RESULT_BOOLEAN, (lRel >= 0) ? true : false);
+        Intent intent = getIntent();
+        intent.putExtra(ConsistentString.BUNDLE_UNIT, bundle);
+        setResult(ConsistentParameter.RESULT_CODE_REMINDERCREATIONACTIVITY, intent); //set resultCode
+        finish();
     }
 }

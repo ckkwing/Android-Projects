@@ -1,5 +1,6 @@
 package com.echen.wisereminder;
 
+
 /**
  * Created by echen on 2015/5/25.
  */
@@ -13,5 +14,8 @@ public class ConsistentString {
     public static final String PARAM_REMINDER_ID = "param_reminder_id";
 //    public static String PARAM_REMINDER_ACTION = "param_reminder_action";
 
+    public static final String BUNDLE_UNIT = "bundle_unit";
 
+    public static final String RESULT_COMMON = "result_common";
+    public static final String RESULT_BOOLEAN = "result_boolean";
 }
