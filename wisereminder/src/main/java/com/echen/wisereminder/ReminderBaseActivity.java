@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.echen.androidcommon.DateTime;
 import com.echen.androidcommon.Interface.IDateTimeEvent;
 import com.echen.wisereminder.Adapter.CategoryListAdapter;
+import com.echen.wisereminder.Adapter.ReminderPropertiesAdapter;
 import com.echen.wisereminder.CustomControl.PriorityPopupWindow;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Category;
@@ -21,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import be.webelite.ion.Icon;
 import be.webelite.ion.IconView;
 import mirko.android.datetimepicker.date.DatePickerDialog;
 import mirko.android.datetimepicker.time.RadialPickerLayout;
@@ -51,39 +58,60 @@ public abstract class ReminderBaseActivity extends Activity {
     protected DatePickerDialog m_datePickerDialog = null;
     protected TimePickerDialog m_timePickerDialog24h = null;
 
+    //new UI
+    protected ReminderPropertiesAdapter propertiesAdapter;
+    protected ListView m_propertyListView;
+    protected TextView m_txtSelectedCategory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.reminder_action_view);
-        m_edtInfo = (EditText) findViewById(R.id.edtReminderInfo);
-        m_edtDueDate = (EditText) findViewById(R.id.edtDueDate);
-        m_edtDueTime = (EditText) findViewById(R.id.edtDueTime);
-        m_btnAction = (Button) findViewById(R.id.btnTest);
-        m_iconPriority = (IconView)findViewById(R.id.iconPriority);
-        m_iconPriority.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPriorityPopupWindow(m_iconPriority);
-            }
-        });
+//        m_edtInfo = (EditText) findViewById(R.id.edtReminderInfo);
+//        m_edtDueDate = (EditText) findViewById(R.id.edtDueDate);
+//        m_edtDueTime = (EditText) findViewById(R.id.edtDueTime);
+//        m_btnAction = (Button) findViewById(R.id.btnTest);
+//        m_iconPriority = (IconView)findViewById(R.id.iconPriority);
+//        m_iconPriority.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showPriorityPopupWindow(m_iconPriority);
+//            }
+//        });
+//        m_dateTime = new DateTime();
+//        m_dateTime.setDateTimeEvent(new IDateTimeEvent() {
+//            @Override
+//            public void DateTimeChanged(DateTime dateTime) {
+//                updateDateTimeOnUI(dateTime);
+//            }
+//        });
+//        createCategoryDropList();
+//        createDateTimePickerDialog();
 
-        m_dateTime = new DateTime();
-        m_dateTime.setDateTimeEvent(new IDateTimeEvent() {
-            @Override
-            public void DateTimeChanged(DateTime dateTime) {
-                updateDateTimeOnUI(dateTime);
-            }
-        });
-        createCategoryDropList();
-        createDateTimePickerDialog();
+        m_propertyListView = (ListView)findViewById(R.id.propertyList);
+        m_txtSelectedCategory = (TextView)findViewById(R.id.txtSelectedCategory);
     }
 
-    protected void createCategoryDropList() {
-        m_categories = DataManager.getInstance().getCategories(false);
-        CategoryListAdapter adapter = new CategoryListAdapter(this, m_categories);
-        m_spinnerCategory = (Spinner) findViewById(R.id.spnCategory);
-        m_spinnerCategory.setAdapter(adapter);
-        m_spinnerCategory.setOnItemSelectedListener(new SpinnerSelectedListener());
+//    protected void createCategoryDropList() {
+//        m_categories = DataManager.getInstance().getCategories(false);
+//        CategoryListAdapter adapter = new CategoryListAdapter(this, m_categories);
+//        m_spinnerCategory = (Spinner) findViewById(R.id.spnCategory);
+//        m_spinnerCategory.setAdapter(adapter);
+//        m_spinnerCategory.setOnItemSelectedListener(new SpinnerSelectedListener());
+//    }
+
+    protected void createProperties()
+    {
+        propertiesAdapter = new ReminderPropertiesAdapter(this, m_reminder);
+        m_propertyListView.setAdapter(propertiesAdapter);
+    }
+
+    protected void updateCategory(Category category)
+    {
+        this.m_selectedCategory = category;
+        m_txtSelectedCategory.setText(m_selectedCategory.getName());
     }
 
     protected void createDateTimePickerDialog()

@@ -13,8 +13,8 @@ import com.echen.androidcommon.Threading.ManualResetEvent;
 import com.echen.wisereminder.ConsistentString;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Reminder;
-import com.echen.wisereminder.Model.ReminderTask;
-import com.echen.wisereminder.Model.Task;
+import com.echen.wisereminder.Model.Task.ReminderTask;
+import com.echen.wisereminder.Model.Task.Task;
 import com.echen.wisereminder.Receiver.ScreenBroadcastReceiver;
 import com.echen.wisereminder.Receiver.TimeTickBroadcastReceiver;
 import java.util.ArrayList;
@@ -62,18 +62,21 @@ public class MainService extends Service {
 //        {
 //            m_taskList.add(new Task());
 //        }
-        //Temp task adding logic
-        for (Reminder reminder : DataManager.getInstance().getReminders(false))
-        {
-            if (reminder.getIsCompleted())
-                continue;
-            long currentUTCTimeLong = DateTime.getNowUTCTimeLong();
-            if (reminder.getDueTime_UTC() <= currentUTCTimeLong)
-            {
-                ReminderTask reminderTask = new ReminderTask(this);
-                m_taskList.add(reminderTask);
-            }
-        }
+
+//        //Temp task adding logic
+//        for (Reminder reminder : DataManager.getInstance().getReminders(false))
+//        {
+//            if (reminder.getIsCompleted())
+//                continue;
+//            long currentUTCTimeLong = DateTime.getNowUTCTimeLong();
+//            if (reminder.getDueTime_UTC() <= currentUTCTimeLong)
+//            {
+//                ReminderTask reminderTask = new ReminderTask(this);
+//                m_taskList.add(reminderTask);
+//            }
+//        }
+
+
         m_manualResetEvent.set();
         flags = START_STICKY;
         String strFormat = "onStartCommand flags: %d, startId: %d";

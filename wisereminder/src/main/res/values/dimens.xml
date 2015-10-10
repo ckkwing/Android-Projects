@@ -20,4 +20,7 @@
     <!--popup-->
     <dimen name="popup_arrow_margin">20dp</dimen>
     <dimen name="popup_priority_width">300dp</dimen>
+
+    <!--Icon-->
+    <dimen name="icon_common_size">20dp</dimen>
 </resources>

@@ -19,6 +19,7 @@
     <string name="subject_categories">Categories</string>
 
     <!--Category-->
+    <string name="category">Category</string>
     <string name="category_inbox">Inbox</string>
     <string name="category_work">Work</string>
     <string name="category_home">Home</string>
@@ -28,10 +29,17 @@
     <string name="reminder_creation">Create a reminder</string>
     <string name="reminder_edition">Edit a reminder</string>
     <string name="reminder_execution_time">Execution time:</string>
+    <string name="reminder_task">Task</string>
+    <string name="reminder_due_date">Due date</string>
 
 
     <!--Priority-->
     <string name="priority">Priority</string>
+    <string name="priority1">Priority 1</string>
+    <string name="priority2">Priority 2</string>
+    <string name="priority3">Priority 3</string>
+    <string name="priority4">Priority 4</string>
+
 
     <!--Settings-->
     <string name="action_settings">Settings</string>

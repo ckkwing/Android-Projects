@@ -42,6 +42,8 @@ public class MainActivity extends Activity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment m_NavigationDrawerFragment;
+    private int m_currentGroupPosition = -1;
+    private int m_currentChildPosition = -1;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -72,6 +74,13 @@ public class MainActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int groupPosition, int childPosition) {
+        m_currentGroupPosition = groupPosition;
+        m_currentChildPosition = childPosition;
+        navigateMainActivity(m_currentGroupPosition, m_currentChildPosition);
+    }
+
+    private void navigateMainActivity(int groupPosition, int childPosition)
+    {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -134,28 +143,41 @@ public class MainActivity extends Activity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode != ConsistentParameter.REQUEST_CODE_MAINACTIVITY)
+        Fragment fragmentMain = getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        if (null == fragmentMain)
+            return;
+        Activity rootActivity = fragmentMain.getActivity();
+        if (null == rootActivity)
+            return;
+//        SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootActivity.findViewById(R.id.swipe_ly);
+//        if (null == swipeLayout)
 //            return;
-//        switch (resultCode) {
-//            case ConsistentParameter.RESULT_CODE_REMINDERCREATIONACTIVITY: {
-//                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
-//                if (null != bundle) {
-//                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
-//                    if (bRel)
-//                        m_swipeLayout.setRefreshing(true);
-//                }
-//            }
-//            break;
-//            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY:{
-//                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
-//                if (null != bundle) {
-//                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
-//                    if (bRel)
-//                        m_swipeLayout.setRefreshing(true);
-//                }
-//            }
-//            break;
-//        }
+        if (requestCode != ConsistentParameter.REQUEST_CODE_MAINACTIVITY)
+            return;
+        switch (resultCode) {
+            case ConsistentParameter.RESULT_CODE_REMINDERCREATIONACTIVITY: {
+                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
+                if (null != bundle) {
+                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
+                    if (bRel) {
+//                        swipeLayout.setRefreshing(true);
+                        navigateMainActivity(m_currentGroupPosition, m_currentChildPosition);
+                    }
+                }
+            }
+            break;
+            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY:{
+                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
+                if (null != bundle) {
+                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
+                    if (bRel) {
+//                        swipeLayout.setRefreshing(true);
+                        navigateMainActivity(m_currentGroupPosition, m_currentChildPosition);
+                    }
+                }
+            }
+            break;
+        }
     }
 
     private WindowManager mWindowManager;
@@ -201,7 +223,7 @@ public class MainActivity extends Activity
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
             }
         });
     }
@@ -277,66 +299,14 @@ public class MainActivity extends Activity
                 }
 
                 if (null != m_selectedItem) {
-//                    List<Reminder> reminders = new ArrayList<>();
-//                    List<Reminder> selectedItemChildren = m_selectedItem.getReminders();
-//                    for (Iterator<Reminder> iterator = selectedItemChildren.iterator(); iterator.hasNext(); ) {
-//                        IListItem item = iterator.next();
-//                        if (null == item)
-//                            continue;
-//                        if (!(item instanceof Reminder))
-//                            continue;
-//                        Reminder reminder = (Reminder) item;
-//                        reminders.add(reminder);
-//                    }
                     ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
                     m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
                     reminderList.setAdapter(m_listAdapter);
-//                    reminderList.setOnItemClickListener(onItemClickListener);
                 }
             }
 
 
             return rootView;
-        }
-
-        private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Reminder reminder = (Reminder) parent.getItemAtPosition(position);
-                if (null == reminder)
-                    return;
-                Intent intent = new Intent(PlaceholderFragment.this.getActivity(), ReminderEditActivity.class);
-                intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
-//                    getActivity().startActivity(intent);
-                startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
-            }
-        };
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != ConsistentParameter.REQUEST_CODE_MAINACTIVITY)
-            return;
-        switch (resultCode) {
-            case ConsistentParameter.RESULT_CODE_REMINDERCREATIONACTIVITY: {
-                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
-                if (null != bundle) {
-                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
-                    if (bRel)
-                        m_swipeLayout.setRefreshing(true);
-                }
-            }
-            break;
-            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY:{
-                Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
-                if (null != bundle) {
-                    boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
-                    if (bRel)
-                        m_swipeLayout.setRefreshing(true);
-                }
-            }
-            break;
-        }
         }
 
         @Override

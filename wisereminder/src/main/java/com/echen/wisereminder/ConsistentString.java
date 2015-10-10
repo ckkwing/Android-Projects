@@ -18,4 +18,7 @@ public class ConsistentString {
 
     public static final String RESULT_COMMON = "result_common";
     public static final String RESULT_BOOLEAN = "result_boolean";
+
+    //Service
+    public static final String SERVICE_KEY_CALLER = "service_key_caller";
 }

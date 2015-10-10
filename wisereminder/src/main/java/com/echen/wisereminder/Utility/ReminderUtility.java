@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
 
+import com.echen.wisereminder.Data.DataManager;
+import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.R;
 
@@ -33,5 +35,22 @@ public class ReminderUtility {
                 break;
         }
         return iColor;
+    }
+
+    public static Category getOwner(Reminder reminder)
+    {
+        Category category = null;
+        if (null == reminder)
+            return category;
+
+        for(Category item : DataManager.getInstance().getCategories(false))
+        {
+            if (reminder.getOwnerId() == item.getId())
+            {
+                category = item;
+                break;
+            }
+        }
+        return category;
     }
 }

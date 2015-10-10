@@ -1,4 +1,4 @@
-package com.echen.wisereminder.Model;
+package com.echen.wisereminder.Model.Task;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,6 +13,7 @@ public class ReminderTask extends Task {
     public ReminderTask(Context context)
     {
         super(context);
+        m_type = TaskType.CheckReminder;
     }
 
     @Override

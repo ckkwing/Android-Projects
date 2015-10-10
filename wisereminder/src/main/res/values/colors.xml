@@ -14,6 +14,7 @@
     <color name="font_black">@color/common_black</color>
     <color name="font_white">@color/common_white</color>
     <color name="font_gray">@color/common_gray</color>
+    <color name="font_gold">@color/common_gold</color>
 
     <!--Priority-->
     <color name="priority_level1">#FFD68080</color>

@@ -2,8 +2,10 @@ package com.echen.wisereminder.Model;
 
 import android.util.Property;
 
+import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Database.ReminderTable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,6 +83,13 @@ public class Reminder implements IListItem {
 
     public long getDueTime_UTC() {
         return dueTime_UTC;
+    }
+
+    //return local time
+    public DateTime getDueTime()
+    {
+        Date localDate = DateTime.getLocalTimeFromUTC(dueTime_UTC);
+        return new DateTime(localDate);
     }
 
     public void setDueTime_UTC(long dueTime_UTC) {

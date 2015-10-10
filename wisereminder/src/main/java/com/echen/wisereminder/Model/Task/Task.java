@@ -1,4 +1,4 @@
-package com.echen.wisereminder.Model;
+package com.echen.wisereminder.Model.Task;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,9 +10,13 @@ public class Task {
 
     protected static final String TAG = "Task";
     protected Context m_context;
+    protected TaskType m_type = TaskType.Blank;
 
-    public Task(Context context)
-    {
+    public TaskType getTaskType() {
+        return this.m_type;
+    }
+
+    public Task(Context context) {
         m_context = context;
     }
 
