@@ -25,15 +25,13 @@ import be.webelite.ion.IconView;
  */
 public class ReminderPropertiesAdapter extends BaseAdapter {
 
-    public class ViewHolder
-    {
+    public class ViewHolder {
         IconView iconView;
         TextView txtTitle;
         TextView txtPropertyString;
     }
 
-    class PropertyItem
-    {
+    class PropertyItem {
         Icon Icon;
         String Title;
         String PropertyString;
@@ -44,6 +42,7 @@ public class ReminderPropertiesAdapter extends BaseAdapter {
     private Reminder m_reminder;
     private LayoutInflater m_layoutInflater;
     private List<PropertyItem> m_propertyItemList = new ArrayList<>();
+    private IPropertySelectedEvent m_iPropertySelectedEvent = null;
 
     public ReminderPropertiesAdapter(Context context, Reminder reminder) {
         if (null == context)
@@ -52,39 +51,14 @@ public class ReminderPropertiesAdapter extends BaseAdapter {
             throw new NullPointerException("ReminderPropertiesAdapter: Passed Reminder is NULL!");
         this.m_context = context;
         this.m_reminder = reminder;
-        this.m_layoutInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.m_layoutInflater = (LayoutInflater) m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ComposePropertyList();
     }
 
-    private void ComposePropertyList()
+    public ReminderPropertiesAdapter(Context context, Reminder reminder, IPropertySelectedEvent propertySelectedEvent)
     {
-        DateTime dueTime = m_reminder.getDueTime();
-        PropertyItem dueTimeProperty = new PropertyItem();
-        dueTimeProperty.Icon = Icon.ion_android_calendar;
-        dueTimeProperty.Title = m_context.getString(R.string.reminder_due_date);
-        dueTimeProperty.PropertyString = dueTime.toString();
-        m_propertyItemList.add(dueTimeProperty);
-
-        PropertyItem priorityProperty = new PropertyItem();
-        priorityProperty.Icon = Icon.ion_flag;
-        priorityProperty.Title = m_context.getString(R.string.priority);
-        switch (m_reminder.getPriority())
-        {
-            case LEVEL1:
-                priorityProperty.PropertyString = m_context.getString(R.string.priority1);
-                break;
-            case LEVEL2:
-                priorityProperty.PropertyString = m_context.getString(R.string.priority2);
-                break;
-            case LEVEL3:
-                priorityProperty.PropertyString = m_context.getString(R.string.priority3);
-                break;
-            case LEVEL4:
-                priorityProperty.PropertyString = m_context.getString(R.string.priority4);
-                break;
-        }
-        m_propertyItemList.add(priorityProperty);
-
+        this(context, reminder);
+        this.m_iPropertySelectedEvent = propertySelectedEvent;
     }
 
     @Override
@@ -104,23 +78,26 @@ public class ReminderPropertiesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        try
-        {
+        try {
             if (m_propertyItemList.isEmpty())
                 return convertView;
-            ViewHolder viewHolder;
-            if (null == convertView)
-            {
+            final ViewHolder viewHolder;
+            if (null == convertView) {
                 convertView = m_layoutInflater.inflate(R.layout.reminder_property_view, null);
                 viewHolder = new ViewHolder();
-                viewHolder.iconView = (IconView)convertView.findViewById(R.id.icon);
-                viewHolder.txtTitle = (TextView)convertView.findViewById(R.id.txtPropertyTitle);
-                viewHolder.txtPropertyString = (TextView)convertView.findViewById(R.id.txtPropertyContent);
+                viewHolder.iconView = (IconView) convertView.findViewById(R.id.icon);
+                viewHolder.txtTitle = (TextView) convertView.findViewById(R.id.txtPropertyTitle);
+                viewHolder.txtPropertyString = (TextView) convertView.findViewById(R.id.txtPropertyContent);
                 convertView.setTag(viewHolder);
-            }
-            else
-            {
-                viewHolder = (ViewHolder)convertView.getTag();
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (m_iPropertySelectedEvent != null)
+                            m_iPropertySelectedEvent.onPropertySelected(viewHolder.txtTitle.getText().toString());
+                    }
+                });
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
             }
 
             final PropertyItem propertyItem = m_propertyItemList.get(position);
@@ -128,11 +105,50 @@ public class ReminderPropertiesAdapter extends BaseAdapter {
             viewHolder.txtTitle.setText(propertyItem.Title);
             viewHolder.txtPropertyString.setText(propertyItem.PropertyString);
 
-        }
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
+
         return convertView;
     }
+
+    private void ComposePropertyList() {
+        DateTime dueTime = m_reminder.getDueTime();
+        PropertyItem dueTimeProperty = new PropertyItem();
+        dueTimeProperty.Icon = Icon.ion_android_calendar;
+        dueTimeProperty.Title = m_context.getString(R.string.reminder_due_date);
+        dueTimeProperty.PropertyString = dueTime.toString();
+        m_propertyItemList.add(dueTimeProperty);
+
+        PropertyItem priorityProperty = new PropertyItem();
+        priorityProperty.Icon = Icon.ion_flag;
+        priorityProperty.Title = m_context.getString(R.string.priority);
+        switch (m_reminder.getPriority()) {
+            case LEVEL1:
+                priorityProperty.PropertyString = m_context.getString(R.string.priority1);
+                break;
+            case LEVEL2:
+                priorityProperty.PropertyString = m_context.getString(R.string.priority2);
+                break;
+            case LEVEL3:
+                priorityProperty.PropertyString = m_context.getString(R.string.priority3);
+                break;
+            case LEVEL4:
+                priorityProperty.PropertyString = m_context.getString(R.string.priority4);
+                break;
+        }
+        m_propertyItemList.add(priorityProperty);
+
+        PropertyItem alertTimeProperty = new PropertyItem();
+        DateTime alertTime = m_reminder.getAlertTime();
+        alertTimeProperty.Icon = Icon.ion_android_alarm;
+        alertTimeProperty.Title = m_context.getString(R.string.reminder_alert_date);
+        if (0 == alertTime.toUTCLong()) {
+        } else {
+            alertTimeProperty.PropertyString = alertTime.toString();
+        }
+        m_propertyItemList.add(alertTimeProperty);
+    }
+
 }

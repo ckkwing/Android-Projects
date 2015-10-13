@@ -106,6 +106,23 @@ public class Reminder implements IListItem {
         this.creationTime_UTC = creationTime_UTC;
     }
 
+    protected long alertTime_UTC = 0;
+
+    public long getAlertTime_UTC() {
+        return alertTime_UTC;
+    }
+
+    //return local time
+    public DateTime getAlertTime()
+    {
+        Date localDate = DateTime.getLocalTimeFromUTC(alertTime_UTC);
+        return new DateTime(localDate);
+    }
+
+    public void setAlertTime_UTC(long alertTime_UTC) {
+        this.alertTime_UTC = alertTime_UTC;
+    }
+
     protected ReminderType reminderType = ReminderType.Once;
 
     public ReminderType getReminderType() {

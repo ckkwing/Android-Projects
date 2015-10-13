@@ -30,6 +30,8 @@ public class ReminderTable {
 
     public static final String MODIFIED_TIME = "modified_time_utc";
 
+    public static final String ALERT_TIME = "alert_time_utc";
+
     //0 is in process, 1 is completed
     public static final String COMPLETED = "completed";
 
@@ -75,7 +77,8 @@ public class ReminderTable {
                 COMPLETED + " INTEGER," +
                 DUE_TIME + " INTEGER," +
                 CREATION_TIME + " INTEGER," +
-                MODIFIED_TIME + " INTEGER" +
+                MODIFIED_TIME + " INTEGER," +
+                ALERT_TIME + " INTEGER" +
                 ");";
         return creation;
     }
@@ -97,6 +100,7 @@ public class ReminderTable {
         reminder.setCreationTime_UTC(cursor.getLong(cursor.getColumnIndex(ReminderTable.CREATION_TIME)));
         Integer priority = cursor.getInt(cursor.getColumnIndex(ReminderTable.PRIORITY));
         reminder.setPriority(Reminder.Priority.values()[priority]);
+        reminder.setAlertTime_UTC(cursor.getLong(cursor.getColumnIndex(ReminderTable.ALERT_TIME)));
         return reminder;
     }
 
@@ -110,6 +114,7 @@ public class ReminderTable {
         cv.put(ReminderTable.CREATION_TIME, reminder.getCreationTime_UTC());
         cv.put(ReminderTable.DUE_TIME, reminder.getDueTime_UTC());
         cv.put(ReminderTable.PRIORITY, reminder.getPriority().ordinal());
+        cv.put(ReminderTable.ALERT_TIME, reminder.getAlertTime_UTC());
         return cv;
     }
 }

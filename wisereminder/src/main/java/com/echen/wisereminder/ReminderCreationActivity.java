@@ -17,18 +17,18 @@ public class ReminderCreationActivity extends ReminderBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setTitle(R.string.reminder_creation);
         m_reminder = new Reminder();
         m_reminder.setPriority(Reminder.Priority.LEVEL4);
         Category inboxCategory = CategoryUtility.getInboxCategory();
         if (null != inboxCategory)
             m_reminder.setOwnerId(inboxCategory.getId());
+        super.onCreate(savedInstanceState);
+//        setTitle(R.string.reminder_creation);
+
 //        m_iconPriority.setTextColor(ReminderUtility.getPriorityColorInt(m_reminder.getPriority(), this));
 //        updateDateTimeOnUI(m_dateTime);
 
-        updateCategory(ReminderUtility.getOwner(m_reminder));
-        createProperties();
+
     }
 
     @Override
