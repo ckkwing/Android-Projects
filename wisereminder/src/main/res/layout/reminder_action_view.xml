@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/reminder_task"
-                android:textColor="@color/font_gold" />
+                android:textColor="@color/font_gold"/>
 
             <EditText
                 android:id="@+id/edtTaskName"
@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/taskWrapper"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:paddingLeft="50dp"
             android:paddingRight="10dp">
@@ -103,7 +104,8 @@
         android:background="@color/common_white"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:listSelector="@drawable/selector_default_listitem"/>
 
     <com.shamanland.fab.FloatingActionButton
         android:id="@+id/fab"

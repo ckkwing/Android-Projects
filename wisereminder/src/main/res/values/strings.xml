@@ -4,6 +4,8 @@
     <!--Common-->
     <string name="common_save">Save</string>
     <string name="common_edit">Edit</string>
+    <string name="common_none">None</string>
+    <string name="common_never">Never</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -40,7 +42,20 @@
     <string name="priority3">Priority 3</string>
     <string name="priority4">Priority 4</string>
 
-
     <!--Settings-->
     <string name="action_settings">Settings</string>
+    <string name="setting_date">Date</string>
+    <string name="setting_time">Time</string>
+
+    <!--Notification-->
+    <string name="action_notification">Notification</string>
+    <string name="notification_task_both">%1$s tasks for today, %2$s overdue.</string>
+    <string name="notification_task_today">%s tasks for today.</string>
+    <string name="notification_task_overdue">No tasks for today, %s overdue.</string>
+    <string name="notification_press_to_review">Press to review tasks</string>
+    <string name="notification_to_do">Tasks better to do</string>
+
+
+    <!--Error-->
+    <string name="error_task_name_empty">Task name cannot be empty</string>
 </resources>

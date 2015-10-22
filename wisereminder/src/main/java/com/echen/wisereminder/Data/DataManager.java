@@ -116,14 +116,68 @@ public class DataManager {
                 }
             }
             break;
-            case Overdue:
-                break;
-            case Today:
-                break;
+            case Overdue: {
+                if (isForce)
+                    reminders = m_reminderDAL.getOverdueReminders();
+                else {
+                    DateTime today = DateTime.today();
+                    for (Reminder reminder : m_reminders) {
+                        if (null == reminder)
+                            continue;
+                        DateTime dateTime = reminder.getDueTime();
+//                        DateTime dateNow = DateTime.now();
+//                        dateNow.update(dateNow.getYear(), dateNow.getMonth(), dateNow.getDay(), dateNow.getHour(), dateNow.getMinute(), dateNow.getSecond());
+//                        if (dateTime.toUTCLong() > 0 && dateTime.toUTCLong() < dateNow.toUTCLong())
+//                        {
+//                            reminders.add(reminder);
+//                        }
+
+                        if (dateTime.toUTCLong() > 0 && dateTime.toUTCLong() < today.toUTCLong()) {
+                            reminders.add(reminder);
+                        }
+                    }
+                }
+            }
+            break;
+            case Today: {
+                if (isForce)
+                    reminders = m_reminderDAL.getTodayReminders();
+                else {
+                    for (Reminder reminder : m_reminders) {
+                        if (null == reminder)
+                            continue;
+                        DateTime dateTime = reminder.getDueTime();
+                        DateTime dateNow = DateTime.now();
+                        if (dateTime.getDay() == dateNow.getDay() &&
+                                dateTime.getMonth() == dateNow.getMonth() &&
+                                dateTime.getYear() == dateNow.getYear()) {
+                            reminders.add(reminder);
+                        }
+                    }
+                }
+            }
+            break;
             case Next7Days:
+                if (isForce)
+                    reminders = m_reminderDAL.getNext7DaysReminders();
+                else {
+                    DateTime today = DateTime.today();
+                    DateTime tomorrow = today.addDays(1);
+                    DateTime next7Days = today.addDays(7);
+                    for (Reminder reminder : m_reminders) {
+                        if (null == reminder)
+                            continue;
+                        DateTime dateTime = reminder.getDueTime();
+                        if (dateTime.toUTCLong() >= tomorrow.toUTCLong() && dateTime.toUTCLong() < next7Days.toUTCLong()) {
+                            reminders.add(reminder);
+                        }
+                    }
+                }
                 break;
-            case Categories:
-                break;
+            case Categories: {
+                //Expand folder in getView
+            }
+            break;
         }
         return reminders;
     }
@@ -132,18 +186,8 @@ public class DataManager {
         return this.m_subjects;
     }
 
-    public void addDefaultCategories()
-    {
+    public void addDefaultCategories() {
         long retId = -1;
-
-        //Test
-        for(int i =0; i< 5; i++)
-        {
-            Reminder testReminder = new Reminder("Reminder " + String.valueOf(i));
-            testReminder.setOwnerId(retId);
-            m_reminderDAL.addReminder(testReminder);
-        }
-        //Test
 
         Category inboxCategory = new Category(getString(R.string.category_inbox));
         inboxCategory.setIsDefault(true);
@@ -153,6 +197,14 @@ public class DataManager {
         retId = m_categoryDAL.addCategory(inboxCategory);
         if (retId <= 0)
             return;
+
+        //Test
+        for (int i = 0; i < 5; i++) {
+            Reminder testReminder = new Reminder("Reminder " + String.valueOf(i));
+            testReminder.setOwnerId(retId);
+            m_reminderDAL.addReminder(testReminder);
+        }
+        //Test
 
         Category workCategory = new Category(getString(R.string.category_work));
         workCategory.setIsDefault(true);

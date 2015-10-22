@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.echen.wisereminder.ConsistentString;
 import com.echen.wisereminder.Service.MainService;
 
+import java.util.Calendar;
+
 /**
  * Created by echen on 2015/9/23.
  */

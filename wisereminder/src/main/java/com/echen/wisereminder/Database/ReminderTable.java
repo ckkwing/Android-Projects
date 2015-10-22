@@ -3,6 +3,7 @@ package com.echen.wisereminder.Database;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Model.Reminder;
 
 /**
@@ -111,9 +112,9 @@ public class ReminderTable {
         cv.put(ReminderTable.OWNER_ID, reminder.getOwnerId());
         cv.put(ReminderTable.STAR, ReminderTable.isStarToDBValue(reminder.getIsStar()));
         cv.put(ReminderTable.COMPLETED, ReminderTable.isCompletedToDBValue(reminder.getIsCompleted()));
+        cv.put(ReminderTable.PRIORITY, reminder.getPriority().ordinal());
         cv.put(ReminderTable.CREATION_TIME, reminder.getCreationTime_UTC());
         cv.put(ReminderTable.DUE_TIME, reminder.getDueTime_UTC());
-        cv.put(ReminderTable.PRIORITY, reminder.getPriority().ordinal());
         cv.put(ReminderTable.ALERT_TIME, reminder.getAlertTime_UTC());
         return cv;
     }

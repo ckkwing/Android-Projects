@@ -37,6 +37,29 @@ public class ReminderUtility {
         return iColor;
     }
 
+    public static String getPriorityString(Reminder.Priority priority, Context context)
+    {
+        String str = "";
+        if (null == context)
+            throw new IllegalArgumentException("Context mustn't be null.");
+        switch (priority)
+        {
+            case LEVEL1:
+                str = context.getString(R.string.priority1);
+                break;
+            case LEVEL2:
+                str = context.getString(R.string.priority2);
+                break;
+            case LEVEL3:
+                str = context.getString(R.string.priority3);
+                break;
+            case LEVEL4:
+                str = context.getString(R.string.priority4);
+                break;
+        }
+        return str;
+    }
+
     public static Category getOwner(Reminder reminder)
     {
         Category category = null;
@@ -53,4 +76,6 @@ public class ReminderUtility {
         }
         return category;
     }
+
+
 }

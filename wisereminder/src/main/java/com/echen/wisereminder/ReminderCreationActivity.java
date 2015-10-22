@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Category;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.Utility.CategoryUtility;
-import com.echen.wisereminder.Utility.ReminderUtility;
 
 /**
  * Created by echen on 2015/5/19.
@@ -26,14 +26,15 @@ public class ReminderCreationActivity extends ReminderBaseActivity {
 //        setTitle(R.string.reminder_creation);
 
 //        m_iconPriority.setTextColor(ReminderUtility.getPriorityColorInt(m_reminder.getPriority(), this));
-//        updateDateTimeOnUI(m_dateTime);
+//        updateDateTimeOnUI(m_dueDateTime);
 
 
     }
 
     @Override
-    public void actionBtnOnClick(View view) {
-        super.actionBtnOnClick(view);
+    public void onAction() {
+        super.onAction();
+        m_reminder.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
         long lRel = DataManager.getInstance().addReminder(m_reminder);
         Bundle bundle = new Bundle();
         bundle.putBoolean(ConsistentString.RESULT_BOOLEAN, (lRel >= 0) ? true : false);

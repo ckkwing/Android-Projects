@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Data.DataManager;
-import com.echen.wisereminder.Utility.ReminderUtility;
-
-import java.util.Date;
+import com.echen.wisereminder.Model.Reminder;
 
 /**
  * Created by echen on 2015/5/28.
@@ -21,7 +18,13 @@ public class ReminderEditActivity extends ReminderBaseActivity {
         long reminderID = intent.getLongExtra(ConsistentString.PARAM_REMINDER_ID, -1);
         if (-1 != reminderID)
         {
-            m_reminder = DataManager.getInstance().getReminderByID(reminderID,false);
+            Reminder reminder;
+            reminder = DataManager.getInstance().getReminderByID(reminderID,false);
+            try {
+                m_reminder = (Reminder)reminder.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
         super.onCreate(savedInstanceState);
 //        setTitle(R.string.reminder_edition);
@@ -29,14 +32,14 @@ public class ReminderEditActivity extends ReminderBaseActivity {
         m_edtReminderName.setText(m_reminder.getName());
 //        long utcDueTime = m_reminder.getDueTime_UTC();
 //        Date localDate = DateTime.getLocalTimeFromUTC(utcDueTime);
-//        m_dateTime.update(localDate);
+//        m_dueDateTime.update(localDate);
 //        m_iconPriority.setTextColor(ReminderUtility.getPriorityColorInt(m_reminder.getPriority(), this));
-//        updateDateTimeOnUI(m_dateTime);
+//        updateDateTimeOnUI(m_dueDateTime);
     }
 
     @Override
-    public void actionBtnOnClick(View view) {
-        super.actionBtnOnClick(view);
+    public void onAction() {
+        super.onAction();
         boolean bRel = DataManager.getInstance().updateReminder(m_reminder);
         Bundle bundle = new Bundle();
         bundle.putBoolean(ConsistentString.RESULT_BOOLEAN, bRel);

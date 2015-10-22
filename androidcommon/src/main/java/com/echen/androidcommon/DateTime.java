@@ -1,5 +1,7 @@
 package com.echen.androidcommon;
 
+import android.util.Log;
+
 import com.echen.androidcommon.Interface.IDateTimeEvent;
 
 import java.text.DateFormat;
@@ -13,7 +15,8 @@ import java.util.Date;
  */
 public class DateTime {
 
-    public static String DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+    private static final String TAG = "DateTime";
+    public static String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private IDateTimeEvent m_iDateTimeEvent = null;
     private Calendar m_localCalendar = null;
 
@@ -34,34 +37,99 @@ public class DateTime {
         m_localCalendar.setTime(date);
     }
 
-    public void setDateTimeEvent(IDateTimeEvent event)
+    public DateTime(long localMillisecond) {
+        m_localCalendar = Calendar.getInstance();
+        m_localCalendar.clear();
+        m_localCalendar.setTimeInMillis(localMillisecond);
+    }
+
+    public int getYear() {
+        return m_localCalendar.get(Calendar.YEAR);
+    }
+
+    public int getMonth() {
+        return m_localCalendar.get(Calendar.MONTH);
+    }
+
+    public int getDay() {
+        return m_localCalendar.get(Calendar.DATE);
+    }
+
+    public int getHour(){
+        return m_localCalendar.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public int getMinute(){
+        return m_localCalendar.get(Calendar.MINUTE);
+    }
+
+    public int getSecond(){
+        return m_localCalendar.get(Calendar.SECOND);
+    }
+
+    public static DateTime minValue() {
+        Calendar minCalendar = Calendar.getInstance();
+        minCalendar.clear();
+        minCalendar.set(1970, 0, 1, 0, 0, 0);
+        return new DateTime(minCalendar);
+    }
+
+    public static DateTime maxValue() {
+        Calendar maxCalendar = Calendar.getInstance();
+        maxCalendar.clear();
+        maxCalendar.set(2100, 0, 1, 0, 0, 0);
+        return new DateTime(maxCalendar);
+    }
+
+    public static DateTime now() {
+        return new DateTime();
+    }
+
+    public static DateTime today() {
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.clear();
+        todayCalendar.set(Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DATE));
+        return new DateTime(todayCalendar);
+    }
+
+    public DateTime addDays(int value)
     {
+        DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
+        newDateTime.getLocalCalendar().add(Calendar.DATE, value);
+        return newDateTime;
+    }
+
+    public void setDateTimeEvent(IDateTimeEvent event) {
         this.m_iDateTimeEvent = event;
     }
 
-    public void update(int year, int month, int day)
-    {
-        m_localCalendar.set(year,month,day);
+    public void update(int year, int month, int day) {
+        m_localCalendar.set(year, month, day);
         if (null != m_iDateTimeEvent)
             m_iDateTimeEvent.DateTimeChanged(this);
     }
 
-    public void update(int year, int month, int day, int hourOfDay, int minute)
-    {
-        m_localCalendar.set(year,month,day, hourOfDay, minute);
+    public void update(int year, int month, int day, int hourOfDay, int minute) {
+        m_localCalendar.set(year, month, day, hourOfDay, minute);
         if (null != m_iDateTimeEvent)
             m_iDateTimeEvent.DateTimeChanged(this);
     }
 
-    public void update(Date date)
-    {
+    public void update(int year, int month, int day, int hourOfDay, int minute, int second) {
+        m_localCalendar.set(year, month, day, hourOfDay, minute, second);
+        if (null != m_iDateTimeEvent)
+            m_iDateTimeEvent.DateTimeChanged(this);
+    }
+
+    public void update(Date date) {
         m_localCalendar.setTime(date);
         if (null != m_iDateTimeEvent)
             m_iDateTimeEvent.DateTimeChanged(this);
     }
 
-    public long toUTCLong()
-    {
+    public long toUTCLong() {
         return getUTCTimeLong(m_localCalendar.getTime());
     }
 
@@ -70,7 +138,7 @@ public class DateTime {
         return toString(DATETIME_FORMAT);
     }
 
-        public String toString(String format) {
+    public String toString(String format) {
         String strFormat = (null == format || format.isEmpty()) ? DATETIME_FORMAT : format;
         DateFormat dateFormat = new SimpleDateFormat(strFormat);
         return dateFormat.format(m_localCalendar.getTime());
@@ -110,8 +178,7 @@ public class DateTime {
         return cal.getTime().getTime();
     }
 
-    public static long getUTCTimeLong(Date localDate)
-    {
+    public static long getUTCTimeLong(Date localDate) {
         Calendar cal = getUTCCalendarFromLocal(localDate);
         return cal.getTime().getTime();
     }
@@ -155,5 +222,44 @@ public class DateTime {
     public static String getLocalTimeStrFromUTC(long milliseconds) {
         SimpleDateFormat sdf = new SimpleDateFormat(DATETIME_FORMAT);
         return sdf.format(getLocalTimeFromUTC(milliseconds));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            Log.d(TAG, "equals compared datetime = null, return false");
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            Log.d(TAG, "equals getClass() != obj.getClass(), return false");
+            return false;
+        }
+        DateTime dateTime = (DateTime) obj;
+
+        if (m_localCalendar == null) {
+            if (dateTime.getLocalCalendar() != null) {
+                Log.d(TAG, "equals dateTime.getLocalCalendar() != null, return false");
+                return false;
+            }
+        } else {
+
+            if (this.toUTCLong() == dateTime.toUTCLong()) {
+                Log.d(TAG, "millis equal, return true");
+                return true;
+            } else {
+                Log.d(TAG, "millis not equal, return false");
+                return false;
+            }
+        }
+//        else if (!m_localCalendar.equals(dateTime.getLocalCalendar())) {
+//            return false;
+//        }
+
+
+        Log.d(TAG, "end equal, return true");
+        return true;
     }
 }

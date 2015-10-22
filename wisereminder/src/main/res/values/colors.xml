@@ -3,7 +3,8 @@
     <color name="frame_main_color">#FF63B2EF</color>
     <color name="common_white">#FFFFFFFF</color>
     <color name="common_black">#FF000000</color>
-    <!--<color name="common_gray">#615b5b</color>-->
+    <color name="common_gray_light">#e8e7e4</color>
+    <color name="common_gray_dark">#615b5b</color>
     <color name="common_gray">#7f7f7f</color>
     <color name="common_gold">#FFD76E</color>
 

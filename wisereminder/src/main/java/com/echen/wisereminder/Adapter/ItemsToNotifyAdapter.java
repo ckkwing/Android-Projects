@@ -3,7 +3,6 @@ package com.echen.wisereminder.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import com.echen.wisereminder.ConsistentParameter;
 import com.echen.wisereminder.ConsistentString;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Reminder;
+import com.echen.wisereminder.Model.Subject;
 import com.echen.wisereminder.R;
 import com.echen.wisereminder.ReminderEditActivity;
 import com.echen.wisereminder.Utility.ReminderUtility;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by echen on 2015/5/19.
+ * Created by echen on 2015/10/22.
  */
-public class ReminderListAdapter extends BaseAdapter {
-    private final String TAG = "ReminderListAdapter";
-    protected Context m_context = null;
-    protected List<Reminder> m_reminderList = new ArrayList<>();
+public class ItemsToNotifyAdapter extends BaseAdapter {
+    private final String TAG = "ItemsToNotifyAdapter";
+    private Context m_context;
     protected LayoutInflater m_layoutInflater = null;
+    private List<Reminder> m_reminderList = new ArrayList<>();
 
     public class ViewHolder
     {
@@ -43,19 +43,14 @@ public class ReminderListAdapter extends BaseAdapter {
         public ImageView PriorityColor;
     }
 
-    public ReminderListAdapter(Context context, List<Reminder> reminderList)
+    public ItemsToNotifyAdapter(Context context)
     {
-        this.m_context = context;
-        if (null == context)
-            throw new NullPointerException("ReminderListAdapter: Passed Context is NULL!");
-        this.m_reminderList = reminderList;
+        m_context = context;
         this.m_layoutInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public void updateSource(List<Reminder> reminderList)
-    {
-        this.m_reminderList = reminderList;
-        ReminderListAdapter.this.notifyDataSetChanged();
+        List<Reminder> overdueReminders = DataManager.getInstance().getRemindersBySubject(Subject.Type.Overdue,true);
+        m_reminderList.addAll(overdueReminders);
+        List<Reminder> todayReminders = DataManager.getInstance().getRemindersBySubject(Subject.Type.Today, true);
+        m_reminderList.addAll(todayReminders);
     }
 
     @Override
@@ -102,10 +97,6 @@ public class ReminderListAdapter extends BaseAdapter {
             viewHolder.Name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(m_context, ReminderEditActivity.class);
-//                    intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
-//                    m_context.startActivity(intent);
-
                     Intent intent = new Intent(m_context, ReminderEditActivity.class);
                     intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
                     ((Activity) m_context).startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
@@ -120,7 +111,7 @@ public class ReminderListAdapter extends BaseAdapter {
                     reminder.setIsStar(starToSet);
                     if (!DataManager.getInstance().updateReminder(reminder))
                         reminder.setIsStar(!starToSet);
-                    ReminderListAdapter.this.notifyDataSetChanged();
+                    ItemsToNotifyAdapter.this.notifyDataSetChanged();
                 }
             });
 
@@ -133,7 +124,7 @@ public class ReminderListAdapter extends BaseAdapter {
                         reminder.setIsCompleted(false);
                     else {
                         m_reminderList.remove(reminder);
-                        ReminderListAdapter.this.notifyDataSetChanged();
+                        ItemsToNotifyAdapter.this.notifyDataSetChanged();
                     }
                 }
             });
@@ -147,5 +138,4 @@ public class ReminderListAdapter extends BaseAdapter {
         }
         return convertView;
     }
-
 }

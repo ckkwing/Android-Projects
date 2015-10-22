@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by echen on 2015/5/15.
  */
-public class Reminder implements IListItem {
+public class Reminder implements IListItem, Cloneable {
     public enum ReminderType {
         Once,
         Everyday,
@@ -79,7 +79,7 @@ public class Reminder implements IListItem {
         this.isCompleted = isCompleted;
     }
 
-    protected long dueTime_UTC = 0;
+    protected long dueTime_UTC = DateTime.minValue().toUTCLong();
 
     public long getDueTime_UTC() {
         return dueTime_UTC;
@@ -96,7 +96,14 @@ public class Reminder implements IListItem {
         this.dueTime_UTC = dueTime_UTC;
     }
 
-    protected long creationTime_UTC = 0;
+    protected long creationTime_UTC = DateTime.minValue().toUTCLong();
+
+    //return local time
+    public DateTime getCreationTime()
+    {
+        Date localDate = DateTime.getLocalTimeFromUTC(creationTime_UTC);
+        return new DateTime(localDate);
+    }
 
     public long getCreationTime_UTC() {
         return creationTime_UTC;
@@ -106,7 +113,7 @@ public class Reminder implements IListItem {
         this.creationTime_UTC = creationTime_UTC;
     }
 
-    protected long alertTime_UTC = 0;
+    protected long alertTime_UTC = DateTime.minValue().toUTCLong();
 
     public long getAlertTime_UTC() {
         return alertTime_UTC;
@@ -149,5 +156,19 @@ public class Reminder implements IListItem {
 
     public Reminder(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Reminder clonedReminder = null;
+        try
+        {
+            clonedReminder = (Reminder) super.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            e.printStackTrace();
+        }
+        return clonedReminder;
     }
 }

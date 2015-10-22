@@ -8,16 +8,17 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import com.echen.androidcommon.DateTime;
+
 import com.echen.androidcommon.Threading.ManualResetEvent;
 import com.echen.wisereminder.ConsistentString;
-import com.echen.wisereminder.Data.DataManager;
-import com.echen.wisereminder.Model.Reminder;
-import com.echen.wisereminder.Model.Task.ReminderTask;
 import com.echen.wisereminder.Model.Task.Task;
+import com.echen.wisereminder.Model.Task.TaskFactory;
+import com.echen.wisereminder.Model.Task.TaskType;
+import com.echen.wisereminder.Receiver.HomeKeyEventBroadCastReceiver;
 import com.echen.wisereminder.Receiver.ScreenBroadcastReceiver;
 import com.echen.wisereminder.Receiver.TimeTickBroadcastReceiver;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -29,14 +30,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MainService extends Service {
 
     private static final String TAG = "MainService";
-//    private static final int NOTIFICATION_ID = 1;
     private Thread m_thread = null;
     private boolean m_isWorking = true;
     private Lock m_lock = new ReentrantLock(true);
     private ManualResetEvent m_manualResetEvent = new ManualResetEvent(false);
     private List<Task> m_taskList = new ArrayList<>();
-//    private NotificationManager m_NotificationManager;
-//    private NotificationCompat.Builder m_builder;
 
     public class ServiceBinder extends Binder {
         public MainService getService()
@@ -51,31 +49,34 @@ public class MainService extends Service {
     public void onCreate() {
         super.onCreate();
         registerSystemReceiver();
-//        m_NotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        m_builder = new NotificationCompat.Builder(this);
         startBackgroundTask();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        for(int i =0; i<1; i++)
-//        {
-//            m_taskList.add(new Task());
-//        }
-
-//        //Temp task adding logic
-//        for (Reminder reminder : DataManager.getInstance().getReminders(false))
-//        {
-//            if (reminder.getIsCompleted())
-//                continue;
-//            long currentUTCTimeLong = DateTime.getNowUTCTimeLong();
-//            if (reminder.getDueTime_UTC() <= currentUTCTimeLong)
-//            {
-//                ReminderTask reminderTask = new ReminderTask(this);
-//                m_taskList.add(reminderTask);
-//            }
-//        }
-
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        if (hour == 14 && minute == 30)
+        {
+            m_lock.lock();
+            boolean isCheckReminderTaskExist = false;
+            for (Iterator<Task> iterator = m_taskList.iterator(); iterator
+                    .hasNext(); ) {
+                Task task = iterator.next();
+                if (null == task)
+                    continue;
+                if (task.getTaskType() == TaskType.CheckReminder) {
+                    isCheckReminderTaskExist = true;
+                    break;
+                }
+            }
+            if (!isCheckReminderTaskExist) {
+                Task checkReminderTask = TaskFactory.createTask(TaskType.CheckReminder, this);
+                m_taskList.add(checkReminderTask);
+            }
+            m_lock.unlock();
+        }
 
         m_manualResetEvent.set();
         flags = START_STICKY;
@@ -112,29 +113,11 @@ public class MainService extends Service {
         IntentFilter filterTimeTick=new IntentFilter();
         filterTimeTick.addAction(Intent.ACTION_TIME_TICK);
         registerReceiver(new TimeTickBroadcastReceiver(), filterTimeTick);
+
+//        IntentFilter filterHomeKey = new IntentFilter();
+//        filterHomeKey.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+//        registerReceiver(new HomeKeyEventBroadCastReceiver(), filterTimeTick);
     }
-
-//    private void sendNotification()
-//    {
-//        m_builder.setContentTitle("测试标题")//设置通知栏标题
-//                .setContentText("测试内容") //设置通知栏显示内容
-//                .setContentIntent(getDefaultIntent(Notification.FLAG_AUTO_CANCEL)) //设置通知栏点击意图
-//            //  .setNumber(number) //设置通知集合的数量
-//                .setTicker("测试通知来啦") //通知首次出现在通知栏，带上升动画效果的
-//                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-//                .setPriority(Notification.PRIORITY_DEFAULT) //设置该通知优先级
-//            //  .setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消
-//                .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
-//                .setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
-//           //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
-//                .setSmallIcon(R.drawable.ic_launcher);//设置通知小ICON
-//        m_NotificationManager.notify(NOTIFICATION_ID, m_builder.build());
-//    }
-
-//    private PendingIntent getDefaultIntent(int flags){
-//        PendingIntent pendingIntent= PendingIntent.getActivity(this, 1, new Intent(), flags);
-//        return pendingIntent;
-//    }
 
     private void startBackgroundTask()
     {
