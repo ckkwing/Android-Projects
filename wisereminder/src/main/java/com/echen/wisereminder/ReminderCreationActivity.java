@@ -36,6 +36,10 @@ public class ReminderCreationActivity extends ReminderBaseActivity {
         super.onAction();
         m_reminder.setCreationTime_UTC(DateTime.getNowUTCTimeLong());
         long lRel = DataManager.getInstance().addReminder(m_reminder);
+        if (lRel > 0)
+        {
+            //Set Alarm
+        }
         Bundle bundle = new Bundle();
         bundle.putBoolean(ConsistentString.RESULT_BOOLEAN, (lRel >= 0) ? true : false);
         Intent intent = getIntent();

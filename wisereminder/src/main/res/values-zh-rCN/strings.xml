@@ -1,14 +1,81 @@
 <resources>
     <string name="app_name">Wisereminder</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <!--Common-->
+    <string name="common_save">保存</string>
+    <string name="common_edit">编辑</string>
+    <string name="common_none">空</string>
+    <string name="common_never">从不</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">打开导航面板</string>
+    <string name="navigation_drawer_close">关闭导航面板</string>
+    <string name="action_example">事例</string>
 
-    <string name="action_example">Example action</string>
+    <!--Subject-->
+    <string name="subject_unknown">未知</string>
+    <string name="subject_all">所有</string>
+    <string name="subject_star">星</string>
+    <string name="subject_overdue">过期</string>
+    <string name="subject_today">今天</string>
+    <string name="subject_next7days">接下来7天</string>
+    <string name="subject_categories">类别</string>
 
-    <string name="action_settings">Settings</string>
+    <!--Category-->
+    <string name="category">类别</string>
+    <string name="category_inbox">收件箱</string>
+    <string name="category_work">工作</string>
+    <string name="category_home">家庭</string>
+    <string name="category_other">其他</string>
+
+    <!--Reminder-->
+    <string name="reminder_creation">创建提醒</string>
+    <string name="reminder_edition">编辑提醒</string>
+    <string name="reminder_execution_time">执行时间：</string>
+    <string name="reminder_task">任务</string>
+    <string name="reminder_due_date">到期时间</string>
+    <string name="reminder_alert_date">告警</string>
+
+    <!--Priority-->
+    <string name="priority">优先级</string>
+    <string name="priority1">优先级1</string>
+    <string name="priority2">优先级2</string>
+    <string name="priority3">优先级3</string>
+    <string name="priority4">优先级4</string>
+
+    <!--Settings-->
+    <string name="action_settings">设置</string>
+    <string name="setting_date">日期</string>
+    <string name="setting_time">时间</string>
+
+    <!--Notification-->
+    <string name="action_notification">通知</string>
+    <string name="notification_task_both">今天有%1$s个任务,有%2$s任务过期了。</string>
+    <string name="notification_task_today">今天有%s个任务。</string>
+    <string name="notification_task_overdue">今天没有任务,有%s任务过期了。</string>
+    <string name="notification_press_to_review">点击查看</string>
+    <string name="notification_to_do">请尽快处理任务</string>
+
+
+    <!--Error-->
+    <string name="error_task_name_empty">任务名称不能为空</string>
+
+    <!--Profile-->
+    <string name="profile_press_to_login">点击登录</string>
+
+    <!--Avatar-->
+    <string name="cropper">剪切</string>
+    <string name="fixedAspectRatio">fixedAspectRatio =</string>
+    <string name="aspectRatioX">\u002010</string>
+    <string name="aspectRatioXHeader">aspectRatioX =</string>
+    <string name="aspectRatioY">\u002010</string>
+    <string name="aspectRatioYHeader">aspectRatioY =</string>
+    <string name="showGuidelines">showGuidelines = </string>
+    <string name="crop">Crop</string>
+    <string name="rotate">Rotate</string>
+    <string name="croppedImageDesc">The cropped image.</string>
+    <string-array name="showGuidelinesArray">
+        <item>Off</item>
+        <item>On Touch</item>
+        <item>On</item>
+    </string-array>
 </resources>

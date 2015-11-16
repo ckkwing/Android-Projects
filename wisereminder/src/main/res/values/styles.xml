@@ -9,6 +9,7 @@
         <!--<item name="android:actionMenuTextColor">@color/font_white</item>-->
         <item name="android:windowBackground">@color/common_black</item> <!--set menu background-->
         <item name="floatingActionButtonStyle">@style/AppTheme.Fab</item>
+        <item name="android:textViewStyle">@style/customTextViewStyle</item>
     </style>
 
     <style name="customActionBarStyle" parent="android:Widget.ActionBar">
@@ -23,6 +24,8 @@
     <style name="customTextViewStyle" parent="android:Widget.TextView">
         <item name="android:textSize">@dimen/fontSize_body</item>
         <item name="android:textColor">@color/font_black</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="AppTheme.Fab" parent="FloatingActionButton">
@@ -35,4 +38,13 @@
         <!--<item name="android:windowExitAnimation">@anim/anim_fade_out</item>-->
     <!--</style>-->
     <!--Animation end-->
+
+    <style name="createAvatarTheme" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/fontSize_body</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
 </resources>

@@ -26,7 +26,7 @@ public class TimeTickBroadcastReceiver extends BootReceiver {
     @Override
     protected void startUploadService(Context context) {
         Intent serviceIntent = new Intent(context, MainService.class);
-        serviceIntent.putExtra(ConsistentString.SERVICE_KEY_CALLER, TAG);
+        serviceIntent.putExtra(ConsistentString.SERVICE_KEY_CALLER, this.getClass().getSimpleName());
         context.startService(serviceIntent);
     }
 }

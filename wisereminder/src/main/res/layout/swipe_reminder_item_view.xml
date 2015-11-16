@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minHeight="@dimen/reminderListItemHeight"
+    android:background="@color/common_white">
+
+    <!-- linearlayout中的布局是每一项后面隐藏的布局 -->
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right"
+        android:tag="back">
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:background="@color/common_gold"
+            android:text="@string/common_edit"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/fontSize_title"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:background="@color/common_red"
+            android:text="@string/common_delete"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/fontSize_title"
+            android:textStyle="bold"/>
+
+        <!--<Button-->
+        <!--android:id="@+id/example_row_b_action_2"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="删除"-->
+        <!--android:textColor="@color/font_black"/>-->
+
+        <!--<Button-->
+        <!--android:id="@+id/example_row_b_action_3"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="编辑" />-->
+    </LinearLayout>
+
+    <!--Front layout-->
+    <LinearLayout
+        android:id="@+id/front"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_white"
+        android:orientation="horizontal"
+        android:tag="front">
+
+        <ImageView
+            android:id="@+id/priorityColorPanel"
+            android:layout_width="8dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:src="@color/frame_main_color" />
+
+        <CheckBox
+            android:id="@+id/chkIsCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:id="@+id/txtReminderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/imgStarFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/start_normal" />
+    </LinearLayout>
+
+</FrameLayout>

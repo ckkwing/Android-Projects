@@ -4,13 +4,13 @@ package com.echen.wisereminder;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,14 +18,22 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echen.androidcommon.FileHelper;
+import com.echen.androidcommon.Utility.ImageUtility;
 import com.echen.wisereminder.Adapter.ExpandableSubjectListAdapter;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Subject;
+import com.echen.wisereminder.Profile.DefaultUser;
+import com.echen.wisereminder.Profile.ProfileManager;
+import com.echen.wisereminder.Utility.AppPathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +67,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     private DrawerLayout mDrawerLayout;
     private ExpandableListView mDrawerExpandableListView;
+    private LinearLayout mProfileWrapper;
+    private de.hdodenhof.circleimageview.CircleImageView m_circleImageView;
+    private TextView mUserName;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
@@ -74,7 +85,7 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSubjectList = DataManager.getInstance().getM_subjects();
+        mSubjectList = DataManager.getInstance().getSubjects();
         subjectListAdapter = new ExpandableSubjectListAdapter(getActionBar().getThemedContext(), mSubjectList);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
@@ -103,6 +114,12 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;//Fix click pass event to activity which under this fragment
+            }
+        });
 //        mDrawerListView = (ListView)view.findViewById(R.id.lstCategories);
 //        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -115,6 +132,33 @@ public class NavigationDrawerFragment extends Fragment {
 //        mDrawerListView.setAdapter(categoryListAdapter);
 //
 //        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
+        mProfileWrapper = (LinearLayout) view.findViewById(R.id.profileWrapper);
+        mProfileWrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(ProfileManager.getInstance().getUser() instanceof DefaultUser)) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, null);
+                    intent.setDataAndType(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            "image/*");
+                    startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_DRAWERFRAMENT);
+                }
+            }
+        });
+
+        m_circleImageView = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.profile_image);
+        m_circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ImagePreviewActivity.class);
+                startActivity(intent);
+            }
+        });
+        updateAvatar();
+
+        mUserName = (TextView) view.findViewById(R.id.txtUserName);
+        mUserName.setText(ProfileManager.getInstance().getUser().getName());
 
         mDrawerExpandableListView = (ExpandableListView) view.findViewById(R.id.lstSubjects);
         mDrawerExpandableListView.setAdapter(subjectListAdapter);
@@ -324,5 +368,40 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int groupPosition, int childPosition);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (null == data)
+            return;
+        switch (resultCode) {
+            case ConsistentParameter.RESULT_CODE_CREATEAVATARACTIVITY: {
+                updateAvatar();
+            }
+            break;
+            default: {
+                Intent intent = new Intent(getActivity().getBaseContext(), CreateAvatarActivityEX.class);
+                intent.putExtra(ConsistentString.PARAM_URI, data.getDataString());
+                startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_DRAWERFRAMENT);
+            }
+            break;
+        }
+    }
+
+    private void updateAvatar()
+    {
+        Bitmap bitmapAvatar = null;
+        if(FileHelper.isExist(AppPathHelper.getAvatarFilePath()))
+        {
+            bitmapAvatar = ImageUtility.getDiskBitmap(AppPathHelper.getAvatarFilePath());
+        }
+        if(null == bitmapAvatar)
+        {
+            m_circleImageView.setImageResource(R.drawable.avatar_default);
+        }
+        else
+        {
+            m_circleImageView.setImageBitmap(bitmapAvatar);
+        }
     }
 }

@@ -186,7 +186,7 @@ public class EncryptionTransmissionService extends Service {
 //                                decrypt(transferInfo.getSourceFile());
                                 if (null != encryptedFile) {
                                     transfer(encryptedFile, PATH_TARGETDIR, encryptedFile.getName());
-                                    FileHelper.DeleteFile(encryptedFile);
+                                    FileHelper.deleteFile(encryptedFile);
                                 }
                                 iterator.remove();
                             }
@@ -206,13 +206,13 @@ public class EncryptionTransmissionService extends Service {
     {
         File temp_encrypted = new File(PATH_TEMP_ENCRYPTED);
         if (null != temp_encrypted && temp_encrypted.exists() && !temp_encrypted.isFile())
-            FileHelper.DeleteFile(temp_encrypted);
+            FileHelper.deleteFile(temp_encrypted);
         File temp_decrypted = new File(PATH_TEMP_DECRYPTED);
         if (null != temp_decrypted && temp_decrypted.exists() && !temp_decrypted.isFile())
-            FileHelper.DeleteFile(temp_decrypted);
+            FileHelper.deleteFile(temp_decrypted);
 //        File target = new File(PATH_TARGETDIR);
 //        if (null != target && target.exists() && !target.isFile())
-//            FileHelper.DeleteFile(target);
+//            FileHelper.deleteFile(target);
     }
 
     private File encrypt(File file)

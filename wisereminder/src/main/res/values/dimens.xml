@@ -9,13 +9,13 @@
     
     <!--List-->
     <dimen name="subjectListItemHeight">30dp</dimen>
-    <dimen name="reminderListItemHeight">50dp</dimen>
+    <dimen name="reminderListItemHeight">80dp</dimen>
     
     <!--Font size-->
-    <dimen name="fontSize_heading">24dp</dimen>
-    <dimen name="fontSize_title">20dp</dimen>
-    <dimen name="fontSize_subtitle">18dp</dimen>
-    <dimen name="fontSize_body">16dp</dimen>
+    <dimen name="fontSize_heading">18dp</dimen>
+    <dimen name="fontSize_title">16dp</dimen>
+    <dimen name="fontSize_subtitle">14dp</dimen>
+    <dimen name="fontSize_body">12dp</dimen>
 
     <!--popup-->
     <dimen name="popup_arrow_margin">20dp</dimen>
@@ -27,4 +27,9 @@
 
     <!--Icon-->
     <dimen name="icon_common_size">20dp</dimen>
+    
+    <!--Profile-->
+    <dimen name="avatar_width">48dp</dimen>
+    <dimen name="avatar_height">48dp</dimen>
+    <dimen name="avatar_border_width">2dp</dimen>
 </resources>

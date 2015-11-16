@@ -36,12 +36,13 @@ import be.webelite.ion.IconView;
 import mirko.android.datetimepicker.date.DatePickerDialog;
 import mirko.android.datetimepicker.time.RadialPickerLayout;
 import mirko.android.datetimepicker.time.TimePickerDialog;
+import uicommon.customcontrol.BaseActivity;
 import uicommon.customcontrol.Interface.IPopupWindowEvent;
 
 /**
  * Created by echen on 2015/5/27.
  */
-public abstract class ReminderBaseActivity extends Activity implements IPropertySelectedEvent {
+public abstract class ReminderBaseActivity extends BaseActivity implements IPropertySelectedEvent {
 
     public String DATETIME_FORMAT_DATE = "yyyy-MM-dd";
     public String DATETIME_FORMAT_TIME = "HH:mm";

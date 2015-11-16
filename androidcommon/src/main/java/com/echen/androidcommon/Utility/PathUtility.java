@@ -11,6 +11,17 @@ import java.io.File;
  */
 public class PathUtility {
 
+    public static String getInternalStorage() {
+        File SDRoot = android.os.Environment.getExternalStorageDirectory();
+        return SDRoot.getAbsolutePath();
+    }
+
+//    public static String getExternalStorage() {
+//        File SDRoot = android.os.Environment.getExternalStorageDirectory();
+//        String external = SDRoot.getAbsolutePath() + "-ext";
+//        return external;
+//    }
+
     public static boolean isSDCardExist()
     {
         String sdCardStatus = Environment.getExternalStorageState();
@@ -54,4 +65,6 @@ public class PathUtility {
         parent = path.substring(0, path.lastIndexOf("/"));
         return parent;
     }
+
+
 }

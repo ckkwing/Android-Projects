@@ -11,14 +11,13 @@ import android.util.Log;
 
 import com.echen.androidcommon.Threading.ManualResetEvent;
 import com.echen.wisereminder.ConsistentString;
-import com.echen.wisereminder.Model.Task.Task;
-import com.echen.wisereminder.Model.Task.TaskFactory;
-import com.echen.wisereminder.Model.Task.TaskType;
-import com.echen.wisereminder.Receiver.HomeKeyEventBroadCastReceiver;
+import com.echen.wisereminder.Task.Task;
+import com.echen.wisereminder.Task.TaskFactory;
+import com.echen.wisereminder.Task.TaskType;
+import com.echen.wisereminder.Receiver.AlarmReceiver;
 import com.echen.wisereminder.Receiver.ScreenBroadcastReceiver;
 import com.echen.wisereminder.Receiver.TimeTickBroadcastReceiver;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -54,34 +53,46 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        if (hour == 14 && minute == 30)
+//        Calendar calendar = Calendar.getInstance();
+//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        int minute = calendar.get(Calendar.MINUTE);
+//        if (hour == 14 && minute == 30)
+//        {
+//            m_lock.lock();
+//            boolean isCheckReminderTaskExist = false;
+//            for (Iterator<Task> iterator = m_taskList.iterator(); iterator
+//                    .hasNext(); ) {
+//                Task task = iterator.next();
+//                if (null == task)
+//                    continue;
+//                if (task.getTaskType() == TaskType.CheckReminder) {
+//                    isCheckReminderTaskExist = true;
+//                    break;
+//                }
+//            }
+//            if (!isCheckReminderTaskExist) {
+//                Task checkReminderTask = TaskFactory.createTask(TaskType.CheckReminder, this);
+//                m_taskList.add(checkReminderTask);
+//            }
+//            m_lock.unlock();
+//        }
+
+        String caller = intent.getStringExtra(ConsistentString.SERVICE_KEY_CALLER);
+        if (null != caller)
         {
-            m_lock.lock();
-            boolean isCheckReminderTaskExist = false;
-            for (Iterator<Task> iterator = m_taskList.iterator(); iterator
-                    .hasNext(); ) {
-                Task task = iterator.next();
-                if (null == task)
-                    continue;
-                if (task.getTaskType() == TaskType.CheckReminder) {
-                    isCheckReminderTaskExist = true;
-                    break;
-                }
-            }
-            if (!isCheckReminderTaskExist) {
+            if (caller.equals(AlarmReceiver.class.getSimpleName()))
+            {
+                m_lock.lock();
                 Task checkReminderTask = TaskFactory.createTask(TaskType.CheckReminder, this);
                 m_taskList.add(checkReminderTask);
+                m_lock.unlock();
             }
-            m_lock.unlock();
         }
 
         m_manualResetEvent.set();
         flags = START_STICKY;
-        String strFormat = "onStartCommand flags: %d, startId: %d";
-        Log.d(TAG, String.format(strFormat, flags, startId));
+//        String strFormat = "onStartCommand flags: %d, startId: %d";
+//        Log.d(TAG, String.format(strFormat, flags, startId));
         return super.onStartCommand(intent, flags, startId);
     }
 

@@ -22,6 +22,7 @@ android {
 
 repositories {
     maven { url 'https://github.com/MarsVard/IonIconView/raw/master/maven' }
+    maven { url 'http://clinker.47deg.com/nexus/content/groups/public' }
 }
 
 dependencies {
@@ -41,4 +42,10 @@ dependencies {
     //    compile 'com.joanzapata.iconify:android-iconify-simplelineicons:2.1.0' // (v1.0.0)
     //    compile 'com.joanzapata.iconify:android-iconify-ionicons:2.1.0' // (v2.0.1)
     compile 'com.shamanland:fab:0.0.8'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.edmodo:cropper:1.0.1'
+    compile files('libs/gson-2.4.jar')
+    compile ('com.fortysevendeg.swipelistview:swipelistview:1.0-SNAPSHOT@aar') {
+        transitive = true
+    }
 }

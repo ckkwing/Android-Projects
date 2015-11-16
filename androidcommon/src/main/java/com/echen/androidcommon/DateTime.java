@@ -59,12 +59,27 @@ public class DateTime {
         return m_localCalendar.get(Calendar.HOUR_OF_DAY);
     }
 
+    public void setHour(int hour)
+    {
+        this.update(this.getYear(), this.getMonth(), this.getDay(), hour, this.getMinute(), this.getSecond());
+    }
+
     public int getMinute(){
         return m_localCalendar.get(Calendar.MINUTE);
     }
 
+    public void setMinute(int minute)
+    {
+        this.update(this.getYear(), this.getMonth(), this.getDay(), this.getHour(), minute, this.getSecond());
+    }
+
     public int getSecond(){
         return m_localCalendar.get(Calendar.SECOND);
+    }
+
+    public void setSecond(int second)
+    {
+        this.update(this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), second);
     }
 
     public static DateTime minValue() {
@@ -94,10 +109,45 @@ public class DateTime {
         return new DateTime(todayCalendar);
     }
 
+    public DateTime addYears(int value)
+    {
+        DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
+        newDateTime.getLocalCalendar().add(Calendar.YEAR, value);
+        return newDateTime;
+    }
+
+    public DateTime addMonths(int value)
+    {
+        DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
+        newDateTime.getLocalCalendar().add(Calendar.MONTH, value);
+        return newDateTime;
+    }
+
     public DateTime addDays(int value)
     {
         DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
         newDateTime.getLocalCalendar().add(Calendar.DATE, value);
+        return newDateTime;
+    }
+
+    public DateTime addHours(int value)
+    {
+        DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
+        newDateTime.getLocalCalendar().add(Calendar.HOUR_OF_DAY, value);
+        return newDateTime;
+    }
+
+    public DateTime addMinutes(int value)
+    {
+        DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
+        newDateTime.getLocalCalendar().add(Calendar.MINUTE, value);
+        return newDateTime;
+    }
+
+    public DateTime addSeconds(int value)
+    {
+        DateTime newDateTime = new DateTime(m_localCalendar.getTimeInMillis());
+        newDateTime.getLocalCalendar().add(Calendar.SECOND, value);
         return newDateTime;
     }
 

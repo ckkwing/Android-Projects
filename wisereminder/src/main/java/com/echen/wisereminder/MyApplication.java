@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.echen.androidcommon.CrashHandler;
 import com.echen.wisereminder.Data.DataManager;
+import com.echen.wisereminder.Profile.ProfileManager;
 import com.echen.wisereminder.Service.MainService;
 import com.echen.wisereminder.Utility.SettingUtility;
 
@@ -42,6 +43,7 @@ public class MyApplication extends Application {
         appContext.startService(intent);
         SettingUtility.getInstance().initiate(appContext);
         DataManager.getInstance().initiate(appContext);
+        ProfileManager.getInstance().initiate(appContext);
     }
 
     @Override

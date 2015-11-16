@@ -1,4 +1,4 @@
-package com.echen.wisereminder.Model.Task;
+package com.echen.wisereminder.Task;
 
 import android.content.Context;
 import android.util.Log;

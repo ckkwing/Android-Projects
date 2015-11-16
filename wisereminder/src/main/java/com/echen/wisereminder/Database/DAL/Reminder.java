@@ -40,6 +40,11 @@ public class Reminder {
         return result;
     }
 
+    public long deleteReminder(com.echen.wisereminder.Model.Reminder reminder)
+    {
+        return db.delete(ReminderTable.TABLE_NAME, ReminderTable.ID+"=?", new String[] {String.valueOf(reminder.getId())});
+    }
+
     public long updateReminderByID(com.echen.wisereminder.Model.Reminder reminder)
     {
         ContentValues cv = ReminderTable.ConverterReminderToDBRow(reminder);

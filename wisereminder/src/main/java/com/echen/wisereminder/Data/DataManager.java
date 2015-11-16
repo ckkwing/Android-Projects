@@ -1,7 +1,6 @@
 package com.echen.wisereminder.Data;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.Model.Category;
@@ -100,7 +99,11 @@ public class DataManager {
         List<Reminder> reminders = new ArrayList<>();
         switch (subjectType) {
             case All: {
-                reminders = m_reminderDAL.getReminders();
+                if (isForce)
+                    reminders = m_reminderDAL.getReminders();
+                else {
+                    reminders.addAll(m_reminders);
+                }
             }
             break;
             case Star: {
@@ -182,7 +185,7 @@ public class DataManager {
         return reminders;
     }
 
-    public List<Subject> getM_subjects() {
+    public List<Subject> getSubjects() {
         return this.m_subjects;
     }
 
@@ -259,6 +262,15 @@ public class DataManager {
         if (lRel >= 0) {
             reminder.setId(lRel);
             m_reminders.add(reminder);
+        }
+        return lRel;
+    }
+
+    public long deleteReminder(Reminder reminder)
+    {
+        long lRel = m_reminderDAL.deleteReminder(reminder);
+        if (lRel >= 0) {
+            m_reminders.remove(reminder);
         }
         return lRel;
     }

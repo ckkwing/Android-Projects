@@ -15,7 +15,7 @@ public class Subject implements IListItem, IReminderParent {
 
     @Override
     public List<Reminder> getReminders() {
-        return DataManager.getInstance().getRemindersBySubject(type,true);
+        return DataManager.getInstance().getRemindersBySubject(type,false);
     }
 
     public enum Type

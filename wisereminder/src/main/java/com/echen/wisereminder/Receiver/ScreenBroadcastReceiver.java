@@ -14,6 +14,6 @@ public class ScreenBroadcastReceiver extends BootReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive ");
-        startUploadService(context);
+//        startUploadService(context);
     }
 }

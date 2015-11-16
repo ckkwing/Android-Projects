@@ -3,8 +3,10 @@ package com.echen.wisereminder;
 import android.app.Activity;
 
 import android.app.ActionBar;
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -15,27 +17,36 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.echen.androidcommon.DateTime;
+import com.echen.androidcommon.DeviceHelper;
 import com.echen.wisereminder.Adapter.ReminderListAdapter;
+import com.echen.wisereminder.Adapter.SwipeReminderListAdapter;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.IListItem;
 import com.echen.wisereminder.Model.IReminderParent;
-import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.Model.Subject;
+import com.echen.wisereminder.Receiver.AlarmReceiver;
+import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
+import com.fortysevendeg.swipelistview.SwipeListView;
+import com.fortysevendeg.swipelistview.SwipeListViewListener;
 
 import java.util.List;
 
+import uicommon.customcontrol.BaseActivity;
 
-public class MainActivity extends Activity
+
+public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -44,6 +55,7 @@ public class MainActivity extends Activity
     private NavigationDrawerFragment m_NavigationDrawerFragment;
     private int m_currentGroupPosition = -1;
     private int m_currentChildPosition = -1;
+    private int m_exitTimes = 0;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -65,11 +77,56 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         createFloatAddButtonView();
+        createPeriodicAlarm();
     }
 
     @Override
     protected void onDestroy() {
+        m_exitTimes = 0;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragmentMain = getFragmentManager().findFragmentById(R.id.container);
+        if (null != fragmentMain)
+        {
+            View rootView = fragmentMain.getView();
+            if (null != rootView)
+            {
+                SwipeListView swipeListView = (SwipeListView)rootView.findViewById(R.id.swipeReminderList);
+                swipeListView.closeOpenedItems();
+                if (0 == m_exitTimes) {
+                    m_exitTimes++;
+                    Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        }
+        super.onBackPressed();
+    }
+
+    private void createPeriodicAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.setAction(ConsistentString.ACTION_BROADCAST_PERIODICALARM);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+        DateTime triggerDate = null;
+        DateTime today = DateTime.today();
+        today.setHour(9);
+        DateTime now = DateTime.now();
+        if (today.toUTCLong() < now.toUTCLong())
+            triggerDate = today.addDays(1);
+        else
+            triggerDate = today;
+
+        //for test
+        triggerDate = DateTime.now();
+        triggerDate = triggerDate.addSeconds(30);
+        //for test
+
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerDate.getLocalCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     @Override
@@ -79,8 +136,7 @@ public class MainActivity extends Activity
         navigateMainActivity(m_currentGroupPosition, m_currentChildPosition);
     }
 
-    private void navigateMainActivity(int groupPosition, int childPosition)
-    {
+    private void navigateMainActivity(int groupPosition, int childPosition) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -92,7 +148,7 @@ public class MainActivity extends Activity
         if (groupPosition < 0)
             return;
 
-        Subject currentSubject = DataManager.getInstance().getM_subjects().get(groupPosition);
+        Subject currentSubject = DataManager.getInstance().getSubjects().get(groupPosition);
         if (null != currentSubject) {
             if (-1 == childPosition)
                 m_Title = currentSubject.getName();
@@ -137,10 +193,10 @@ public class MainActivity extends Activity
 //            return true;
 //        }
 
-        if (id == R.id.action_notification)
-        {
-            Intent intent = new Intent(MainActivity.this,AppNotificationActivity.class);
-            this.startActivity(intent);
+        if (id == R.id.action_notification) {
+            Intent intent = new Intent(MainActivity.this, AppNotificationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            this.startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
             return true;
         }
 
@@ -173,7 +229,7 @@ public class MainActivity extends Activity
                 }
             }
             break;
-            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY:{
+            case ConsistentParameter.RESULT_CODE_REMINDEREDITIONACTIVITY: {
                 Bundle bundle = data.getBundleExtra(ConsistentString.BUNDLE_UNIT);
                 if (null != bundle) {
                     boolean bRel = bundle.getBoolean(ConsistentString.RESULT_BOOLEAN);
@@ -197,7 +253,6 @@ public class MainActivity extends Activity
         mWindowManager = this.getWindowManager();
         wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         wmParams.format = PixelFormat.RGBA_8888;
-        ;
         wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         wmParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
         wmParams.x = 20;
@@ -231,6 +286,7 @@ public class MainActivity extends Activity
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, ReminderCreationActivity.class);
                 startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
+
             }
         });
     }
@@ -247,6 +303,7 @@ public class MainActivity extends Activity
         private static final String ARG_SECTION_CHILD_NUMBER = "section_child_number";
         private static final int REFRESH_COMPLETE = 0X110;
         private ReminderListAdapter m_listAdapter = null;
+        private SwipeReminderListAdapter m_swipeListAdapter = null;
         private SwipeRefreshLayout m_swipeLayout;
         private IReminderParent m_selectedItem;
         private static Context m_context;
@@ -284,17 +341,17 @@ public class MainActivity extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            m_swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_ly);
-            m_swipeLayout.setOnRefreshListener(this);
-            m_swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-                    android.R.color.holo_orange_light, android.R.color.holo_red_light);
+//            m_swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_ly);
+//            m_swipeLayout.setOnRefreshListener(this);
+//            m_swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+//                    android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
             Bundle bundle = getArguments();
             if (null != bundle) {
                 int groupPosition = bundle.getInt(ARG_SECTION_GROUP_NUMBER);
                 int childPosition = bundle.getInt(ARG_SECTION_CHILD_NUMBER);
                 m_selectedItem = null;
-                List<Subject> subjects = DataManager.getInstance().getM_subjects();
+                List<Subject> subjects = DataManager.getInstance().getSubjects();
                 Subject currentSubject = subjects.get(groupPosition);
                 if (null == currentSubject)
                     return rootView;
@@ -306,14 +363,57 @@ public class MainActivity extends Activity
                 }
 
                 if (null != m_selectedItem) {
-                    ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
-                    m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
-                    reminderList.setAdapter(m_listAdapter);
+//                    ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
+//                    m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
+//                    reminderList.setAdapter(m_listAdapter);
+
+                    SwipeListView swipeListView = (SwipeListView)rootView.findViewById(R.id.swipeReminderList);
+                    m_swipeListAdapter = new SwipeReminderListAdapter(m_context, m_selectedItem.getReminders(), swipeListView);
+                    swipeListView.setAdapter(m_swipeListAdapter);
+                    swipeListView.setSwipeListViewListener(new RemindersSwipeListViewListener());
+                    int deviceWidth = DeviceHelper.getDisplayMetrics(m_context).widthPixels;
+                    int offSet = deviceWidth/3;
+                    swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_LEFT);
+                    swipeListView.setOffsetLeft(offSet);
+//                    swipeListView.setOffsetRight(offSet);
+                    swipeListView.setAnimationTime(1);
+                    swipeListView.setSwipeOpenOnLongPress(false);
                 }
             }
 
 
             return rootView;
+        }
+
+        class RemindersSwipeListViewListener extends BaseSwipeListViewListener
+        {
+
+            @Override
+            public void onMove(int position, float x) {
+                super.onMove(position, x);
+            }
+
+            @Override
+            public void onClickFrontView(int position) {
+                super.onClickFrontView(position);
+            }
+
+            @Override
+            public void onClickBackView(int position) {
+                super.onClickBackView(position);
+            }
+
+            @Override
+            public void onDismiss(int[] reverseSortedPositions) {
+                super.onDismiss(reverseSortedPositions);
+                if (reverseSortedPositions.length > 0)
+                    m_swipeListAdapter.notifyDataSetChanged();
+//                for (int position : reverseSortedPositions) {
+//                    Log.i("lenve", "position--:"+position);
+//                    testData.remove(position);
+//                }
+//                mAdapter.notifyDataSetChanged();
+            }
         }
 
         @Override
@@ -327,7 +427,9 @@ public class MainActivity extends Activity
         @Override
         public void onRefresh() {
 //            mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
-            m_listAdapter.updateSource(m_selectedItem.getReminders());
+
+//            m_listAdapter.updateSource(m_selectedItem.getReminders());
+            m_swipeListAdapter.updateSource(m_selectedItem.getReminders());
             mHandler.sendEmptyMessage(REFRESH_COMPLETE);
         }
 

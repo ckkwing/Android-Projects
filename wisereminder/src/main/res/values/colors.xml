@@ -7,6 +7,7 @@
     <color name="common_gray_dark">#615b5b</color>
     <color name="common_gray">#7f7f7f</color>
     <color name="common_gold">#FFD76E</color>
+    <color name="common_red">#FF0000</color>
 
     <!--Border-->
     <color name="border_gray">#FFC3C3C3</color>

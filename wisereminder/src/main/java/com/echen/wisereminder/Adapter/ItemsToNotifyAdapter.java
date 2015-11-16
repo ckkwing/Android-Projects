@@ -94,40 +94,41 @@ public class ItemsToNotifyAdapter extends BaseAdapter {
             viewHolder.ID = reminder.getId();
 
             viewHolder.Name.setText(reminder.getName());
-            viewHolder.Name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(m_context, ReminderEditActivity.class);
-                    intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
-                    ((Activity) m_context).startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
-                }
-            });
+//            viewHolder.Name.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(m_context, ReminderEditActivity.class);
+//                    intent.putExtra(ConsistentString.PARAM_REMINDER_ID, reminder.getId());
+//                    ((Activity) m_context).startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_MAINACTIVITY);
+//                }
+//            });
 
             viewHolder.Star.setBackgroundResource((true == reminder.getIsStar()) ? R.drawable.start_selected : R.drawable.start_normal);
-            viewHolder.Star.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    boolean starToSet = !reminder.getIsStar();
-                    reminder.setIsStar(starToSet);
-                    if (!DataManager.getInstance().updateReminder(reminder))
-                        reminder.setIsStar(!starToSet);
-                    ItemsToNotifyAdapter.this.notifyDataSetChanged();
-                }
-            });
+//            viewHolder.Star.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    boolean starToSet = !reminder.getIsStar();
+//                    reminder.setIsStar(starToSet);
+//                    if (!DataManager.getInstance().updateReminder(reminder))
+//                        reminder.setIsStar(!starToSet);
+//                    ItemsToNotifyAdapter.this.notifyDataSetChanged();
+//                }
+//            });
 
-            viewHolder.ChkCompleted.setChecked(false);
-            viewHolder.ChkCompleted.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    reminder.setIsCompleted(true);
-                    if (!DataManager.getInstance().updateReminder(reminder))
-                        reminder.setIsCompleted(false);
-                    else {
-                        m_reminderList.remove(reminder);
-                        ItemsToNotifyAdapter.this.notifyDataSetChanged();
-                    }
-                }
-            });
+            viewHolder.ChkCompleted.setVisibility(View.GONE);
+//            viewHolder.ChkCompleted.setChecked(false);
+//            viewHolder.ChkCompleted.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    reminder.setIsCompleted(true);
+//                    if (!DataManager.getInstance().updateReminder(reminder))
+//                        reminder.setIsCompleted(false);
+//                    else {
+//                        m_reminderList.remove(reminder);
+//                        ItemsToNotifyAdapter.this.notifyDataSetChanged();
+//                    }
+//                }
+//            });
             int iPriorityColor = ReminderUtility.getPriorityColorInt(reminder.getPriority(), m_context);
             ColorDrawable colorDrawable = new ColorDrawable(iPriorityColor);
             viewHolder.PriorityColor.setImageDrawable(colorDrawable);

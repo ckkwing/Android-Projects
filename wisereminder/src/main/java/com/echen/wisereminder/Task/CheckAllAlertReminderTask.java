@@ -1,4 +1,4 @@
-package com.echen.wisereminder.Model.Task;
+package com.echen.wisereminder.Task;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,11 +8,11 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
-import com.echen.androidcommon.DateTime;
 import com.echen.wisereminder.AppNotificationActivity;
 import com.echen.wisereminder.Data.DataManager;
 import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.Model.Subject;
+import com.echen.wisereminder.NotificationIDs;
 import com.echen.wisereminder.R;
 
 import java.util.List;
@@ -21,8 +21,6 @@ import java.util.List;
  * Created by echen on 2015/9/29.
  */
 public class CheckAllAlertReminderTask extends Task {
-    private int NOTIFICATION_ID = 1;
-
     public CheckAllAlertReminderTask(Context context) {
         super(context);
         m_type = TaskType.CheckReminder;
@@ -87,12 +85,14 @@ public class CheckAllAlertReminderTask extends Task {
                 .setTicker("Task reminder")
                 .setSmallIcon(R.drawable.ic_launcher);
         Notification notify = builder.build();
-        notificationManager.notify(NOTIFICATION_ID, notify);
+        notificationManager.notify(NotificationIDs.NOTIFICATION_ID_CHECKALLALERTREMINDER, notify);
 
     }
 
     private PendingIntent getDefaultIntent(int flags) {
-        PendingIntent pendingIntent = PendingIntent.getActivity(m_context, 1, new Intent(m_context, AppNotificationActivity.class), flags);
+        Intent intent = new Intent(m_context, AppNotificationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(m_context, 1, intent, flags);
         return pendingIntent;
     }
 }
