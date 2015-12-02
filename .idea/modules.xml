@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/arthur/arthur.iml" filepath="$PROJECT_DIR$/arthur/arthur.iml" />
       <module fileurl="file://$PROJECT_DIR$/gifMagic/gifMagic.iml" filepath="$PROJECT_DIR$/gifMagic/gifMagic.iml" />
       <module fileurl="file://$PROJECT_DIR$/googleDateTimePickers/googleDateTimePickers.iml" filepath="$PROJECT_DIR$/googleDateTimePickers/googleDateTimePickers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
       <module fileurl="file://$PROJECT_DIR$/wisereminder/wisereminder.iml" filepath="$PROJECT_DIR$/wisereminder/wisereminder.iml" />
     </modules>
   </component>

@@ -47,4 +47,8 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
+
+    <style name="PreferenceTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/common_white</item>
+    </style>
 </resources>

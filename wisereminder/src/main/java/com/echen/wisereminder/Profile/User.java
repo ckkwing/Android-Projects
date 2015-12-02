@@ -1,6 +1,7 @@
 package com.echen.wisereminder.Profile;
 
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 
 import com.echen.androidcommon.Utility.Utility;
 

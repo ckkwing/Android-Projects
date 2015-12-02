@@ -1,55 +1,96 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ioniconview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:choiceMode="singleChoice"
-    android:background="@color/common_white" tools:context=".NavigationDrawerFragment"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@color/common_white"
+    tools:context=".NavigationDrawerFragment">
+
     <LinearLayout
-        android:id="@+id/profileWrapper"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        android:orientation="horizontal"
-        android:background="@color/frame_main_color"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp">
-        <!--<be.webelite.ion.IconView-->
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/profileWrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/frame_main_color"
+            android:minHeight="100dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp">
+            <!--<be.webelite.ion.IconView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:textSize="40dp"-->
             <!--android:background="@drawable/gray_circle"-->
             <!--ioniconview:name="ion_person" />-->
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="@dimen/avatar_width"
-            android:layout_height="@dimen/avatar_height"
-            android:src="@drawable/avatar_default"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@color/common_gray"/>
-        <TextView
-            android:id="@+id/txtUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/font_white"
-            android:textSize="@dimen/fontSize_title"/>
-    </LinearLayout>
-    <!--<ListView-->
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/avatar_width"
+                android:layout_height="@dimen/avatar_height"
+                android:src="@drawable/avatar_default"
+                app:civ_border_color="@color/common_gray"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/font_white"
+                android:textSize="@dimen/fontSize_title" />
+        </LinearLayout>
+        <!--<ListView-->
         <!--android:id="@+id/lstCategories"-->
         <!--android:layout_width="fill_parent"-->
         <!--android:layout_height="fill_parent"-->
         <!--android:divider="@android:color/transparent"-->
         <!--android:dividerHeight="0dp"></ListView>-->
-    <ExpandableListView
-        android:id="@+id/lstSubjects"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
-        android:childDivider="@android:color/transparent"
-        android:groupIndicator="@null"></ExpandableListView>
-</LinearLayout>
+
+        <ExpandableListView
+            android:id="@+id/lstSubjects"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:childDivider="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:groupIndicator="@null"></ExpandableListView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/common_gold"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <be.webelite.ion.IconView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    ioniconview:name="ion_ionic" />
+
+                <TextView
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Setting" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
 

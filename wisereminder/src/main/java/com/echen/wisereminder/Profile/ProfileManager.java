@@ -1,10 +1,14 @@
 package com.echen.wisereminder.Profile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 
 import com.echen.androidcommon.FileHelper;
+import com.echen.androidcommon.Utility.ImageUtility;
 import com.echen.wisereminder.R;
 import com.echen.wisereminder.Utility.AppPathHelper;
 import com.google.gson.Gson;
@@ -50,6 +54,8 @@ public class ProfileManager {
         if (null == context)
             return false;
         this.m_context = context;
+        Bitmap defaultAvatar= BitmapFactory.decodeResource(m_context.getResources(), R.drawable.avatar_default);
+        boolean bRel = ImageUtility.saveBitmapAsPng(defaultAvatar, AppPathHelper.getAvatarFilePath());
         loadCurrentUser();
         return true;
     }
@@ -64,7 +70,8 @@ public class ProfileManager {
         }.getType();
         Gson gson = new Gson();
         if (!FileHelper.isExist(AppPathHelper.getUserProfileFilePath())) {
-            m_user = new DefaultUser(m_context.getString(R.string.profile_press_to_login), "eric@sohu.com");
+            m_user = null;
+//            m_user = new DefaultUser(m_context.getString(R.string.profile_press_to_login), "NULL");
 //            String jsonUser = gson.toJson(m_user);
 //            boolean isWriteSuccess = FileHelper.writeToFile(jsonUser, AppPathHelper.getUserProfileFilePath());
 //            if (isWriteSuccess) {

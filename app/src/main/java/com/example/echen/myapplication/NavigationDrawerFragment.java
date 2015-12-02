@@ -1,50 +1,26 @@
-package com.echen.wisereminder;
+package com.example.echen.myapplication;
 
-
-import android.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.DisplayMetrics;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ExpandableListView;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
-
-import com.echen.androidcommon.DeviceHelper;
-import com.echen.androidcommon.FileHelper;
-import com.echen.androidcommon.Utility.ImageUtility;
-import com.echen.wisereminder.Adapter.ExpandableSubjectListAdapter;
-import com.echen.wisereminder.Data.DataManager;
-import com.echen.wisereminder.Model.Subject;
-import com.echen.wisereminder.Profile.DefaultUser;
-import com.echen.wisereminder.Profile.ProfileManager;
-import com.echen.wisereminder.Profile.User;
-import com.echen.wisereminder.Utility.AppPathHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import uicommon.customcontrol.Listview.ExpandableListViewForScrollView;
-import uicommon.customcontrol.Utility;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -52,6 +28,7 @@ import uicommon.customcontrol.Utility;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
     /**
      * Remember the position of the selected item.
      */
@@ -74,18 +51,12 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ExpandableListView mDrawerExpandableListView;
-    private LinearLayout mProfileWrapper;
-    private de.hdodenhof.circleimageview.CircleImageView m_circleImageView;
-    private TextView mUserName;
+    private ListView mDrawerListView;
     private View mFragmentContainerView;
-    private View mSettings;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    private ExpandableSubjectListAdapter subjectListAdapter = null;
-    private List<Subject> mSubjectList = new ArrayList<>();
 
     public NavigationDrawerFragment() {
     }
@@ -93,9 +64,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mSubjectList = DataManager.getInstance().getSubjects();
-        subjectListAdapter = new ExpandableSubjectListAdapter(getActionBar().getThemedContext(), mSubjectList);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -108,7 +76,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition, -1);
+        selectItem(mCurrentSelectedPosition);
     }
 
     @Override
@@ -121,105 +89,25 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(
+        mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        view.setOnTouchListener(new View.OnTouchListener() {
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;//Fix click pass event to activity which under this fragment
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
             }
         });
-//        mDrawerListView = (ListView)view.findViewById(R.id.lstCategories);
-//        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                selectItem(position);
-//            }
-//        });
-//
-//
-//        mDrawerListView.setAdapter(categoryListAdapter);
-//
-//        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-
-        mProfileWrapper = (LinearLayout) view.findViewById(R.id.profileWrapper);
-        mProfileWrapper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != ProfileManager.getInstance().getUser()) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, null);
-                    intent.setDataAndType(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            "image/*");
-                    startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_DRAWERFRAMENT);
-                }
-            }
-        });
-
-        m_circleImageView = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.profile_image);
-        m_circleImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ImagePreviewActivity.class);
-                startActivity(intent);
-            }
-        });
-        updateAvatar();
-
-        mUserName = (TextView) view.findViewById(R.id.txtUserName);
-        String userName = getString(R.string.profile_press_to_login);
-        if (null != ProfileManager.getInstance().getUser())
-            userName = ProfileManager.getInstance().getUser().getName();
-        mUserName.setText(userName);
-
-        mSettings = (TextView)view.findViewById(R.id.settings);
-        mSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mDrawerExpandableListView = (ExpandableListView) view.findViewById(R.id.lstSubjects);
-        mDrawerExpandableListView.setAdapter(subjectListAdapter);
-        Utility.setListViewHeightBasedOnChildren(mDrawerExpandableListView);
-        mDrawerExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                for (int i = 0; i < mSubjectList.size(); i++) {
-                    if (groupPosition != i) {
-                        mDrawerExpandableListView.collapseGroup(i);
-                    }
-                }
-            }
-        });
-        mDrawerExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Subject subject = mSubjectList.get(groupPosition);
-                if (subject.getType() == Subject.Type.Categories)
-                    return false;
-                else {
-                    selectItem(groupPosition, -1);
-                    return true;
-                }
-            }
-        });
-        mDrawerExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                selectItem(groupPosition, childPosition);
-                return false;
-            }
-        });
-//        DisplayMetrics displayMetrics = DeviceHelper.getDisplayMetrics(this.getActivity());
-//        ViewGroup.LayoutParams layoutParams = mDrawerExpandableListView.getLayoutParams();
-//        layoutParams.height = displayMetrics.heightPixels/2;
-//        mDrawerExpandableListView.setLayoutParams(layoutParams);
-
-
-        return view;
+        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+                getActionBar().getThemedContext(),
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                new String[]{
+                        getString(R.string.title_section1),
+                        getString(R.string.title_section2),
+                        getString(R.string.title_section3),
+                }));
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        return mDrawerListView;
     }
 
     public boolean isDrawerOpen() {
@@ -260,7 +148,7 @@ public class NavigationDrawerFragment extends Fragment {
                     return;
                 }
 
-                getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
             @Override
@@ -279,7 +167,7 @@ public class NavigationDrawerFragment extends Fragment {
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
 
-                getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
 
@@ -300,19 +188,16 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int groupPosition, int childPosition) {
-        mCurrentSelectedPosition = groupPosition;
-        if (mDrawerExpandableListView != null) {
-//            mDrawerExpandableListView.setItemChecked(groupPosition, true);
-            mDrawerExpandableListView.setSelectedGroup(groupPosition);
-            mDrawerExpandableListView.setSelectedChild(groupPosition, childPosition, true);
+    private void selectItem(int position) {
+        mCurrentSelectedPosition = position;
+        if (mDrawerListView != null) {
+            mDrawerListView.setItemChecked(position, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-//            mCallbacks.onNavigationDrawerItemSelected(DataManager.getInstance().getCategories().get(position-1));
-            mCallbacks.onNavigationDrawerItemSelected(groupPosition, childPosition);
+            mCallbacks.onNavigationDrawerItemSelected(position);
         }
     }
 
@@ -378,14 +263,11 @@ public class NavigationDrawerFragment extends Fragment {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//        ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.common_black));
-//        actionBar.setBackgroundDrawable(colorDrawable);
         actionBar.setTitle(R.string.app_name);
-
     }
 
     private ActionBar getActionBar() {
-        return getActivity().getActionBar();
+        return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
     /**
@@ -395,41 +277,6 @@ public class NavigationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int groupPosition, int childPosition);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (null == data)
-            return;
-        switch (resultCode) {
-            case ConsistentParameter.RESULT_CODE_CREATEAVATARACTIVITY: {
-                updateAvatar();
-            }
-            break;
-            default: {
-                Intent intent = new Intent(getActivity().getBaseContext(), CreateAvatarActivityEX.class);
-                intent.putExtra(ConsistentString.PARAM_URI, data.getDataString());
-                startActivityForResult(intent, ConsistentParameter.REQUEST_CODE_DRAWERFRAMENT);
-            }
-            break;
-        }
-    }
-
-    private void updateAvatar()
-    {
-        Bitmap bitmapAvatar = null;
-        if(FileHelper.isExist(AppPathHelper.getAvatarFilePath()))
-        {
-            bitmapAvatar = ImageUtility.getDiskBitmap(AppPathHelper.getAvatarFilePath());
-        }
-        if(null == bitmapAvatar)
-        {
-            m_circleImageView.setImageResource(R.drawable.avatar_default);
-        }
-        else
-        {
-            m_circleImageView.setImageBitmap(bitmapAvatar);
-        }
+        void onNavigationDrawerItemSelected(int position);
     }
 }

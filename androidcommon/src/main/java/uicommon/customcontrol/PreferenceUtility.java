@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
  * Created by echen on 2015/11/16.
  */
 public class PreferenceUtility {
+    public static String KEY_LANGUAGE = "language";
+
     private static SharedPreferences m_SharedPreferences = null;
     private static SharedPreferences.Editor m_Editor = null;
 

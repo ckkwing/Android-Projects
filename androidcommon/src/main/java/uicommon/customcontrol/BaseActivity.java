@@ -6,6 +6,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import com.echen.androidcommon.Utility.LanguageUtility;
+
 import java.util.Locale;
 
 /**
@@ -13,15 +15,14 @@ import java.util.Locale;
  */
 public class BaseActivity extends Activity {
 
-    protected String KEY_LANGUAGE = "language";
-    protected String LANGUAGE_CODE_CHINESE = "zh";
-    protected String LANGUAGE_CODE_ENGLISH = "en";
+
+//    protected String LANGUAGE_CODE_ENGLISH = "en";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferenceUtility.init(this);
-        switchLanguage(PreferenceUtility.getString(KEY_LANGUAGE, LANGUAGE_CODE_CHINESE));
+        switchLanguage(PreferenceUtility.getString(PreferenceUtility.KEY_LANGUAGE, LanguageUtility.LANGUAGE_CODE_CHINESE));
     }
 
     protected void switchLanguage(String languageCode) {
@@ -29,22 +30,12 @@ public class BaseActivity extends Activity {
         Configuration configuration = resources.getConfiguration();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
 
-        Locale locale = getMappedLanguageLocale(languageCode);
+        Locale locale = LanguageUtility.getMappedLanguageLocale(languageCode);
         if (locale != configuration.locale) {
             configuration.locale = locale;
             resources.updateConfiguration(configuration, displayMetrics);
         }
 
-        PreferenceUtility.commitString(KEY_LANGUAGE, languageCode);
-    }
-
-    protected Locale getMappedLanguageLocale(String languageCode) {
-        Locale locale = Locale.ENGLISH;
-        if (languageCode.equalsIgnoreCase(LANGUAGE_CODE_ENGLISH)) {
-            locale = Locale.ENGLISH;
-        } else if (languageCode.equalsIgnoreCase(LANGUAGE_CODE_CHINESE)) {
-            locale = Locale.SIMPLIFIED_CHINESE;
-        }
-        return locale;
+        PreferenceUtility.commitString(PreferenceUtility.KEY_LANGUAGE, languageCode);
     }
 }

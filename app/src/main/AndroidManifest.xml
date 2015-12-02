@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.echen.myapplication"
     android:versionCode="1"
-    android:versionName="0.9 Beta">
+    android:versionName="0.9 Beta" >
+
+    <uses-permission android:name="android.permission.read_contacts" />
 
     <application
         android:name=".MyApplication"
@@ -16,14 +18,23 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.pick" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-                <data android:path="contacts" android:scheme="content" />
+
+                <data
+                    android:path="contacts"
+                    android:scheme="content" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity1"></activity>
+        <activity android:name=".Activity1" />
         <activity android:name=".ImagesActivity" />
+
         <uses-sdk android:minSdkVersion="4" />
+
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2" >
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.read_contacts" />
 
 </manifest>
