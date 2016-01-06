@@ -60,33 +60,37 @@
             android:groupIndicator="@null"></ExpandableListView>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/common_gold"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="fill_parent"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/common_gray"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="left">
                 <be.webelite.ion.IconView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:textSize="20dp"
-                    ioniconview:name="ion_ionic" />
+                    ioniconview:name="ion_android_settings" />
 
                 <TextView
                     android:id="@+id/settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Setting" />
             </LinearLayout>
 

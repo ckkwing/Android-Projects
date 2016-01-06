@@ -22,7 +22,6 @@ import com.echen.wisereminder.Model.Reminder;
 import com.echen.wisereminder.R;
 import com.echen.wisereminder.ReminderEditActivity;
 import com.echen.wisereminder.Utility.ReminderUtility;
-import com.fortysevendeg.swipelistview.SwipeListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class SwipeReminderListAdapter extends BaseAdapter {
     protected Context m_context = null;
     protected List<Reminder> m_reminderList = new ArrayList<>();
     protected LayoutInflater m_layoutInflater = null;
-    private SwipeListView m_SwipeListView ;
+//    private SwipeListView m_SwipeListView ;
     private int m_deviceWidth = 80;
 
     public class ViewHolder
@@ -50,21 +49,16 @@ public class SwipeReminderListAdapter extends BaseAdapter {
         public Button BtnDelete;
     }
 
-//    class ViewHolder{
-//        TextView mFrontText ;
-//        Button mBackEdit,mBackDelete ;
+//    public SwipeReminderListAdapter(Context context, List<Reminder> reminderList, SwipeListView swipeListView)
+//    {
+//        this.m_context = context;
+//        if (null == context)
+//            throw new NullPointerException("SwipeReminderListAdapter: Passed Context is NULL!");
+//        this.m_reminderList = reminderList;
+//        this.m_layoutInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        this.m_SwipeListView = swipeListView;
+//        m_deviceWidth = DeviceHelper.getDisplayMetrics(m_context).widthPixels;
 //    }
-
-    public SwipeReminderListAdapter(Context context, List<Reminder> reminderList, SwipeListView swipeListView)
-    {
-        this.m_context = context;
-        if (null == context)
-            throw new NullPointerException("SwipeReminderListAdapter: Passed Context is NULL!");
-        this.m_reminderList = reminderList;
-        this.m_layoutInflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.m_SwipeListView = swipeListView;
-        m_deviceWidth = DeviceHelper.getDisplayMetrics(m_context).widthPixels;
-    }
 
     public void updateSource(List<Reminder> reminderList)
     {
@@ -172,10 +166,10 @@ public class SwipeReminderListAdapter extends BaseAdapter {
                         m_reminderList.remove(reminder);
                     }
 
-                    //Close animation
-                    m_SwipeListView.closeAnimate(position);
-                    //Call dismiss function
-                    m_SwipeListView.dismiss(position);
+//                    //Close animation
+//                    m_SwipeListView.closeAnimate(position);
+//                    //Call dismiss function
+//                    m_SwipeListView.dismiss(position);
                 }
             });
         }

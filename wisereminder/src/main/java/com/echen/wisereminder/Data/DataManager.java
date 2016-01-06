@@ -304,8 +304,22 @@ public class DataManager {
 
     public boolean updateReminder(Reminder reminder) {
         long lRel = m_reminderDAL.updateReminderByID(reminder);
-        if (1 == lRel)
+        if (1 == lRel) {
+            Reminder updateReminder = null;
+            for (Reminder existReminder : m_reminders)
+            {
+                if (reminder.getId() == existReminder.getId())
+                {
+                    updateReminder = existReminder;
+                    break;
+                }
+            }
+            if (null != updateReminder)
+            {
+                m_reminders.set(m_reminders.indexOf(updateReminder), reminder);
+            }
             return true;
+        }
         return false;
     }
 }

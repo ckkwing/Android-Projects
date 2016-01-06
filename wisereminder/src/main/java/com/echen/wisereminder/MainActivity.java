@@ -39,9 +39,7 @@ import com.echen.wisereminder.Model.IListItem;
 import com.echen.wisereminder.Model.IReminderParent;
 import com.echen.wisereminder.Model.Subject;
 import com.echen.wisereminder.Receiver.AlarmReceiver;
-import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
-import com.fortysevendeg.swipelistview.SwipeListView;
-import com.fortysevendeg.swipelistview.SwipeListViewListener;
+
 
 import java.util.List;
 
@@ -88,25 +86,25 @@ public class MainActivity extends BaseActivity
         super.onDestroy();
     }
 
-    @Override
-    public void onBackPressed() {
-        Fragment fragmentMain = getFragmentManager().findFragmentById(R.id.container);
-        if (null != fragmentMain)
-        {
-            View rootView = fragmentMain.getView();
-            if (null != rootView)
-            {
-                SwipeListView swipeListView = (SwipeListView)rootView.findViewById(R.id.swipeReminderList);
-                swipeListView.closeOpenedItems();
-                if (0 == m_exitTimes) {
-                    m_exitTimes++;
-                    Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        }
-        super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Fragment fragmentMain = getFragmentManager().findFragmentById(R.id.container);
+//        if (null != fragmentMain)
+//        {
+//            View rootView = fragmentMain.getView();
+//            if (null != rootView)
+//            {
+//                SwipeListView swipeListView = (SwipeListView)rootView.findViewById(R.id.swipeReminderList);
+//                swipeListView.closeOpenedItems();
+//                if (0 == m_exitTimes) {
+//                    m_exitTimes++;
+//                    Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//            }
+//        }
+//        super.onBackPressed();
+//    }
 
     private void createPeriodicAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -365,21 +363,20 @@ public class MainActivity extends BaseActivity
                 }
 
                 if (null != m_selectedItem) {
-//                    ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
-//                    m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
-//                    reminderList.setAdapter(m_listAdapter);
+                    ListView reminderList = (ListView) rootView.findViewById(R.id.reminderList);
+                    m_listAdapter = new ReminderListAdapter(m_context, m_selectedItem.getReminders());
+                    reminderList.setAdapter(m_listAdapter);
 
-                    SwipeListView swipeListView = (SwipeListView)rootView.findViewById(R.id.swipeReminderList);
-                    m_swipeListAdapter = new SwipeReminderListAdapter(m_context, m_selectedItem.getReminders(), swipeListView);
-                    swipeListView.setAdapter(m_swipeListAdapter);
-                    swipeListView.setSwipeListViewListener(new RemindersSwipeListViewListener());
-                    int deviceWidth = DeviceHelper.getDisplayMetrics(m_context).widthPixels;
-                    int offSet = deviceWidth/3;
-                    swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_LEFT);
-                    swipeListView.setOffsetLeft(offSet);
-//                    swipeListView.setOffsetRight(offSet);
-                    swipeListView.setAnimationTime(1);
-                    swipeListView.setSwipeOpenOnLongPress(false);
+//                    SwipeListView swipeListView = (SwipeListView)rootView.findViewById(R.id.swipeReminderList);
+//                    m_swipeListAdapter = new SwipeReminderListAdapter(m_context, m_selectedItem.getReminders(), swipeListView);
+//                    swipeListView.setAdapter(m_swipeListAdapter);
+//                    swipeListView.setSwipeListViewListener(new RemindersSwipeListViewListener());
+//                    int deviceWidth = DeviceHelper.getDisplayMetrics(m_context).widthPixels;
+//                    int offSet = deviceWidth/3;
+//                    swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_LEFT);
+//                    swipeListView.setOffsetLeft(offSet);
+//                    swipeListView.setAnimationTime(1);
+//                    swipeListView.setSwipeOpenOnLongPress(false);
                 }
             }
 
@@ -387,36 +384,36 @@ public class MainActivity extends BaseActivity
             return rootView;
         }
 
-        class RemindersSwipeListViewListener extends BaseSwipeListViewListener
-        {
-
-            @Override
-            public void onMove(int position, float x) {
-                super.onMove(position, x);
-            }
-
-            @Override
-            public void onClickFrontView(int position) {
-                super.onClickFrontView(position);
-            }
-
-            @Override
-            public void onClickBackView(int position) {
-                super.onClickBackView(position);
-            }
-
-            @Override
-            public void onDismiss(int[] reverseSortedPositions) {
-                super.onDismiss(reverseSortedPositions);
-                if (reverseSortedPositions.length > 0)
-                    m_swipeListAdapter.notifyDataSetChanged();
-//                for (int position : reverseSortedPositions) {
-//                    Log.i("lenve", "position--:"+position);
-//                    testData.remove(position);
-//                }
-//                mAdapter.notifyDataSetChanged();
-            }
-        }
+//        class RemindersSwipeListViewListener extends BaseSwipeListViewListener
+//        {
+//
+//            @Override
+//            public void onMove(int position, float x) {
+//                super.onMove(position, x);
+//            }
+//
+//            @Override
+//            public void onClickFrontView(int position) {
+//                super.onClickFrontView(position);
+//            }
+//
+//            @Override
+//            public void onClickBackView(int position) {
+//                super.onClickBackView(position);
+//            }
+//
+//            @Override
+//            public void onDismiss(int[] reverseSortedPositions) {
+//                super.onDismiss(reverseSortedPositions);
+//                if (reverseSortedPositions.length > 0)
+//                    m_swipeListAdapter.notifyDataSetChanged();
+////                for (int position : reverseSortedPositions) {
+////                    Log.i("lenve", "position--:"+position);
+////                    testData.remove(position);
+////                }
+////                mAdapter.notifyDataSetChanged();
+//            }
+//        }
 
         @Override
         public void onAttach(Activity activity) {

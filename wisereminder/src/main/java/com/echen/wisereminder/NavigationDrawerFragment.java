@@ -26,6 +26,7 @@ import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ import com.echen.wisereminder.Utility.AppPathHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.webelite.ion.Icon;
 import uicommon.customcontrol.Listview.ExpandableListViewForScrollView;
 import uicommon.customcontrol.Utility;
 
@@ -123,24 +125,12 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;//Fix click pass event to activity which under this fragment
-            }
-        });
-//        mDrawerListView = (ListView)view.findViewById(R.id.lstCategories);
-//        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        view.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                selectItem(position);
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;//Fix click pass event to activity which under this fragment
 //            }
 //        });
-//
-//
-//        mDrawerListView.setAdapter(categoryListAdapter);
-//
-//        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         mProfileWrapper = (LinearLayout) view.findViewById(R.id.profileWrapper);
         mProfileWrapper.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +182,13 @@ public class NavigationDrawerFragment extends Fragment {
                         mDrawerExpandableListView.collapseGroup(i);
                     }
                 }
+                Utility.setListViewHeightBasedOnChildren(mDrawerExpandableListView);
+            }
+        });
+        mDrawerExpandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Utility.setListViewHeightBasedOnChildren(mDrawerExpandableListView);
             }
         });
         mDrawerExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -269,6 +266,10 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
+
+                ExpandableListView elv = (ExpandableListView)drawerView.findViewById(R.id.lstSubjects);
+                elv.setFocusable(false);
+                drawerView.scrollTo(0,0);
 
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
