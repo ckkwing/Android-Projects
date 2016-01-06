@@ -24,7 +24,10 @@ public class Utility {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
+        int calculatedHeight = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        if (params.height != calculatedHeight) {
+            params.height = calculatedHeight;
+            listView.setLayoutParams(params);
+        }
     }
 }
